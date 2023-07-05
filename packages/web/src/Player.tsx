@@ -1,31 +1,23 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import {
   CapsuleCollider,
-  CuboidCollider,
   RapierCollider,
   RapierRigidBody,
   RigidBody,
   Vector3Object,
   quat,
-  useRapier,
   vec3,
 } from "@react-three/rapier";
 import { useControls } from "leva";
+import * as React from "react";
 import { useEffect, useRef, useState } from "react";
-import { Quaternion, Vector3, Vector3Tuple } from "three";
-import { useStore, PlayerState, ActionType } from "./store";
-import { Capsule } from "@react-three/drei";
-import { act } from "react-dom/test-utils";
+import { Vector3, Vector3Tuple } from "three";
+import { ActionType, useStore } from "./store";
 
 const keys: { [key: string]: ActionType } = {
-  // KeyW: "jump",
-  // ArrowUp: "jump",
   KeyS: "down",
-  // ArrowDown: "down",
   KeyA: "left",
-  // ArrowLeft: "left",
   KeyD: "right",
-  // ArrowRight: "right",
   Space: "jump",
 };
 

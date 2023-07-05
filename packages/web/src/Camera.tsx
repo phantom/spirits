@@ -1,21 +1,19 @@
 import { extend, useFrame, useThree } from "@react-three/fiber";
-// import { RigidBodyApi } from "@react-three/rapier";
-import { useEffect, useLayoutEffect, useRef } from "react";
-import { Vector3 } from "three";
 import { vec3 } from "@react-three/rapier";
 import CameraControls from "camera-controls";
 import { useControls } from "leva";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import * as THREE from "three";
+import { Vector3 } from "three";
 import { useStore } from "./store";
-
-type Props = {};
+import * as React from "react";
 
 CameraControls.install({ THREE });
 extend({ CameraControls });
 
 const cameraOffset = new Vector3(0, 2, 0);
 
-export default function Camera(_: Props) {
+export default function Camera() {
   const controlsRef = useRef<CameraControls>(null);
   const playerRef = useStore((store) => store.player.ref);
 

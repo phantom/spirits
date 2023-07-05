@@ -3,11 +3,10 @@ import {
   RapierRigidBody,
   RigidBody,
   RigidBodyProps,
-  useRapier,
 } from "@react-three/rapier";
+import * as React from "react";
+import { useRef } from "react";
 import { useStore } from "./store";
-import { useEffect, useRef, useState } from "react";
-import { Vector3 } from "three";
 
 export const Platform = ({
   position = [0, 0, 0],

@@ -1,12 +1,10 @@
-import nipplejs, { Joystick } from "nipplejs";
-import { useCallback, useEffect, useMemo, useRef } from "react";
-import { Vector2, Vector3 } from "three";
+import nipplejs, { JoystickManager } from "nipplejs";
+import * as React from "react";
+import { useEffect, useRef } from "react";
+import { Vector3 } from "three";
 import { useStore } from "./store";
-import { JoystickManager } from "nipplejs";
 
-interface Props {}
-
-export const MobileControls = (props: Props) => {
+export const MobileControls = () => {
   const directionRef = useStore((store) => store.controls.direction)!;
   const actionsRef = useStore((store) => store.controls.actions)!;
   const ref = useRef<HTMLDivElement>(null);
