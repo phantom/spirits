@@ -17,7 +17,11 @@ export const RotatingPlatform = ({
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setPassthrough((prevPassthrough) => !prevPassthrough);
+      setPassthrough((prevPassthrough) => {
+        const collider = ref.current?.collider(ref.current.handle);
+        collider?.setSensor(!prevPassthrough);
+        return !prevPassthrough;
+      });
     }, 4000 + Math.random() * 1000);
 
     // Cleanup function to clear the interval when the component unmounts
