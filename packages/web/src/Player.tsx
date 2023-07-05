@@ -113,8 +113,6 @@ export const Player = ({
 
     player.setLinvel(linvel, true);
 
-    console.log(didJumpRelease.current, pointerDown.current, collisions.length);
-
     if (
       pointerDown.current &&
       didJumpRelease.current &&
