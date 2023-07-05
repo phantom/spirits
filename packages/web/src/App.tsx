@@ -44,7 +44,7 @@ export const App = () => {
 
   const coins = React.useMemo(() => {
     return [...Array(10)].map((_, i) => (
-      <Coins key={i} position={[3 + randFloatSpread(2), i * 4 + 8, 0]} />
+      <Coins key={i} position={[3 + randFloatSpread(2), i * 4 + 10, 0]} />
     ));
   }, []);
 
@@ -75,11 +75,11 @@ export const App = () => {
           <Platform position={[-5, 25, 0]} args={[1, 50, 1]} />
           <Platform position={[5, 25, 0]} args={[1, 50, 1]} />
 
-          <Platform position={[0, 4, 0]} args={[10, 0.1, 1]} oneWay={true} />
+          <Platform position={[0, 6, 0]} args={[10, 0.1, 1]} oneWay={true} />
 
-          <RotatingPlatform position={[-1.5, 8, 0]} args={[6, 1, 1]} />
-          <Platform position={[-1.5, 16, 0]} args={[7, 1, 1]} />
-          <Platform position={[2, 12, 0]} args={[1, 9, 1]} />
+          <RotatingPlatform position={[-1.5, 10, 0]} args={[6, 1, 1]} />
+          <Platform position={[-1.5, 18, 0]} args={[7, 1, 1]} />
+          <Platform position={[2, 14, 0]} args={[1, 9, 1]} />
 
           {coins}
 

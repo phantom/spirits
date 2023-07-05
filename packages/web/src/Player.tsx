@@ -46,7 +46,11 @@ export const Player = ({
 
   const { speed, jumpHeight } = useControls({
     speed: 5,
-    jumpHeight: 25,
+    jumpHeight: {
+      value: 40,
+      min: 10,
+      max: 100,
+    },
   });
 
   const { gl } = useThree();
@@ -162,9 +166,24 @@ export const Player = ({
     player.setLinvel(linvel, true);
     player.applyImpulse(impulse, true);
 
+    console.log(state, playerState);
+
     set((store) => {
       store.player.state = state;
     });
+  });
+
+  useFrame(() => {
+    const { x, y, z } = ref.current?.linvel() || { x: 0, y: 0, z: 0 };
+    const diff = Date.now() - lastJumpedAt.current;
+    ref.current?.setLinvel(
+      {
+        x: x,
+        y: y >= 0 ? (diff > 100 ? y * 0.9 : y * 1) : y - 0.25,
+        z,
+      },
+      true
+    );
   });
 
   useEffect(() => {
