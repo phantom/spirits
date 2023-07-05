@@ -106,6 +106,9 @@ export const Player = ({
 
       if (touchingWall && !touchingFloor) {
         state = "sliding";
+        const linvel = vec3(player.linvel());
+        linvel.y = -4;
+        player.setLinvel(linvel, true);
       }
     }
 
