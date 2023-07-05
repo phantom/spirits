@@ -29,10 +29,10 @@ export const Player = ({
   const pointerDown = useRef(false);
   const lastJumpedAt = useRef(0);
   const startedSlidingAt = useRef<number>();
+  const didJumpRelease = useRef(true);
 
   const touchingFloor = useRef(false);
   const canJump = useRef(false);
-  const didJumpRelease = useRef(true);
   const jumpPosition = useRef<Vector3>();
   const horizontalMovementAfterJump = useRef(0);
 
@@ -89,7 +89,9 @@ export const Player = ({
 
     const impulse = vec3();
 
-    // player.setLinvel(linvel, true);
+    if (!didJumpRelease.current && !pointerDown.current) {
+      didJumpRelease.current = true;
+    }
 
     const touchingWall = collisions.some(
       ({ normal }) => Math.abs(normal.x) === 1
@@ -106,20 +108,20 @@ export const Player = ({
 
       if (touchingWall && !touchingFloor) {
         state = "sliding";
-        const diff = Date.now() - (startedSlidingAt.current ?? 0);
-        const timeToMaxSlide = 1000;
-        linvel.multiply(new Vector3(0, 1, 0));
-        linvel.y = lerp(0, -speed, Math.min(diff / timeToMaxSlide, 0.9));
       }
     }
 
     player.setLinvel(linvel, true);
 
+    console.log(didJumpRelease.current, pointerDown.current, collisions.length);
+
     if (
       pointerDown.current &&
+      didJumpRelease.current &&
       collisions.length > 0 &&
       lastJumpedAt.current + 100 < Date.now()
     ) {
+      didJumpRelease.current = false;
       linvel.y = 0;
       impulse.y = jumpHeight;
 
@@ -131,6 +133,13 @@ export const Player = ({
 
       state = "jumping";
       lastJumpedAt.current = Date.now();
+    }
+
+    if (state === "sliding" || playerState === "sliding") {
+      const diff = Date.now() - (startedSlidingAt.current ?? 0);
+      const timeToMaxSlide = 1000;
+      linvel.multiply(new Vector3(0, 1, 0));
+      linvel.y = lerp(0, -speed, Math.min(diff / timeToMaxSlide, 0.9));
     }
 
     player.setLinvel(linvel, true);
@@ -191,7 +200,7 @@ export const Player = ({
       >
         <CapsuleCollider args={[0.25, 0.5]} mass={2} />
         <mesh>
-          <boxGeometry args={[0.7, 1, 0.7]} />
+          <boxGeometry args={[1, 1.5, 1]} />
           <meshStandardMaterial />
         </mesh>
       </RigidBody>

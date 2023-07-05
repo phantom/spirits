@@ -60,7 +60,7 @@ export const App = () => {
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 5]} />
         <Camera />
-        <Physics debug>
+        <Physics>
           <Player position={[0, 2, 0]} />
           <Coins position={[2, 1.5, 0]} />
           <Spike position={[4, 4, 0]} />
