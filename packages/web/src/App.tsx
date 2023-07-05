@@ -14,6 +14,7 @@ import { NoProvider } from "./NoProvider";
 import getProvider from "./utils/getProvider";
 import ConnectRow from "./ConnectRow";
 import { RotatingPlatform } from "./RotatingPlatform";
+import { FloatingSpike } from "./FloatingSpike";
 
 // =============================================================================
 // Constants
@@ -71,7 +72,7 @@ export const App = () => {
         <Physics>
           <Player position={[0, 2, 0]} />
 
-          <Spike position={[-3, 15, 0]} args={[11, 1, 1]} />
+          <FloatingSpike position={[-3, 15, 0]} args={[11, 1, 1]} />
 
           <Platform position={[0, 0, 0]} args={[11, 1, 1]} />
           <Platform position={[-50, 5, 0]} args={[1, 10, 1]} />
