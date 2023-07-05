@@ -14,13 +14,6 @@ import { useEffect, useRef, useState } from "react";
 import { Vector3, Vector3Tuple } from "three";
 import { ActionType, useStore } from "./store";
 
-const keys: { [key: string]: ActionType } = {
-  KeyS: "down",
-  KeyA: "left",
-  KeyD: "right",
-  Space: "jump",
-};
-
 export const Player = ({
   position = [0, 0, 0],
 }: {
@@ -48,7 +41,7 @@ export const Player = ({
   >(new Map());
 
   const { speed, jumpHeight } = useControls({
-    speed: 1,
+    speed: 5,
     jumpHeight: 25,
   });
 
