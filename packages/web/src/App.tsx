@@ -12,6 +12,7 @@ import { useProviderProps } from "./utils/useProviderProps";
 import { NoProvider } from "./NoProvider";
 import getProvider from "./utils/getProvider";
 import ConnectRow from "./ConnectRow";
+import { RotatingPlatform } from "./RotatingPlatform";
 
 // =============================================================================
 // Constants
@@ -75,7 +76,7 @@ export const App = () => {
 
           <Platform position={[0, 4, 0]} args={[10, 0.1, 1]} oneWay={true} />
 
-          <Platform position={[-1.5, 8, 0]} args={[7, 1, 1]} />
+          <RotatingPlatform position={[-1.5, 8, 0]} args={[6, 1, 1]} />
           <Platform position={[-1.5, 16, 0]} args={[7, 1, 1]} />
           <Platform position={[2, 12, 0]} args={[1, 9, 1]} />
 
