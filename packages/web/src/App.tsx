@@ -9,6 +9,7 @@ import { Coins } from "./Coin";
 import { useStore } from "./store";
 import { Spike } from "./Spike";
 import { useProviderProps } from "./utils/useProviderProps";
+import { useControls } from "leva";
 import { NoProvider } from "./NoProvider";
 import getProvider from "./utils/getProvider";
 import ConnectRow from "./ConnectRow";
@@ -62,7 +63,7 @@ export const App = () => {
       <div>
         <h1>Score: {score}</h1>
       </div>
-      <Canvas camera={{ position: [0, 5, 12], fov: 50 }}>
+      <Canvas orthographic>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 5]} />
         <Camera />
