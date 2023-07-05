@@ -107,9 +107,7 @@ export const Player = ({
       if (touchingWall) {
         if (touchingFloor) {
           state = "moving";
-        }
-
-        if (playerState === "jumping") {
+        } else {
           state = "sliding";
         }
       }
@@ -176,13 +174,20 @@ export const Player = ({
               collider: other.collider,
             });
 
+            const collisions = Array.from(collisionMap.current.values());
+
+            const touchingFloor = collisions.some(
+              ({ normal }) => Math.abs(normal.y) === 1
+            );
+            const touchingWall = collisions.some(
+              ({ normal }) => Math.abs(normal.x) === 1
+            );
+
             // flip the player if they're moving into the wall
-            if (Math.abs(manifold.normal().x) > 0.9) {
-              if (playerState === "moving") {
-                directionRef.current = directionRef.current.multiply(
-                  new Vector3(-1, 1, 1)
-                );
-              }
+            if (touchingWall && touchingFloor) {
+              directionRef.current = directionRef.current.multiply(
+                new Vector3(-1, 1, 1)
+              );
             }
           }
         }}
