@@ -174,16 +174,18 @@ export const Player = ({
   });
 
   useFrame(() => {
-    const { x, y, z } = ref.current?.linvel() || { x: 0, y: 0, z: 0 };
-    const diff = Date.now() - lastJumpedAt.current;
-    ref.current?.setLinvel(
-      {
-        x: x,
-        y: y >= 0 ? (diff > 100 ? y * 0.9 : y * 1) : y - 0.25,
-        z,
-      },
-      true
-    );
+    if (playerState === "jumping" || playerState === "falling") {
+      const { x, y, z } = ref.current?.linvel() || { x: 0, y: 0, z: 0 };
+      const diff = Date.now() - lastJumpedAt.current;
+      ref.current?.setLinvel(
+        {
+          x: x,
+          y: y >= 0 ? (diff > 100 ? y * 0.9 : y * 1) : y - 0.25,
+          z,
+        },
+        true
+      );
+    }
   });
 
   useEffect(() => {
