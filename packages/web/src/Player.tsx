@@ -13,6 +13,7 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Vector3, Vector3Tuple } from "three";
 import { ActionType, useStore } from "./store";
+import { lerp } from "three/src/math/MathUtils";
 
 export const Player = ({
   position = [0, 0, 0],
@@ -69,6 +70,8 @@ export const Player = ({
     const { current: player } = ref;
     if (!player) return;
 
+    let state = playerState;
+
     const collisions = Array.from(collisionMap.current.values());
     const normal = collisions.reduce((acc, { normal: curr }) => {
       acc.x += curr.x;
@@ -83,15 +86,12 @@ export const Player = ({
 
     const angle = normal.length() === 0 ? 0 : Math.atan2(normal.x, normal.y);
 
-    const isPlatformJumpable = Math.abs(angle) <= (Math.PI / 3) * 2;
-
     const linvel = vec3(player.linvel());
     linvel.x = directionRef.current.x * speed;
 
     player.setLinvel(linvel, true);
 
     if (collisions.length > 0 && lastJumpedAt.current + 100 < Date.now()) {
-      let state = playerState;
       const touchingFloor = collisions.some(
         ({ normal }) => Math.abs(normal.y) === 1
       );
@@ -104,17 +104,9 @@ export const Player = ({
         ({ normal }) => Math.abs(normal.x) === 1
       );
 
-      if (touchingWall) {
-        if (touchingFloor) {
-          state = "moving";
-        } else {
-          state = "sliding";
-        }
+      if (touchingWall && !touchingFloor) {
+        state = "sliding";
       }
-
-      set((store) => {
-        store.player.state = state;
-      });
     }
 
     if (
@@ -133,8 +125,6 @@ export const Player = ({
 
       player.applyImpulse(jumpVector, true);
 
-      console.log(jumpVector);
-
       // jump to other direction if angle is Math.PI / 2
       if (playerState === "sliding") {
         directionRef.current = directionRef.current.multiply(
@@ -142,11 +132,13 @@ export const Player = ({
         );
       }
 
-      set((store) => {
-        store.player.state = "jumping";
-      });
+      state = "jumping";
       lastJumpedAt.current = Date.now();
     }
+
+    set((store) => {
+      store.player.state = state;
+    });
   });
 
   useEffect(() => {
