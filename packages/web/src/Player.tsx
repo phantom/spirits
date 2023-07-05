@@ -73,19 +73,6 @@ export const Player = ({
     let state = playerState;
 
     const collisions = Array.from(collisionMap.current.values());
-    const normal = collisions.reduce((acc, { normal: curr }) => {
-      acc.x += curr.x;
-      acc.y += curr.y;
-      acc.z += curr.z;
-      return acc;
-    }, new Vector3(0, 0, 0)) as Vector3;
-
-    normal.normalize();
-
-    normal.y = -normal.y;
-
-    const angle = normal.length() === 0 ? 0 : Math.atan2(normal.x, normal.y);
-
     const linvel = vec3(player.linvel());
 
     // walk in the direction we're going
@@ -95,6 +82,10 @@ export const Player = ({
 
     // player.setLinvel(linvel, true);
 
+    const touchingWall = collisions.some(
+      ({ normal }) => Math.abs(normal.x) === 1
+    );
+
     if (collisions.length > 0 && lastJumpedAt.current + 100 < Date.now()) {
       const touchingFloor = collisions.some(
         ({ normal }) => Math.abs(normal.y) === 1
@@ -103,10 +94,6 @@ export const Player = ({
       if (touchingFloor) {
         state = "moving";
       }
-
-      const touchingWall = collisions.some(
-        ({ normal }) => Math.abs(normal.x) === 1
-      );
 
       if (touchingWall && !touchingFloor) {
         state = "sliding";
@@ -121,20 +108,10 @@ export const Player = ({
       collisions.length > 0 &&
       lastJumpedAt.current + 100 < Date.now()
     ) {
-      const rotation = quat().setFromAxisAngle(
-        new Vector3(0, 0, 1),
-        angle * 0.3
-      );
-
-      const jumpVector = new Vector3(0, jumpHeight, 0).applyQuaternion(
-        rotation
-      );
-
       linvel.y = 0;
       impulse.y = jumpHeight;
 
-      // jump to other direction if angle is Math.PI / 2
-      if (playerState === "sliding") {
+      if (touchingWall) {
         directionRef.current = directionRef.current.multiply(
           new Vector3(-1, 1, 1)
         );
