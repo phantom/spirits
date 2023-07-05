@@ -1,0 +1,18 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "web#dev": {
+      "cache": false
+    },
+    "web#build": {
+      "outputs": ["packages/web/dist/**"],
+      "cache": false
+    },
+    "api#start": {
+      "cache": false
+    },
+    "api#build": {
+      "cache": false
+    }
+  }
+}
