@@ -28,14 +28,10 @@ export const Player = ({
 }) => {
   const ref = useRef<RapierRigidBody>(null);
   const { viewport } = useThree();
-  const onCollisionEnter = () => (
-    ref.current!.setTranslation({ x: 0, y: 0, z: 0 }, true),
-    ref.current!.setLinvel({ x: 0, y: 10, z: 0 }, true)
-  );
 
   const set = useStore((store) => store.set);
   const playerState = useStore((store) => store.player.state);
-  const actionsRef = useStore((store) => store.controls.actions)!;
+  const directionRef = useRef(new Vector3(1, 0, 0));
 
   const touchingFloor = useRef(false);
   const canJump = useRef(false);
@@ -47,167 +43,24 @@ export const Player = ({
   const { camera } = useThree();
   const [flipX, setFlipX] = useState(false);
 
-  const moveFieldByKey = (key: string): ActionType => keys[key];
+  const collisionMap = useRef<
+    Map<string, { normal: Vector3Object; collider: RapierCollider }>
+  >(new Map());
 
-  const collisionMap = useRef<{
-    [key: string]: { normal: Vector3Object; collider: RapierCollider };
-  }>({});
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      actionsRef.current![moveFieldByKey(e.code)] = {
-        startedAt: Date.now(),
-        value: 1,
-      };
-    };
-    const handleKeyUp = (e: KeyboardEvent) => {
-      actionsRef.current![moveFieldByKey(e.code)] = {
-        startedAt: Date.now(),
-        value: 0,
-      };
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyUp);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
-
-  const { speed, jumpHeight, mass } = useControls({
+  const { speed, jumpHeight } = useControls({
     speed: 1,
     jumpHeight: 25,
-    mass: 1,
   });
 
   useFrame(() => {
     const { current: player } = ref;
     if (!player) return;
-    if (!actionsRef.current) return;
 
-    const { down, left, right, jump } = actionsRef.current;
-    // console.log(down, left, right, jump);
-
-    const linvel = new Vector3(
-      Number(right.value) - Number(left.value),
-      -Number(down.value) * 0.25,
-      0
-    );
+    const linvel = directionRef.current;
+    linvel.normalize();
     linvel.multiplyScalar(speed);
 
-    const collisions = Object.values(collisionMap.current);
-    const normal = collisions.reduce((acc, { normal: curr }) => {
-      acc.x += curr.x;
-      acc.y += curr.y;
-      acc.z += curr.z;
-      return acc;
-    }, new Vector3(0, 0, 0)) as Vector3;
-
-    normal.normalize();
-
-    normal.y = -normal.y;
-
-    const angle = normal.length() === 0 ? 0 : Math.atan2(normal.x, normal.y);
-
-    const isPlatformJumpable = Math.abs(angle) <= Math.PI / 2;
-
-    if (!didJumpRelease.current && !jump.value) {
-      didJumpRelease.current = true;
-    }
-
-    if (touchingFloor.current && !jump.value) {
-      horizontalMovementAfterJump.current = 0;
-      jumpPosition.current = undefined;
-
-      if (isPlatformJumpable) {
-        canJump.current = true;
-      }
-
-      if (!left && !right) {
-        set((store) => {
-          store.player.state = "idle";
-        });
-      } else {
-        set((store) => {
-          store.player.state = "moving";
-        });
-      }
-    }
-
-    if (
-      touchingFloor.current &&
-      Math.abs(Math.abs(angle) - Math.PI / 2) < 0.01
-    ) {
-      player.setTranslation(
-        {
-          ...player.translation(),
-          y: player.translation().y - 0.02,
-        },
-        true
-      );
-
-      linvel.x = 0;
-
-      set((store) => {
-        store.player.state = "sliding";
-      });
-    }
-
-    if (
-      didJumpRelease.current &&
-      canJump.current &&
-      jump.value &&
-      Date.now() - lastJumpedAt.current > 100
-    ) {
-      const rotation = quat().setFromAxisAngle(
-        new Vector3(0, 0, 1),
-        angle * 0.3
-      );
-
-      const jumpVector = new Vector3(0, jumpHeight, 0).applyQuaternion(
-        rotation
-      );
-
-      player.applyImpulse(jumpVector, true);
-
-      horizontalMovementAfterJump.current = player.linvel().x;
-      canJump.current = false;
-      lastJumpedAt.current = Date.now();
-
-      didJumpRelease.current = false;
-      jumpPosition.current = vec3(player.translation());
-
-      set((store) => {
-        store.player.state = "jumping";
-      });
-    }
-
-    if (
-      !touchingFloor.current &&
-      playerState !== "jumping" &&
-      (ref.current?.linvel()?.y ?? 0) < 0
-    ) {
-      set((store) => {
-        store.player.state = "falling";
-      });
-    }
-
-    if (horizontalMovementAfterJump.current) {
-      linvel.x += horizontalMovementAfterJump.current * 0.05;
-    }
-    ref.current?.applyImpulse(linvel, true);
-  });
-
-  useFrame(() => {
-    const { x, y, z } = ref.current?.linvel() || { x: 0, y: 0, z: 0 };
-    ref.current?.setLinvel(
-      {
-        x: x * 0.9,
-        y: y >= 0 ? y * 0.9 : (y - 0.1) * 1,
-        z,
-      },
-      true
-    );
+    player.setLinvel(linvel, true);
   });
 
   useEffect(() => {
@@ -221,30 +74,40 @@ export const Player = ({
       <RigidBody
         ref={ref}
         name="player"
-        mass={mass}
         position={position}
         enabledTranslations={[true, true, false]}
         lockRotations={true}
         ccd={true}
         onCollisionEnter={({ other, manifold }) => {
-          if (other?.rigidBodyObject?.name === "platform") {
+          if (
+            other?.rigidBodyObject?.name === "platform" &&
+            !collisionMap.current.has(other.collider.handle.toString())
+          ) {
             touchingFloor.current = true;
-            collisionMap.current[other.collider.handle] = {
+
+            collisionMap.current.set(other.collider.handle.toString(), {
               normal: manifold.normal(),
               collider: other.collider,
-            };
+            });
+
+            if (Math.abs(manifold.normal().x) > 0.9) {
+              console.log(manifold.normal());
+              directionRef.current = directionRef.current.multiply(
+                new Vector3(-1, 1, 1)
+              );
+            }
           }
         }}
         onCollisionExit={({ other }) => {
           if (other?.rigidBodyObject?.name === "platform") {
             touchingFloor.current = false;
-            delete collisionMap.current[other.collider.handle];
+            collisionMap.current.delete(other.collider.handle.toString());
           }
         }}
       >
-        <CapsuleCollider args={[0.5, 0.5]} mass={0} />
+        <CapsuleCollider args={[0.5, 0.5]} mass={1} />
         <mesh>
-          <boxGeometry args={[1, 1, 1]} />
+          <boxGeometry args={[1, 2, 1]} />
           <meshStandardMaterial />
         </mesh>
       </RigidBody>

@@ -57,7 +57,6 @@ export type Store = {
     movement: MutableRefObject<Vector2>;
   };
   controls: {
-    actions: RefObject<Actions>;
     direction: MutableRefObject<Vector3>;
   };
   game: {

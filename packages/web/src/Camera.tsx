@@ -11,7 +11,7 @@ import * as React from "react";
 CameraControls.install({ THREE });
 extend({ CameraControls });
 
-const cameraOffset = new Vector3(0, 2, 0);
+const cameraOffset = new Vector3(0, 10, 0);
 
 export default function Camera() {
   const controlsRef = useRef<CameraControls>(null);
@@ -22,7 +22,7 @@ export default function Camera() {
 
   const { fov, distance, cameraSensitivity } = useControls({
     fov: {
-      value: 80,
+      value: 50,
       min: 10,
       max: 180,
     },
