@@ -26,8 +26,6 @@ export const RotatingPlatform = ({
     };
   }, []);
 
-  console.log("passthrough", passthrough);
-
   return (
     <RigidBody
       type="fixed"
