@@ -117,6 +117,7 @@ export const Player = ({
     player.setLinvel(linvel, true);
 
     if (
+      jumpsLeft.current > 0 &&
       pointerDown.current &&
       didJumpRelease.current &&
       collisions.length > 0 &&
@@ -142,7 +143,7 @@ export const Player = ({
       jumpsLeft.current > 0 &&
       pointerDown.current &&
       didJumpRelease.current &&
-      lastJumpedAt.current + 100 < Date.now()
+      lastJumpedAt.current + 300 < Date.now()
     ) {
       didJumpRelease.current = false;
       linvel.y = 0;

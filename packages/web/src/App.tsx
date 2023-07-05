@@ -34,9 +34,15 @@ export const App = () => {
       <Platform
         key={i}
         args={[10, 0.1, 1]}
-        position={[randFloatSpread(10), i * 4 + 4, 0]}
+        position={[0, i * 4 + 4, 0]}
         oneWay={true}
       />
+    ));
+  }, []);
+
+  const coins = React.useMemo(() => {
+    return [...Array(10)].map((_, i) => (
+      <Coins key={i} position={[3 + randFloatSpread(2), i * 4 + 8, 0]} />
     ));
   }, []);
 
@@ -62,13 +68,30 @@ export const App = () => {
         <Camera />
         <Physics>
           <Player position={[0, 2, 0]} />
-          <Coins position={[2, 1.5, 0]} />
-          <Spike position={[4, 4, 0]} />
           <Platform position={[0, 0, 0]} args={[11, 1, 1]} />
           <Platform position={[-50, 5, 0]} args={[1, 10, 1]} />
           <Platform position={[-5, 25, 0]} args={[1, 50, 1]} />
           <Platform position={[5, 25, 0]} args={[1, 50, 1]} />
-          {platforms}
+
+          <Platform position={[0, 4, 0]} args={[10, 0.1, 1]} oneWay={true} />
+
+          <Platform position={[-1.5, 8, 0]} args={[7, 1, 1]} />
+          <Platform position={[-1.5, 16, 0]} args={[7, 1, 1]} />
+          <Platform position={[2, 12, 0]} args={[1, 9, 1]} />
+
+          {coins}
+
+          <Platform position={[0, 20, 0]} args={[3, 1, 1]} />
+          <Platform position={[1.5, 21.5, 0]} args={[1, 4, 1]} />
+          <Platform position={[-1.5, 21.5, 0]} args={[1, 4, 1]} />
+          <Platform position={[0, 23, 0]} args={[3, 1, 1]} />
+
+          <Platform position={[0, 26, 0]} args={[10, 0.1, 1]} oneWay={true} />
+
+          <Platform position={[0, 30, 0]} args={[3, 1, 1]} />
+          <Platform position={[1.5, 31.5, 0]} args={[1, 4, 1]} />
+          <Platform position={[-1.5, 31.5, 0]} args={[1, 4, 1]} />
+          <Platform position={[0, 33, 0]} args={[3, 1, 1]} />
         </Physics>
       </Canvas>
     </>
