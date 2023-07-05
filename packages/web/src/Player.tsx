@@ -30,6 +30,7 @@ export const Player = ({
   const lastJumpedAt = useRef(0);
   const startedSlidingAt = useRef<number>();
   const didJumpRelease = useRef(true);
+  const jumpsLeft = useRef(0);
 
   const touchingFloor = useRef(false);
   const canJump = useRef(false);
@@ -98,6 +99,8 @@ export const Player = ({
     );
 
     if (collisions.length > 0 && lastJumpedAt.current + 100 < Date.now()) {
+      jumpsLeft.current = 2;
+
       const touchingFloor = collisions.some(
         ({ normal }) => Math.abs(normal.y) === 1
       );
@@ -129,7 +132,22 @@ export const Player = ({
         );
       }
 
+      jumpsLeft.current -= 1;
       state = "jumping";
+      lastJumpedAt.current = Date.now();
+    }
+
+    if (
+      state === "jumping" &&
+      jumpsLeft.current > 0 &&
+      pointerDown.current &&
+      didJumpRelease.current &&
+      lastJumpedAt.current + 100 < Date.now()
+    ) {
+      didJumpRelease.current = false;
+      linvel.y = 0;
+      impulse.y = jumpHeight;
+      jumpsLeft.current -= 1;
       lastJumpedAt.current = Date.now();
     }
 
