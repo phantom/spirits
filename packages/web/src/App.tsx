@@ -8,6 +8,7 @@ import * as React from "react";
 import { Coins } from "./Coin";
 import { OrbitControls } from "@react-three/drei";
 import { useStore } from "./store";
+import { Spike } from "./Spike";
 
 export const App = () => {
   const score = useStore((store) => store.player.score);
@@ -35,6 +36,7 @@ export const App = () => {
         <Physics debug>
           <Player position={[0, 2, 0]} />
           <Coins position={[2, 1.5, 0]} />
+          <Spike position={[4, 4, 0]} />
           <Platform position={[0, 0, 0]} args={[11, 1, 1]} />
           <Platform position={[-50, 5, 0]} args={[1, 10, 1]} />
           <Platform position={[-5, 25, 0]} args={[1, 50, 1]} />

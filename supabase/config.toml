@@ -9,3 +9,6 @@ verify_jwt = false
 
 [functions.postgres]
 verify_jwt = false
+
+[functions.actions]
+verify_jwt = false
