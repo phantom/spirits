@@ -6,11 +6,27 @@ import { Platform } from "./Platform";
 import { Player } from "./Player";
 import * as React from "react";
 import { Coins } from "./Coin";
-import { OrbitControls } from "@react-three/drei";
 import { useStore } from "./store";
 import { Spike } from "./Spike";
+import { useProviderProps } from "./utils/useProviderProps";
+import { NoProvider } from "./NoProvider";
+import getProvider from "./utils/getProvider";
+import ConnectRow from "./ConnectRow";
+
+// =============================================================================
+// Constants
+// =============================================================================
+
+const provider = getProvider();
+
+// =============================================================================
+// Main Component
+// =============================================================================
 
 export const App = () => {
+  const providerProps = useProviderProps();
+  const { publicKey, connectedMethods, handleConnect } = providerProps;
+
   const score = useStore((store) => store.player.score);
 
   const platforms = React.useMemo(() => {
@@ -24,8 +40,19 @@ export const App = () => {
     ));
   }, []);
 
+  if (!provider) {
+    return <NoProvider />;
+  }
+
   return (
     <>
+      {/* Provider Connection */}
+      <ConnectRow
+        publicKey={publicKey}
+        connectedMethods={connectedMethods}
+        connect={handleConnect}
+      />
+
       <div>
         <h1>Score: {score}</h1>
       </div>
