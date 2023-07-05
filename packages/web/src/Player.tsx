@@ -28,6 +28,7 @@ export const Player = ({
   const directionRef = useRef(new Vector3(1, 0, 0));
   const pointerDown = useRef(false);
   const lastJumpedAt = useRef(0);
+  const startedSlidingAt = useRef<number>();
 
   const touchingFloor = useRef(false);
   const canJump = useRef(false);
@@ -66,6 +67,14 @@ export const Player = ({
     };
   });
 
+  useEffect(() => {
+    if (playerState === "sliding") {
+      startedSlidingAt.current = Date.now();
+    } else {
+      startedSlidingAt.current = undefined;
+    }
+  }, [playerState]);
+
   useFrame(() => {
     const { current: player } = ref;
     if (!player) return;
@@ -97,7 +106,10 @@ export const Player = ({
 
       if (touchingWall && !touchingFloor) {
         state = "sliding";
-        linvel.y = -4;
+        const diff = Date.now() - (startedSlidingAt.current ?? 0);
+        const timeToMaxSlide = 1000;
+        linvel.multiply(new Vector3(0, 1, 0));
+        linvel.y = lerp(0, -speed, Math.min(diff / timeToMaxSlide, 0.9));
       }
     }
 
