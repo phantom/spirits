@@ -1,0 +1,10 @@
+{
+  "imports": {
+    "std/server": "https://deno.land/std@0.168.0/http/server.ts",
+    "@metaplex-foundation/js": "https://esm.sh/@metaplex-foundation/js@0.19.3",
+    "@solana/web3.js": "https://esm.sh/@solana/web3.js@1.48.0",
+    "bs58": "https://esm.sh/bs58@5.0.0",
+    "oak": "https://deno.land/x/oak@v11.1.0/mod.ts",
+    "postgres": "https://deno.land/x/postgres@v0.14.2/mod.ts"
+  }
+}
