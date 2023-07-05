@@ -87,9 +87,13 @@ export const Player = ({
     const angle = normal.length() === 0 ? 0 : Math.atan2(normal.x, normal.y);
 
     const linvel = vec3(player.linvel());
+
+    // walk in the direction we're going
     linvel.x = directionRef.current.x * speed;
 
-    player.setLinvel(linvel, true);
+    const impulse = vec3();
+
+    // player.setLinvel(linvel, true);
 
     if (collisions.length > 0 && lastJumpedAt.current + 100 < Date.now()) {
       const touchingFloor = collisions.some(
@@ -106,11 +110,11 @@ export const Player = ({
 
       if (touchingWall && !touchingFloor) {
         state = "sliding";
-        const linvel = vec3(player.linvel());
         linvel.y = -4;
-        player.setLinvel(linvel, true);
       }
     }
+
+    player.setLinvel(linvel, true);
 
     if (
       pointerDown.current &&
@@ -126,10 +130,8 @@ export const Player = ({
         rotation
       );
 
-      const linvel = vec3(player.linvel());
       linvel.y = 0;
-      player.setLinvel(linvel, true);
-      player.applyImpulse(jumpVector, true);
+      impulse.y = jumpHeight;
 
       // jump to other direction if angle is Math.PI / 2
       if (playerState === "sliding") {
@@ -141,6 +143,9 @@ export const Player = ({
       state = "jumping";
       lastJumpedAt.current = Date.now();
     }
+
+    player.setLinvel(linvel, true);
+    player.applyImpulse(impulse, true);
 
     set((store) => {
       store.player.state = state;
