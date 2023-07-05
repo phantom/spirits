@@ -18,9 +18,10 @@ export const RotatingPlatform = ({
   useEffect(() => {
     const interval = setInterval(() => {
       setPassthrough((prevPassthrough) => {
+        const inversePasshrough = !prevPassthrough;
         const collider = ref.current?.collider(ref.current.handle);
-        collider?.setSensor(!prevPassthrough);
-        return !prevPassthrough;
+        collider?.setSensor(inversePasshrough);
+        return inversePasshrough;
       });
     }, 4000 + Math.random() * 1000);
 
@@ -38,14 +39,6 @@ export const RotatingPlatform = ({
       name="platform"
       ref={ref}
       sensor={passthrough}
-      onCollisionEnter={({ other }) => {
-        if (other.rigidBodyObject?.name === "player") {
-          const collider = ref.current?.collider(ref.current.handle);
-          if (passthrough) {
-            collider?.setSensor(false);
-          }
-        }
-      }}
       {...props}
     >
       <mesh>

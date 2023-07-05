@@ -20,28 +20,22 @@ export default function Camera() {
   const { gl, camera } = useThree();
   const set = useStore((store) => store.set);
 
-  const { fov, distance, cameraSensitivity } = useControls({
-    fov: {
+  const { cameraSensitivity, zoom } = useControls({
+    zoom: {
       value: 50,
       min: 10,
-      max: 180,
+      max: 100,
     },
     cameraSensitivity: {
       value: 0.9,
       min: 0,
       max: 1,
     },
-    distance: {
-      value: 30,
-      min: 10,
-      max: 50,
-    },
   });
 
   useEffect(() => {
-    (camera as THREE.PerspectiveCamera).fov = fov;
-    camera.updateProjectionMatrix();
-  }, [fov]);
+    controlsRef.current?.zoomTo(zoom, true);
+  }, [zoom]);
 
   useEffect(() => {
     set((store) => {
@@ -59,10 +53,6 @@ export default function Camera() {
     controlsRef.current!.touches.two = CameraControls.ACTION.NONE;
     controlsRef.current!.touches.three = CameraControls.ACTION.NONE;
   }, [controlsRef]);
-
-  useLayoutEffect(() => {
-    controlsRef.current?.dollyTo(distance, false);
-  }, [distance]);
 
   useFrame((_, delta) => {
     const cameraPosition = camera.getWorldPosition(new Vector3());
