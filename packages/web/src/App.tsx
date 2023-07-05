@@ -31,8 +31,7 @@ export const App = () => {
       <Canvas camera={{ position: [0, 5, 12], fov: 50 }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 5]} />
-        {/* <Camera /> */}
-        <OrbitControls />
+        <Camera />
         <Physics debug>
           <Player position={[0, 2, 0]} />
           <Coins position={[2, 1.5, 0]} />

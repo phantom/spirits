@@ -11,7 +11,7 @@ import * as React from "react";
 CameraControls.install({ THREE });
 extend({ CameraControls });
 
-const cameraOffset = new Vector3(0, 10, 0);
+const cameraOffset = new Vector3(0, 6, 0);
 
 export default function Camera() {
   const controlsRef = useRef<CameraControls>(null);
@@ -71,7 +71,7 @@ export default function Camera() {
     // lerp to playerPosition
     const newPosition = new Vector3().lerpVectors(
       cameraPosition,
-      new Vector3(playerPosition?.x, playerPosition?.y, cameraPosition.z).add(
+      new Vector3(cameraPosition?.x, playerPosition?.y, cameraPosition.z).add(
         cameraOffset
       ),
       cameraSensitivity
@@ -79,7 +79,10 @@ export default function Camera() {
 
     controlsRef.current?.setLookAt(
       ...newPosition.toArray(),
-      ...vec3(playerPosition).add(cameraOffset).toArray(),
+      ...vec3(playerPosition)
+        .multiply(new Vector3(0, 1, 0))
+        .add(cameraOffset)
+        .toArray(),
       true
     );
 

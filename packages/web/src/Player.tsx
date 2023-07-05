@@ -189,9 +189,9 @@ export const Player = ({
           }
         }}
       >
-        <CapsuleCollider args={[0.5, 0.5]} mass={1} />
+        <CapsuleCollider args={[0.25, 0.5]} mass={2} />
         <mesh>
-          <boxGeometry args={[1, 2, 1]} />
+          <boxGeometry args={[0.7, 1, 0.7]} />
           <meshStandardMaterial />
         </mesh>
       </RigidBody>
