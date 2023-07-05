@@ -9,7 +9,7 @@ import { useStore } from "./store";
 import { Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
 
-const xboundary = [-2, 2];
+const xboundary = [-1, 1];
 
 export function FloatingSpike(props: RigidBodyProps) {
   const store = useStore((store) => store);
@@ -21,9 +21,6 @@ export function FloatingSpike(props: RigidBodyProps) {
     if (!spike || !props.position) return;
 
     const linvel = vec3(spike.linvel());
-    // linvel.x = 1;
-
-    console.log(props.position, spike.translation().x);
 
     // Sweep back and forth
     if (spike.translation().x > xboundary[1]) {
@@ -42,7 +39,6 @@ export function FloatingSpike(props: RigidBodyProps) {
   return (
     <RigidBody
       onCollisionEnter={() => {
-        console.log("here");
         store?.player.ref?.current?.setTranslation(new Vector3(0, 2, 0), false);
       }}
       ref={ref}

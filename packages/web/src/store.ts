@@ -3,7 +3,7 @@ import { RapierRigidBody } from "@react-three/rapier";
 import CameraControls from "camera-controls";
 import { setAutoFreeze } from "immer";
 import { createRef, MutableRefObject, RefObject } from "react";
-import { Group, Mesh, Vector2, Vector3 } from "three";
+import { Mesh, Vector2, Vector3 } from "three";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
@@ -21,7 +21,7 @@ export type PlayerState =
   | "victory"
   | "sliding";
 
-export type EntityType = "tree";
+export type EntityType = "coin";
 
 export type Entity = {
   type: EntityType;
