@@ -126,6 +126,9 @@ export const Player = ({
         rotation
       );
 
+      const linvel = vec3(player.linvel());
+      linvel.y = 0;
+      player.setLinvel(linvel, true);
       player.applyImpulse(jumpVector, true);
 
       // jump to other direction if angle is Math.PI / 2
