@@ -50,6 +50,7 @@ export type Store = {
   player: {
     state: PlayerState;
     ref: RefObject<RapierRigidBody> | null;
+    score: number;
   };
   level: Level;
   camera: {
@@ -72,6 +73,7 @@ export const useStore = create(
     player: {
       state: "idle",
       ref: null,
+      score: 0,
     },
     level: {
       entities: [],
