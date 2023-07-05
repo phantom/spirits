@@ -7,3 +7,27 @@
 - player stuff should be calculated with delta
 - if moving in a certain direction and jumping, remain the x velocity from before the jump
 - force portrait mode
+
+# Backend Airdropper 🪂
+
+```
+// Deploy a function
+npx supabase functions deploy sweepstakes --project-ref <project_ref>
+
+// Set secrets
+npx supabase secrets set --env-file ./supabase/.env
+
+// New Function
+npx supabase functions new postgres
+```
+
+### Developing in VSCode
+Add the following to your .vscode settings.json.
+```
+{
+  "deno.enablePaths": ["./supabase"],
+  "deno.unstable": true,
+  "deno.importMap": "/Users/mitchell.catoen/Documents/workspace/supabase/supabase/functions/import_map.json"
+}
+
+```

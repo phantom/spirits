@@ -1,0 +1,11 @@
+[functions.hello-world]
+verify_jwt = false
+
+[functions.reward]
+verify_jwt = false
+
+[functions.sweepstakes]
+verify_jwt = false
+
+[functions.postgres]
+verify_jwt = false
