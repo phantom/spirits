@@ -71,7 +71,7 @@ export type Store = {
 export const useStore = create(
   immer<Store>((set) => ({
     player: {
-      state: "idle",
+      state: "moving",
       ref: null,
       score: 0,
     },
