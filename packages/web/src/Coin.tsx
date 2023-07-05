@@ -7,26 +7,22 @@ interface CoinProps extends RigidBodyProps {
 }
 
 export const Coin = (props: CoinProps) => {
-  const [isCaptured, setIsCaptured] = React.useState(false);
-
   const set = useStore((store) => store.set);
 
   return (
     <RigidBody
+      name="coin"
       type="fixed"
       sensor={true}
       onIntersectionEnter={() => {
-        if (!isCaptured) {
-          set((store) => {
-            store.player.score += 1;
-          });
-          props.remove();
-          setIsCaptured(true);
-        }
+        set((store) => {
+          store.player.score += 1;
+        });
+        props.remove();
       }}
       {...props}
     >
-      <mesh scale={isCaptured ? 0 : 1}>
+      <mesh>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="gold" />
       </mesh>
