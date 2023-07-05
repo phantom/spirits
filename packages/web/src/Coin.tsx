@@ -20,6 +20,7 @@ export const Coin = (props: CoinProps) => {
           set((store) => {
             store.player.score += 1;
           });
+          props.remove();
           setIsCaptured(true);
         }
       }}
