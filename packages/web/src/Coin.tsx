@@ -2,7 +2,11 @@ import { RigidBody, RigidBodyProps } from "@react-three/rapier";
 import * as React from "react";
 import { useStore } from "./store";
 
-export function Coins(props: RigidBodyProps) {
+interface CoinProps extends RigidBodyProps {
+  remove: () => void;
+}
+
+export const Coin = (props: CoinProps) => {
   const [isCaptured, setIsCaptured] = React.useState(false);
 
   const set = useStore((store) => store.set);
@@ -27,4 +31,4 @@ export function Coins(props: RigidBodyProps) {
       </mesh>
     </RigidBody>
   );
-}
+};
