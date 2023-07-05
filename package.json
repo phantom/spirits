@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "web": "turbo web#dev",
+    "web:build": "turbo web#build",
     "api": "turbo api#start",
     "api:build": "turbo api#build"
   },
@@ -16,5 +17,6 @@
   },
   "devDependencies": {
     "typescript": "^5.0.2"
-  }
+  },
+  "packageManager": "yarn@1.22.18"
 }
