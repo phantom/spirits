@@ -28,10 +28,12 @@ export const Player = ({
   const directionRef = useRef(new Vector3(1, 0, 0));
   const pointerDown = useRef(false);
   const lastJumpedAt = useRef(0);
+  const startedSlidingAt = useRef<number>();
+  const didJumpRelease = useRef(true);
+  const jumpsLeft = useRef(0);
 
   const touchingFloor = useRef(false);
   const canJump = useRef(false);
-  const didJumpRelease = useRef(true);
   const jumpPosition = useRef<Vector3>();
   const horizontalMovementAfterJump = useRef(0);
 
@@ -66,6 +68,14 @@ export const Player = ({
     };
   });
 
+  useEffect(() => {
+    if (playerState === "sliding") {
+      startedSlidingAt.current = Date.now();
+    } else {
+      startedSlidingAt.current = undefined;
+    }
+  }, [playerState]);
+
   useFrame(() => {
     const { current: player } = ref;
     if (!player) return;
@@ -73,19 +83,6 @@ export const Player = ({
     let state = playerState;
 
     const collisions = Array.from(collisionMap.current.values());
-    const normal = collisions.reduce((acc, { normal: curr }) => {
-      acc.x += curr.x;
-      acc.y += curr.y;
-      acc.z += curr.z;
-      return acc;
-    }, new Vector3(0, 0, 0)) as Vector3;
-
-    normal.normalize();
-
-    normal.y = -normal.y;
-
-    const angle = normal.length() === 0 ? 0 : Math.atan2(normal.x, normal.y);
-
     const linvel = vec3(player.linvel());
 
     // walk in the direction we're going
@@ -93,9 +90,17 @@ export const Player = ({
 
     const impulse = vec3();
 
-    // player.setLinvel(linvel, true);
+    if (!didJumpRelease.current && !pointerDown.current) {
+      didJumpRelease.current = true;
+    }
+
+    const touchingWall = collisions.some(
+      ({ normal }) => Math.abs(normal.x) === 1
+    );
 
     if (collisions.length > 0 && lastJumpedAt.current + 100 < Date.now()) {
+      jumpsLeft.current = 2;
+
       const touchingFloor = collisions.some(
         ({ normal }) => Math.abs(normal.y) === 1
       );
@@ -104,44 +109,54 @@ export const Player = ({
         state = "moving";
       }
 
-      const touchingWall = collisions.some(
-        ({ normal }) => Math.abs(normal.x) === 1
-      );
-
       if (touchingWall && !touchingFloor) {
         state = "sliding";
-        linvel.y = -4;
       }
     }
 
     player.setLinvel(linvel, true);
 
     if (
+      jumpsLeft.current > 0 &&
       pointerDown.current &&
+      didJumpRelease.current &&
       collisions.length > 0 &&
       lastJumpedAt.current + 100 < Date.now()
     ) {
-      const rotation = quat().setFromAxisAngle(
-        new Vector3(0, 0, 1),
-        angle * 0.3
-      );
-
-      const jumpVector = new Vector3(0, jumpHeight, 0).applyQuaternion(
-        rotation
-      );
-
+      didJumpRelease.current = false;
       linvel.y = 0;
       impulse.y = jumpHeight;
 
-      // jump to other direction if angle is Math.PI / 2
-      if (playerState === "sliding") {
+      if (touchingWall) {
         directionRef.current = directionRef.current.multiply(
           new Vector3(-1, 1, 1)
         );
       }
 
+      jumpsLeft.current -= 1;
       state = "jumping";
       lastJumpedAt.current = Date.now();
+    }
+
+    if (
+      state === "jumping" &&
+      jumpsLeft.current > 0 &&
+      pointerDown.current &&
+      didJumpRelease.current &&
+      lastJumpedAt.current + 300 < Date.now()
+    ) {
+      didJumpRelease.current = false;
+      linvel.y = 0;
+      impulse.y = jumpHeight;
+      jumpsLeft.current -= 1;
+      lastJumpedAt.current = Date.now();
+    }
+
+    if (state === "sliding" || playerState === "sliding") {
+      const diff = Date.now() - (startedSlidingAt.current ?? 0);
+      const timeToMaxSlide = 1000;
+      linvel.multiply(new Vector3(0, 1, 0));
+      linvel.y = lerp(0, -speed, Math.min(diff / timeToMaxSlide, 0.9));
     }
 
     player.setLinvel(linvel, true);
@@ -202,7 +217,7 @@ export const Player = ({
       >
         <CapsuleCollider args={[0.25, 0.5]} mass={2} />
         <mesh>
-          <boxGeometry args={[0.7, 1, 0.7]} />
+          <boxGeometry args={[1, 1.5, 1]} />
           <meshStandardMaterial />
         </mesh>
       </RigidBody>

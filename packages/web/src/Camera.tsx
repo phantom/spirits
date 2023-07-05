@@ -11,7 +11,7 @@ import * as React from "react";
 CameraControls.install({ THREE });
 extend({ CameraControls });
 
-const cameraOffset = new Vector3(0, 6, 0);
+const cameraOffset = new Vector3(0, 4, 0);
 
 export default function Camera() {
   const controlsRef = useRef<CameraControls>(null);
