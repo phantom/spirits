@@ -13,9 +13,6 @@ export function Spike(props: RigidBodyProps) {
       sensor={true}
       onIntersectionEnter={() => {
         if (!isCaptured) {
-          set((store) => {
-            store.player.score += 1;
-          });
           setIsCaptured(true);
         }
       }}

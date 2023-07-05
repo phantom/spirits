@@ -8,7 +8,6 @@ import * as React from "react";
 import { useStore } from "./store";
 import { Spike } from "./Spike";
 import { useProviderProps } from "./utils/useProviderProps";
-import { useControls } from "leva";
 import { NoProvider } from "./NoProvider";
 import getProvider from "./utils/getProvider";
 import ConnectRow from "./ConnectRow";
@@ -55,6 +54,7 @@ export const App = () => {
         <Physics debug>
           <Player position={[0, 2, 0]} />
           <Spike position={[4, 4, 0]} />
+
           <Platform position={[0, 0, 0]} args={[11, 1, 1]} />
           <Platform position={[-50, 5, 0]} args={[1, 10, 1]} />
           <Platform position={[-5, 25, 0]} args={[1, 50, 1]} />

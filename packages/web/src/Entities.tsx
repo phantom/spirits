@@ -18,11 +18,7 @@ export const Entities = () => {
     setNumber(Math.random());
   };
 
-  console.log("Entities", entities);
-
   const spawnCoins = useCallback(() => {
-    console.log("Spawning");
-
     [...Array(coinsCount)].map(() => {
       const uuid = MathUtils.generateUUID();
       entities.current.set(
