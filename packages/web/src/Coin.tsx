@@ -11,6 +11,7 @@ export const Coin = (props: CoinProps) => {
 
   return (
     <RigidBody
+      name="coin"
       type="fixed"
       sensor={true}
       onIntersectionEnter={() => {

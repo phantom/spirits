@@ -6,7 +6,6 @@ import { Platform } from "./Platform";
 import { Player } from "./Player";
 import * as React from "react";
 import { useStore } from "./store";
-import { Spike } from "./Spike";
 import { useProviderProps } from "./utils/useProviderProps";
 import { NoProvider } from "./NoProvider";
 import getProvider from "./utils/getProvider";
@@ -46,6 +45,7 @@ export const App = () => {
       <div>
         <h1>Score: {score}</h1>
       </div>
+
       <Canvas orthographic>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 5]} />
@@ -53,7 +53,6 @@ export const App = () => {
         {/* <OrbitControls /> */}
         <Physics debug>
           <Player position={[0, 2, 0]} />
-          <Spike position={[4, 4, 0]} />
 
           <Platform position={[0, 0, 0]} args={[11, 1, 1]} />
           <Platform position={[-50, 5, 0]} args={[1, 10, 1]} />
@@ -78,7 +77,7 @@ export const App = () => {
           <Platform position={[-1.5, 31.5, 0]} args={[1, 4, 1]} />
           <Platform position={[0, 33, 0]} args={[3, 1, 1]} />
 
-          {/* Currently spawns coins */}
+          {/* Spawns coins and spikes */}
           <Entities />
         </Physics>
       </Canvas>
