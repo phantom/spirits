@@ -131,12 +131,6 @@ export const Player = ({
       linvel.y = 0;
       impulse.y = jumpHeight;
 
-      if (touchingWall) {
-        directionRef.current = directionRef.current.multiply(
-          new Vector3(-1, 1, 1)
-        );
-      }
-
       jumpsLeft.current -= 1;
       state = "jumping";
       lastJumpedAt.current = Date.now();
@@ -166,8 +160,6 @@ export const Player = ({
     player.setLinvel(linvel, true);
     player.applyImpulse(impulse, true);
 
-    console.log(state, playerState);
-
     set((store) => {
       store.player.state = state;
     });
@@ -187,6 +179,14 @@ export const Player = ({
       );
     }
   });
+
+  useEffect(() => {
+    if (playerState === "sliding") {
+      directionRef.current = directionRef.current.multiply(
+        new Vector3(-1, 1, 1)
+      );
+    }
+  }, [playerState]);
 
   useEffect(() => {
     set((store) => {
@@ -223,7 +223,7 @@ export const Player = ({
             );
 
             // flip the player if they're moving into the wall
-            if (touchingWall && touchingFloor) {
+            if (playerState === "moving" && touchingWall && touchingFloor) {
               directionRef.current = directionRef.current.multiply(
                 new Vector3(-1, 1, 1)
               );
