@@ -105,9 +105,7 @@ export const Player = ({
     if (collisions.length > 0 && lastJumpedAt.current + 100 < Date.now()) {
       jumpsLeft.current = 2;
 
-      const touchingFloor = collisions.some(
-        ({ normal }) => Math.abs(normal.y) === 1
-      );
+      const touchingFloor = collisions.some(({ normal }) => normal.y === -1);
 
       if (touchingFloor) {
         state = "moving";
@@ -136,13 +134,22 @@ export const Player = ({
       lastJumpedAt.current = Date.now();
     }
 
+    console.log(
+      playerState,
+      jumpsLeft.current,
+      collisions.length,
+      pointerDown.current,
+      didJumpRelease.current,
+      lastJumpedAt.current
+    );
     if (
-      state === "jumping" &&
+      playerState === "jumping" &&
       jumpsLeft.current > 0 &&
       pointerDown.current &&
       didJumpRelease.current &&
       lastJumpedAt.current + 300 < Date.now()
     ) {
+      console.log("double jump");
       didJumpRelease.current = false;
       linvel.y = 0;
       impulse.y = jumpHeight;
@@ -159,6 +166,8 @@ export const Player = ({
 
     player.setLinvel(linvel, true);
     player.applyImpulse(impulse, true);
+
+    console.log(playerState, state, linvel.x);
 
     set((store) => {
       store.player.state = state;
