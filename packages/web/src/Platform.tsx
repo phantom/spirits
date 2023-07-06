@@ -49,8 +49,6 @@ export const Platform = ({
   //   }
   // });
 
-  console.log(props.sprite);
-
   const platformTexture = useLoader(
     TextureLoader,
     props.sprite
