@@ -5,15 +5,14 @@ import {
   RapierRigidBody,
   RigidBody,
   Vector3Object,
-  quat,
   vec3,
 } from "@react-three/rapier";
 import { useControls } from "leva";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
-import { Vector3, Vector3Tuple } from "three";
-import { ActionType, useStore } from "./store";
+import { Mesh, Vector3, Vector3Tuple } from "three";
 import { lerp } from "three/src/math/MathUtils";
+import { useStore } from "./store";
 
 export const Player = ({
   position = [0, 0, 0],
@@ -32,6 +31,7 @@ export const Player = ({
   const startedSlidingAt = useRef<number>();
   const didJumpRelease = useRef(true);
   const jumpsLeft = useRef(0);
+  const directionPointerRef = useRef<Mesh>(null);
 
   const touchingFloor = useRef(false);
   const canJump = useRef(false);
@@ -85,6 +85,9 @@ export const Player = ({
 
   const changeDirection = React.useCallback(() => {
     directionRef.current = directionRef.current.multiply(new Vector3(-1, 1, 1));
+    directionPointerRef
+      .current!.position.copy(directionRef.current)
+      .multiplyScalar(0.5);
   }, []);
 
   useEffect(() => {
@@ -260,6 +263,10 @@ export const Player = ({
         <mesh>
           <boxGeometry args={[1, 1.5, 1]} />
           <meshStandardMaterial />
+        </mesh>
+        <mesh ref={directionPointerRef}>
+          <boxGeometry args={[0.3, 1, 0.1]} />
+          <meshStandardMaterial color="green" />
         </mesh>
       </RigidBody>
     </>
