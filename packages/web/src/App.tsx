@@ -33,6 +33,7 @@ export const App = () => {
   const height = useStore((store) => store.player.maxHeight);
   const isLevelEditing = useStore((store) => store.game.isLevelEditing);
   const set = useStore((store) => store.set);
+  const isGamePaused = useStore((store) => store.game.isPaused);
 
   const _ = useControls(
     {
@@ -81,13 +82,28 @@ export const App = () => {
         />
       )}
 
-      <div>
-        <h1>Score: {score}</h1>
-        <h1>Max Height: {height}</h1>
+      <div className="absolute z-50 flex justify-between w-full p-2">
+        <div className="flex gap-2">
+          <div className="bg-[#232326] px-6 py-2 rounded-lg text-white font-bold">
+            🪙 {score}
+          </div>
+          <div className="bg-[#232326] px-4 py-2 rounded-lg text-white font-bold">
+            🔼 {height}
+          </div>
+        </div>
+        <button
+          className="bg-[#232326] px-4 py-2 rounded-lg text-white font-bold"
+          onClick={() => {
+            alert("pause");
+          }}
+        >
+          {isGamePaused ? "Play" : "Pause"}
+        </button>
       </div>
       <Leva collapsed={true} />
 
       <Canvas orthographic>
+        <color attach={"background"} args={["#232326"]} />
         <React.Suspense fallback={null}>
           <Background />
 
