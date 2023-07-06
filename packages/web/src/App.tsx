@@ -101,7 +101,6 @@ export const App = () => {
           {isGamePaused ? "Play" : "Pause"}
         </button>
       </div>
-      <Leva collapsed={true} />
 
       <Canvas orthographic>
         <color attach={"background"} args={["#232326"]} />
@@ -128,6 +127,10 @@ export const App = () => {
           )}
         </React.Suspense>
       </Canvas>
+
+      <div className="absolute bottom-0 right-0">
+        <Leva collapsed={true} fill />
+      </div>
     </>
   );
 };
