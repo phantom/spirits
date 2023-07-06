@@ -132,7 +132,7 @@ useStore.setState((store) => {
       rotation: [0, 0, 0],
     },
     {
-      position: [0, 5.322533964847794, 0],
+      position: [0, 1.7916432444330859, 0],
       scale: [15, 0.1, 1],
       type: "platform",
       oneWay: true,
@@ -254,6 +254,18 @@ useStore.setState((store) => {
       position: [4.505331771475527, -3.9174472773313003, 0],
       rotation: [0, 0, 0, "XYZ"],
       scale: [1, 6, 1],
+    },
+    {
+      type: "coin",
+      position: [-0.02221057895379186, 8.45565694418315, 0],
+      scale: [1, 1, 1],
+      rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      type: "coin",
+      position: [4.559074388601773, 15.699383745062503, 0],
+      scale: [1, 1, 1],
+      rotation: [0, 0, 0, "XYZ"],
     },
   ];
   store.level.entities = new Map([
