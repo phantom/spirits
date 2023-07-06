@@ -89,7 +89,7 @@ export const Entities = () => {
       entities.current.set(uuid, platform);
     });
     refresh();
-  }, []);
+  }, [blueprints]);
 
   return (
     <group ref={entitiesRef}>{Array.from(entities.current.values())}</group>

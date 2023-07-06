@@ -11,13 +11,14 @@ import { NoProvider } from "./NoProvider";
 import { Vector3 } from "three";
 import getProvider from "./utils/getProvider";
 import ConnectRow from "./ConnectRow";
-import { RotatingPlatform } from "./RotatingPlatform";
+import { PassThroughPlatform } from "./PassThroughPlatform";
 import { Entities } from "./Entities";
 import { FloatingSpike } from "./FloatingSpike";
 import { useControls } from "leva";
 import Editor from "./Editor";
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { Snake } from "./Snake";
+import { RotatingPlatform } from "./RotatingPlatform";
 
 // =============================================================================
 // Constants
@@ -110,6 +111,8 @@ export const App = () => {
 
               {/* Spawns coins and spikes */}
               <Entities />
+
+              <RotatingPlatform length={3} width={3} />
             </Physics>
           </>
         )}
