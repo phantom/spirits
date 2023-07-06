@@ -83,7 +83,7 @@ export function SnakeTransparent(
     <RigidBody name="platform" type="fixed" sensor={true} {...props}>
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial transparent color="gray" opacity={0.5} />
+        <meshStandardMaterial transparent color="gray" opacity={0.1} />
       </mesh>
     </RigidBody>
   );

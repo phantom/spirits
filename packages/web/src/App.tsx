@@ -109,6 +109,7 @@ export const App = () => {
                 width={4}
                 height={5}
                 snakeLength={7}
+                numSnakes={1}
               />
 
               <Snake
