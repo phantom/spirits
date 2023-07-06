@@ -112,17 +112,10 @@ export default function Editor(_: Props) {
             type: entityType as EntityType,
             position: [0, 0, 0],
             rotation: [0, 0, 0],
-            scale: [1, 4, 1],
+            scale: [1, 1, 1],
             color: seedColor(`${id}`).toHex(),
           });
-          console.log({
-            id,
-            type: entityType as EntityType,
-            position: [0, 0, 0],
-            rotation: [0, 0, 0],
-            scale: [1, 4, 1],
-            color: seedColor(`${id}`).toHex(),
-          });
+
           onEntitySelect(id);
         }),
         duplicate: button(() => {

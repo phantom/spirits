@@ -18,20 +18,24 @@ function getRectangleCoordinates(
 ): [number, number][] {
   const coordinates: [number, number][] = [];
 
+  // Calculate the centroid of the rectangle
+  const centroidX = Math.floor(width / 2);
+  const centroidY = Math.floor(height / 2);
+
   for (let x = 0; x < width; x++) {
-    coordinates.push([x, 0]);
+    coordinates.push([x - centroidX, 0 - centroidY]);
   }
 
   for (let y = 1; y < height; y++) {
-    coordinates.push([width - 1, y]);
+    coordinates.push([width - 1 - centroidX, y - centroidY]);
   }
 
   for (let x = width - 2; x >= 0; x--) {
-    coordinates.push([x, height - 1]);
+    coordinates.push([x - centroidX, height - 1 - centroidY]);
   }
 
   for (let y = height - 2; y >= 1; y--) {
-    coordinates.push([0, y]);
+    coordinates.push([0 - centroidX, y - centroidY]);
   }
 
   return coordinates;
@@ -141,6 +145,7 @@ export function Snake(
       case SnakePartType.Body:
         return (
           <SnakeBody
+            args={[1, 1, 1]}
             position={[
               props.position[0] + pos[0],
               props.position[1] + pos[1],
@@ -153,6 +158,7 @@ export function Snake(
       case SnakePartType.Head:
         return (
           <SnakeHead
+            args={[1, 1, 1]}
             position={[
               props.position[0] + pos[0],
               props.position[1] + pos[1],
@@ -165,6 +171,7 @@ export function Snake(
       case SnakePartType.Transparent:
         return (
           <SnakeTransparent
+            args={[1, 1, 1]}
             position={[
               props.position[0] + pos[0],
               props.position[1] + pos[1],

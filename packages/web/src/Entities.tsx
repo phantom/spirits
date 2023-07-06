@@ -6,6 +6,7 @@ import React from "react";
 import { button, useControls } from "leva";
 import { FloatingSpike } from "./FloatingSpike";
 import { Platform } from "./Platform";
+import { Snake } from "./Snake";
 
 const coinsCount = 25;
 const spikesCount = 4;
@@ -88,6 +89,20 @@ export const Entities = () => {
               remove={() => {
                 entities.current.delete(uuid);
               }}
+            />
+          );
+          break;
+        case "snake":
+          entities.current.set(
+            uuid,
+            <Snake
+              position={blueprint.position}
+              rotation={blueprint.rotation}
+              key={uuid}
+              width={blueprint.scale[0]}
+              height={blueprint.scale[1]}
+              snakeLength={5}
+              numSnakes={1}
             />
           );
           break;

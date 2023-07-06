@@ -21,7 +21,12 @@ export type PlayerState =
   | "victory"
   | "sliding";
 
-export type EntityType = "platform" | "spiked-platform" | "coin" | "spike";
+export type EntityType =
+  | "platform"
+  | "spiked-platform"
+  | "coin"
+  | "spike"
+  | "snake";
 
 export type Entity = {
   type: EntityType;
