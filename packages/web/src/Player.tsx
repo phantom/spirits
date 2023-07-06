@@ -231,8 +231,8 @@ export const Player = ({
         />
         <CuboidCollider
           sensor={true}
-          args={[width / 2, height * 0.9, 0.5]}
-          position={[width / 2, 0, 0]}
+          args={[width / 2, height * 0.6, 0.5]}
+          position={[width / 2, (-height * 0.4) / 2, 0]}
           mass={0}
           onIntersectionEnter={({ other }) => {
             if (
@@ -254,8 +254,8 @@ export const Player = ({
         />
         <CuboidCollider
           sensor={true}
-          args={[width / 2, height * 0.9, 0.5]}
-          position={[-width / 2, 0, 0]}
+          args={[width / 2, height * 0.6, 0.5]}
+          position={[-width / 2, (-height * 0.4) / 2, 0]}
           mass={0}
           onIntersectionEnter={({ other }) => {
             if (
