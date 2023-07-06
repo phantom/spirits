@@ -11,12 +11,15 @@ import * as React from "react";
 CameraControls.install({ THREE });
 extend({ CameraControls });
 
-const cameraOffset = new Vector3(0, 4, 0);
+const cameraOffset = new Vector3(0, 0, 0);
+
+const dimensions = 9 / 16;
 
 export default function Camera() {
   const controlsRef = useRef<CameraControls>(null);
   const playerRef = useStore((store) => store.player.ref);
   const isLevelEditing = useStore((store) => store.game.isLevelEditing);
+  const scalerRef = useRef<THREE.Mesh>(null);
 
   const { gl, camera } = useThree();
   const set = useStore((store) => store.set);
@@ -88,10 +91,18 @@ export default function Camera() {
     controlsRef.current!.update(delta);
   });
 
+  useEffect(() => {
+    controlsRef.current?.fitToBox(scalerRef.current, true);
+  }, []);
+
   return (
     <>
       {/* @ts-ignore */}
       <cameraControls ref={controlsRef} args={[camera, gl.domElement]} />
+      <mesh ref={scalerRef} position={[0, 0, 0]} visible={false}>
+        <boxGeometry args={[15, 15 / dimensions, 1]} />
+        {/* <meshBasicMaterial color="red" /> */}
+      </mesh>
     </>
   );
 }
