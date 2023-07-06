@@ -20,7 +20,7 @@ export enum PlatformSprite {
 export const PlatformSpriteMap: Record<string, string> = {
   ["platform"]: "/sprites/platform-variants/large.png",
   [PlatformSprite.SmallHorizontal]: "/sprites/platform-variants/small.png",
-  [PlatformSprite.Square]: "/sprites/platform-variants/platform-square.png",
+  ["square-platform"]: "/sprites/platform-variants/platform-square.png",
   ["vertical-platform"]: "/sprites/platform-variants/vertical.png",
   ["vertical-platform-small"]: "/sprites/platform-variants/vertical-small.png",
 };

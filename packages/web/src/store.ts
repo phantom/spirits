@@ -132,11 +132,17 @@ useStore.setState((store) => {
       rotation: [0, 0, 0],
     },
     {
-      position: [0, 5.322533964847794, 0],
+      position: [0, 1.7916432444330859, 0],
       scale: [15, 0.1, 1],
       type: "platform",
       oneWay: true,
       rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      position: [0, 3.75, 0],
+      scale: [1, 1, 1],
+      type: "spiked-platform",
+      orientation: "up",
     },
     {
       position: [0, 20, 0],
@@ -160,6 +166,12 @@ useStore.setState((store) => {
     { position: [-3, 46, 0], scale: [1, 4, 1], type: "platform" },
     { position: [3, 50, 0], scale: [1, 4, 1], type: "platform" },
     {
+      position: [7, 15, 0],
+      scale: [1, 1, 1],
+      type: "spiked-platform",
+      orientation: "left",
+    },
+    {
       position: [0, 54, 0],
       scale: [15, 0.1, 1],
       oneWay: true,
@@ -167,21 +179,21 @@ useStore.setState((store) => {
     },
     {
       type: "platform",
-      position: [0, 0, 7.57424949949359e-17],
+      position: [0, -6.412917749024082, 7.57424949949359e-17],
       rotation: [0, 0, 0, "XYZ"],
       scale: [10, 1, 1],
     },
     {
-      type: "vertical-platform-small",
-      position: [-4.499381742499162, 0.5, 0],
-      rotation: [0, 0, 0, "XYZ"],
-      scale: [1, 2, 1],
+      position: [0, 28, 0],
+      scale: [1, 1, 1],
+      type: "spiked-platform",
+      orientation: "down",
     },
     {
       type: "vertical-platform-small",
-      position: [4.5, 0.5, 0],
+      position: [-4.499381742499162, -5.844193797614366, 0],
+      rotation: [0, 0, 0, "XYZ"],
       scale: [1, 2, 1],
-      rotation: [0, 0, 0],
     },
     {
       type: "snake",
@@ -255,8 +267,25 @@ useStore.setState((store) => {
       rotation: [0, 0, 0, "XYZ"],
       scale: [4, 4, 1],
     },
+    {
+      type: "vertical-platform",
+      position: [4.505331771475527, -3.9174472773313003, 0],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [1, 6, 1],
+    },
+    {
+      type: "coin",
+      position: [-0.02221057895379186, 8.45565694418315, 0],
+      scale: [1, 1, 1],
+      rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      type: "coin",
+      position: [4.559074388601773, 15.699383745062503, 0],
+      scale: [1, 1, 1],
+      rotation: [0, 0, 0, "XYZ"],
+    },
   ];
-
   store.level.entities = new Map([
     ...level.map((entity, index) => {
       const uuid = MathUtils.generateUUID();
