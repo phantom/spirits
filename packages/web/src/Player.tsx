@@ -238,6 +238,7 @@ export const Player = ({
             const touchingFloor = collisions.some(
               ({ normal }) => Math.abs(normal.y) === 1
             );
+
             const touchingLeft = collisions.some(
               ({ normal }) => normal.x === -1
             );
@@ -260,6 +261,7 @@ export const Player = ({
 
             if (
               state === "moving" &&
+              playerState !== "jumping" &&
               touchingFloor &&
               (touchingRight || touchingLeft)
             ) {
@@ -294,7 +296,13 @@ export const Player = ({
           onLoopEnd={onEnd}
           frameName={frameName}
           fps={20}
-          animationNames={["idle", "run", "jump", "RightWallslide"]}
+          animationNames={[
+            "idle",
+            "run",
+            "jump",
+            "RightWallslide",
+            "doublejump",
+          ]}
           autoPlay={true}
           loop={true}
           alphaTest={0.01}
