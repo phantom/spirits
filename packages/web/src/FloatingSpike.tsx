@@ -38,7 +38,8 @@ export function FloatingSpike(props: RigidBodyProps) {
 
   return (
     <RigidBody
-      onCollisionEnter={() => {
+      onCollisionEnter={({ other }) => {
+        if (other.name !== "player") return;
         store?.player.ref?.current?.setTranslation(new Vector3(0, 2, 0), false);
         store?.player.ref?.current?.setLinvel(new Vector3(0, 0, 0), false);
       }}

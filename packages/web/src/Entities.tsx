@@ -7,7 +7,7 @@ import { button, useControls } from "leva";
 import { FloatingSpike } from "./FloatingSpike";
 
 const coinsCount = 25;
-const spikesCount = 1;
+const spikesCount = 4;
 
 export const Entities = () => {
   const set = useStore((store) => store.set);
