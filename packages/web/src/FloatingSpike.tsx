@@ -22,10 +22,12 @@ export function FloatingSpike(props: RigidBodyProps) {
 
     const linvel = vec3(spike.linvel());
 
+    console.log(spike.translation().x, props.position.x, xboundary[1]);
+
     // Sweep back and forth
-    if (spike.translation().x > props.position[0] + xboundary[1]) {
+    if (spike.translation().x >= props.position.x + xboundary[1]) {
       linvel.x = -1;
-    } else if (spike.translation().x <= props.position[0] + xboundary[0]) {
+    } else if (spike.translation().x <= props.position.x + xboundary[0]) {
       linvel.x = 1;
     }
     spike.setLinvel(linvel, true);
@@ -43,6 +45,7 @@ export function FloatingSpike(props: RigidBodyProps) {
       }}
       ref={ref}
       {...props}
+      linearVelocity={[1, 0, 0]}
     >
       <mesh>
         <circleGeometry args={[0.5, 3]} />
