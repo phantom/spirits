@@ -47,7 +47,7 @@ export const Player = ({
   const { speed, jumpHeight } = useControls({
     speed: 5,
     jumpHeight: {
-      value: 40,
+      value: 50,
       min: 10,
       max: 100,
     },
