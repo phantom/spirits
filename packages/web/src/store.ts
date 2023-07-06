@@ -51,6 +51,7 @@ export type Store = {
     state: PlayerState;
     ref: RefObject<RapierRigidBody> | null;
     score: number;
+    scoredCoinsRef: RefObject<Set<string>> | null;
   };
   level: Level;
   camera: {
@@ -74,6 +75,7 @@ export const useStore = create(
       state: "moving",
       ref: null,
       score: 0,
+      scoredCoinsRef: createRef<Set<string>>() as MutableRefObject<Set<string>>,
     },
     level: {
       entities: [],

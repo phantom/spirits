@@ -3,11 +3,13 @@ import * as React from "react";
 import { useStore } from "./store";
 
 interface CoinProps extends RigidBodyProps {
+  key: string;
   remove: () => void;
 }
 
 export const Coin = (props: CoinProps) => {
   const set = useStore((store) => store.set);
+  const scoredCoinsRef = useStore((store) => store.player.scoredCoinsRef);
 
   return (
     <RigidBody
@@ -15,10 +17,15 @@ export const Coin = (props: CoinProps) => {
       type="fixed"
       sensor={true}
       onIntersectionEnter={() => {
-        set((store) => {
-          store.player.score += 1;
-        });
         props.remove();
+        console.log("Coin collision detected."); // debug log
+        if (!scoredCoinsRef?.current?.has(props.key)) {
+          console.log("Incrementing score."); // debug log
+          scoredCoinsRef?.current?.add(props.key);
+          set((store) => {
+            store.player.score += 1;
+          });
+        }
       }}
       {...props}
     >
