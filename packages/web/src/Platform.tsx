@@ -9,13 +9,29 @@ import { useRef } from "react";
 import { useStore } from "./store";
 import { TextureLoader } from "three";
 
+export enum PlatformSprite {
+  LargeHorizontal,
+  SmallHorizontal,
+  Square,
+}
+
+export const PlatformSpriteMap = {
+  [PlatformSprite.LargeHorizontal]: "src/sprites/platform-variants/large.png",
+  [PlatformSprite.SmallHorizontal]: "src/sprites/platform-variants/small.png",
+  [PlatformSprite.Square]: "src/sprites/platform-variants/square.png",
+};
+
 export const Platform = ({
   position = [0, 0, 0],
   rotation = [0, 0, 0],
   args = [10, 1, 1],
   oneWay = false,
   ...props
-}: RigidBodyProps & { oneWay?: boolean; color?: THREE.Color }) => {
+}: RigidBodyProps & {
+  oneWay?: boolean;
+  color?: THREE.Color;
+  sprite?: PlatformSprite;
+}) => {
   const ref = useRef<RapierRigidBody>(null);
   const playerRef = useStore((store) => store.player.ref);
 
@@ -28,7 +44,13 @@ export const Platform = ({
   //   }
   // });
 
-  const platformTexture = useLoader(TextureLoader, "src/sprites/block.png");
+  const platformTexture = useLoader(
+    TextureLoader,
+    props.sprite
+      ? PlatformSpriteMap[props.sprite] ??
+          "src/sprites/platform-variants/large.png"
+      : "src/sprites/platform-variants/large.png"
+  );
 
   return (
     <RigidBody

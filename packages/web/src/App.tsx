@@ -15,6 +15,7 @@ import { useProviderProps } from "./utils/useProviderProps";
 import { SpikedPlatform } from "./SpikedPlatform";
 import { Coin } from "./Coin";
 import { Snake } from "./Snake";
+import { Platform } from "./Platform";
 
 // =============================================================================
 // Constants
@@ -106,7 +107,7 @@ export const App = () => {
                 height={4}
                 snakeLength={4}
                 numSnakes={1}
-              />{" "}
+              />
               {/* Spawns coins, spikes, platforms */}
               <Entities />
             </Physics>
