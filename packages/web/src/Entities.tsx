@@ -5,6 +5,7 @@ import { Coin } from "./Coin";
 import React from "react";
 import { button, useControls } from "leva";
 import { FloatingSpike } from "./FloatingSpike";
+import { SpikedPlatform } from "./SpikedPlatform";
 import { Platform } from "./Platform";
 import { Snake } from "./Snake";
 
@@ -114,6 +115,16 @@ export const Entities = () => {
               oneWay={(blueprint as any)?.oneWay}
               position={blueprint.position}
               args={blueprint.scale}
+            />
+          );
+          break;
+        case "spiked-platform":
+          entities.current.set(
+            uuid,
+            <SpikedPlatform
+              key={uuid}
+              position={new Vector3(...blueprint.position)}
+              orientation={(blueprint as any)?.orientation}
             />
           );
       }

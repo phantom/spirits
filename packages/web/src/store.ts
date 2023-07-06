@@ -38,6 +38,7 @@ export type Entity = {
 
   // platform specific
   oneWay?: boolean;
+  orientation?: string;
 };
 
 export type Level = {

@@ -1,28 +1,16 @@
-import { OrbitControls, TransformControls } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
+import { TransformControls } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
 import { button, useControls } from "leva";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import seedColor from "seed-color";
-import {
-  Color,
-  Euler,
-  MathUtils,
-  Mesh,
-  PerspectiveCamera,
-  Quaternion,
-  Vector3,
-} from "three";
-import { OrbitControls as ThreeOrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { Euler, MathUtils, Mesh, Quaternion, Vector3 } from "three";
 import { TransformControls as ThreeTransformControls } from "three/examples/jsm/controls/TransformControls";
 import { Entity, EntityType, useStore } from "./store";
 import * as React from "react";
-import { Snake } from "./Snake";
-
-type Props = {};
 
 const backgroundDistance = 50;
 
-export default function Editor(_: Props) {
+export default function Editor() {
   // const orbit = useRef<ThreeOrbitControls>(null);
   const transform = useRef<ThreeTransformControls>(null);
   const meshRef = useRef<Mesh>(null);
@@ -62,6 +50,7 @@ export default function Editor(_: Props) {
           value: "platform" as EntityType,
           options: [
             "platform",
+            "spiked-platform",
             "rock",
             "ball",
             "wheel",

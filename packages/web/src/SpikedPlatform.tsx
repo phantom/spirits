@@ -12,7 +12,7 @@ interface SpikedPlatformProps extends RigidBodyProps {
 }
 
 export const SpikedPlatform = ({
-  position = new Vector3(3, 2, 0),
+  position = new Vector3(0, 2, 0),
   platformSize = new Vector3(1, 1, 0),
   spikeSize = new Vector3(1, 1, 0),
   orientation = "top",
