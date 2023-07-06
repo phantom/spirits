@@ -76,6 +76,29 @@ export default function Editor(_: Props) {
           ],
           value: selected,
         },
+        save: button(() => {
+          console.log(
+            JSON.stringify(
+              Array.from(entitiesRef.current.values()).map((entity) => {
+                // strip off id
+                const { id, ...props } = entity;
+                return props;
+              })
+            )
+          );
+        }),
+        load: button(() => {
+          const entities = JSON.parse(
+            prompt("Paste entities JSON here") ?? "[]"
+          );
+
+          entitiesRef.current.clear();
+          entities.map((entity: Entity) => {
+            const id = MathUtils.generateUUID();
+            entitiesRef.current.set(id, { ...entity, id });
+          });
+          onEntitySelect(entitiesRef.current.values().next().value.id);
+        }),
         addEntity: button(() => {
           const id = MathUtils.generateUUID();
           entitiesRef.current.set(id, {
@@ -153,7 +176,10 @@ export default function Editor(_: Props) {
   const onEntitySelect = useCallback(
     (id: string | undefined) => {
       setSelected(id);
+      if (!id) return;
       const entity = entitiesRef.current.get(id ?? "");
+      if (!entity) return;
+
       setEntityType(entity?.type ?? "platform");
       setControls({
         position: entity?.position ?? [0, 0, 0],
