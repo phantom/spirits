@@ -87,7 +87,11 @@ export const Platform = ({
     >
       <mesh>
         <boxGeometry args={args} />
-        <meshBasicMaterial map={platformTexture} />
+        <meshBasicMaterial
+          map={platformTexture}
+          color={0xffffff}
+          transparent={true}
+        />
       </mesh>
     </RigidBody>
   );

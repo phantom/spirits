@@ -2,12 +2,11 @@ import {
   RapierRigidBody,
   RigidBody,
   RigidBodyProps,
-  vec3,
 } from "@react-three/rapier";
+import { useLoader } from "@react-three/fiber";
+import { RepeatWrapping, TextureLoader } from "three";
 import * as React from "react";
 import { useStore } from "./store";
-import { useFrame } from "@react-three/fiber";
-import { Vector3 } from "three";
 
 const yboundary = [-1, 1];
 
@@ -21,25 +20,11 @@ export const Coin = (props: CoinProps) => {
   const scoredCoinsRef = useStore((store) => store.player.scoredCoinsRef);
   const ref = React.useRef<RapierRigidBody>(null);
 
-  useFrame(() => {
-    const { current: coin } = ref;
-    if (!coin || !props.position) return;
-
-    const linvel = vec3(coin.linvel());
-
-    // Sweep back and forth
-    const position = props.position as Vector3;
-
-    if (coin.translation().y >= position[1] + yboundary[1]) {
-      linvel.y = -1;
-    } else if (coin.translation().y <= position[1] + yboundary[0]) {
-      linvel.y = 3;
-    }
-    coin.setLinvel(linvel, true);
-  });
+  const coinTexture = useLoader(TextureLoader, "src/sprites/coin.png");
 
   return (
     <RigidBody
+      type="fixed"
       name="coin"
       sensor={true}
       onIntersectionEnter={() => {
@@ -55,8 +40,12 @@ export const Coin = (props: CoinProps) => {
       {...props}
     >
       <mesh>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="gold" />
+        <planeGeometry args={[1, 1]} />
+        <meshBasicMaterial
+          map={coinTexture}
+          color={0xffffff}
+          transparent={true}
+        />
       </mesh>
     </RigidBody>
   );
