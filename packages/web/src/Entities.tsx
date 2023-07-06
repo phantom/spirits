@@ -5,9 +5,10 @@ import { Coin } from "./Coin";
 import React from "react";
 import { button, useControls } from "leva";
 import { Spike } from "./Spike";
+import { FloatingSpike } from "./FloatingSpike";
 
 const coinsCount = 25;
-const spikesCount = 10;
+const spikesCount = 2;
 
 export const Entities = () => {
   const set = useStore((store) => store.set);
@@ -45,11 +46,10 @@ export const Entities = () => {
       const uuid = MathUtils.generateUUID();
       entities.current.set(
         uuid,
-        <Spike
+        <FloatingSpike
           position={
             new Vector3(MathUtils.randFloatSpread(5), Math.random() * 50, 0)
           }
-          rotation={new Euler().fromArray([Math.PI / 2, 0, 0])}
           key={uuid}
         />
       );
