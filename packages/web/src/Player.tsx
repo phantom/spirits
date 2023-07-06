@@ -53,9 +53,9 @@ export const Player = ({
   >(new Map());
 
   const { speed, jumpHeight, jumpDamping, fallDamping } = useControls({
-    speed: 10,
+    speed: 5,
     jumpHeight: {
-      value: 100,
+      value: 40,
       min: 10,
       max: 500,
     },

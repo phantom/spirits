@@ -1,3 +1,4 @@
+import { useLoader } from "@react-three/fiber";
 import {
   RapierRigidBody,
   RigidBody,
@@ -5,6 +6,7 @@ import {
   vec3,
 } from "@react-three/rapier";
 import * as React from "react";
+import { TextureLoader } from "three";
 
 enum SnakePartType {
   Head,
@@ -56,11 +58,19 @@ function rotateArrayByOne(arr: any[]): any[] {
 export function SnakeBody(
   props: RigidBodyProps & { width: number; height: number }
 ) {
+  const platformTexture = useLoader(
+    TextureLoader,
+    "src/sprites/snake-block.png"
+  );
   return (
     <RigidBody name="platform" type="fixed" sensor={false} {...props}>
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="gray" />
+        <meshStandardMaterial
+          map={platformTexture}
+          color={0xffffff}
+          transparent={true}
+        />
       </mesh>
     </RigidBody>
   );
@@ -69,25 +79,40 @@ export function SnakeBody(
 export function SnakeHead(
   props: RigidBodyProps & { width: number; height: number }
 ) {
+  const platformTexture = useLoader(
+    TextureLoader,
+    "src/sprites/snake-head.png"
+  );
   return (
     <RigidBody name="platform" type="fixed" sensor={false} {...props}>
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="blue" />
+        <meshStandardMaterial
+          map={platformTexture}
+          color={0xffffff}
+          transparent={true}
+        />
       </mesh>
     </RigidBody>
   );
 }
 
-// TODO: Change direction of player when it hits a spike
 export function SnakeTransparent(
   props: RigidBodyProps & { width: number; height: number }
 ) {
+  const platformTexture = useLoader(
+    TextureLoader,
+    "src/sprites/snake-transparent.png"
+  );
   return (
     <RigidBody name="platform" type="fixed" sensor={true} {...props}>
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial transparent color="gray" opacity={0.1} />
+        <meshStandardMaterial
+          map={platformTexture}
+          color={0xffffff}
+          transparent={true}
+        />
       </mesh>
     </RigidBody>
   );
