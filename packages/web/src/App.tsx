@@ -106,7 +106,7 @@ export const App = () => {
                 height={4}
                 snakeLength={4}
                 numSnakes={1}
-              />{" "}
+              />
               {/* Spawns coins, spikes, platforms */}
               <Entities />
             </Physics>
