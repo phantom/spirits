@@ -240,7 +240,7 @@ export const Player = ({
               other?.rigidBodyObject?.name === "platform" &&
               !other.collider.isSensor()
             ) {
-              changeDirection(new Vector3(-1, 1, 1));
+              changeDirection(new Vector3(-1, 0, 0));
               touchingRights.current += 1;
             }
           }}
@@ -263,7 +263,7 @@ export const Player = ({
               other?.rigidBodyObject?.name === "platform" &&
               !other.collider.isSensor()
             ) {
-              changeDirection(new Vector3(1, 1, 1));
+              changeDirection(new Vector3(1, 0, 0));
               touchingLefts.current += 1;
             }
           }}
