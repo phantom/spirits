@@ -1,7 +1,8 @@
 import { RigidBody, RigidBodyProps } from "@react-three/rapier";
 import * as React from "react";
 import { useStore } from "./store";
-import { Vector3 } from "three";
+import { Sprite, SpriteMaterial, TextureLoader, Vector3 } from "three";
+import { useLoader } from "@react-three/fiber";
 
 interface SpikedPlatformProps extends RigidBodyProps {
   position?: Vector3;
@@ -12,44 +13,42 @@ interface SpikedPlatformProps extends RigidBodyProps {
 
 export const SpikedPlatform = ({
   position = new Vector3(),
-  platformSize = new Vector3(1, 1.5, 0),
-  spikeSize = new Vector3(1, 0.5, 0),
+  platformSize = new Vector3(2, 1, 0),
+  spikeSize = new Vector3(1, 1, 0),
   orientation = "top",
   ...props
 }: SpikedPlatformProps) => {
   const store = useStore((store) => store);
 
-  // Calculate the spike position based on orientation
-  let spikePosition;
+  const spikeTexture = useLoader(TextureLoader, "src/sprites/spike.png");
+  const spikeMaterial = new SpriteMaterial({ map: spikeTexture });
+  const spikeSprite = new Sprite(spikeMaterial);
+  spikeSprite.scale.set(spikeSize.x, spikeSize.y, 1);
+
+  const spikePosition = new Vector3();
   switch (orientation) {
     case "top":
-      spikePosition = new Vector3(0, platformSize.y / 2 + spikeSize.y / 2, 0);
+      spikePosition.y += platformSize.y / 2 + spikeSize.y - 0.5;
       break;
     case "bottom":
-      spikePosition = new Vector3(
-        0,
-        -(platformSize.y / 2 + spikeSize.y / 2),
-        0
-      );
+      spikePosition.y -= platformSize.y / 2 + spikeSize.y;
       break;
     case "left":
-      spikePosition = new Vector3(
-        -(platformSize.x / 2 + spikeSize.x / 2),
-        0,
-        0
-      );
+      spikePosition.x -= platformSize.x / 2 + spikeSize.x;
       break;
     case "right":
-      spikePosition = new Vector3(platformSize.x / 2 + spikeSize.x / 2, 0, 0);
+      spikePosition.x += platformSize.x / 2 + spikeSize.x;
       break;
     default:
-      spikePosition = new Vector3(0, platformSize.y / 2 + spikeSize.y / 2, 0);
+      spikePosition.y += platformSize.y / 2 + spikeSize.y;
       break;
   }
 
+  console.log("Spike position", spikePosition);
+
   return (
     <group position={position}>
-      <RigidBody name="platform" type="fixed" {...props}>
+      <RigidBody name="platform" type="fixed" colliders="hull" {...props}>
         <mesh>
           <boxGeometry args={platformSize.toArray()} />
           <meshStandardMaterial color="gray" />
@@ -57,10 +56,10 @@ export const SpikedPlatform = ({
       </RigidBody>
       <RigidBody
         name="spike"
-        type="fixed"
         position={spikePosition}
         onCollisionEnter={({ other }) => {
           if (other.rigidBodyObject?.name !== "player") return;
+          console.log("Colliding"); // Why is this not logging :(
           store?.player.ref?.current?.setTranslation(
             new Vector3(0, 2, 0),
             false
@@ -69,10 +68,7 @@ export const SpikedPlatform = ({
         }}
         {...props}
       >
-        <mesh>
-          <boxGeometry args={spikeSize.toArray()} />
-          <meshStandardMaterial color="red" />
-        </mesh>
+        <primitive object={spikeSprite} />
       </RigidBody>
     </group>
   );
