@@ -25,6 +25,7 @@ export const Player = ({
 
   const set = useStore((store) => store.set);
   const playerState = useStore((store) => store.player.state);
+  const playerHeight = useStore((store) => store.player.height);
   const directionRef = useRef(new Vector3(1, 0, 0));
   const pointerDown = useRef(false);
   const lastJumpedAt = useRef(0);
@@ -170,6 +171,11 @@ export const Player = ({
 
     player.setLinvel(linvel, true);
     player.applyImpulse(impulse, true);
+
+    if (player.translation().y > playerHeight)
+      set((store) => {
+        store.player.height = Math.floor(player.translation().y);
+      });
 
     set((store) => {
       store.player.state = state;

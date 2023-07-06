@@ -35,6 +35,7 @@ export const App = () => {
   const { publicKey, connectedMethods, handleConnect } = providerProps;
 
   const score = useStore((store) => store.player.score);
+  const height = useStore((store) => store.player.height);
   const isLevelEditing = useStore((store) => store.game.isLevelEditing);
   const set = useStore((store) => store.set);
 
@@ -89,6 +90,7 @@ export const App = () => {
 
       <div>
         <h1>Score: {score}</h1>
+        <h1>Max Height: {height}</h1>
       </div>
 
       <Canvas orthographic>
