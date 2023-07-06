@@ -25,7 +25,7 @@ export const Player = ({
 
   const set = useStore((store) => store.set);
   const playerState = useStore((store) => store.player.state);
-  const playerHeight = useStore((store) => store.player.height);
+  const playerHeight = useStore((store) => store.player.maxHeight);
   const directionRef = useRef(new Vector3(1, 0, 0));
   const pointerDown = useRef(false);
   const lastJumpedAt = useRef(0);
