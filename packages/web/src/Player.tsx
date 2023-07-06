@@ -1,6 +1,7 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import {
   CapsuleCollider,
+  CuboidCollider,
   RapierCollider,
   RapierRigidBody,
   RigidBody,
@@ -13,6 +14,9 @@ import { useEffect, useRef, useState } from "react";
 import { Mesh, Vector3, Vector3Tuple } from "three";
 import { lerp } from "three/src/math/MathUtils";
 import { useStore } from "./store";
+
+const width = 0.5;
+const height = 4 / 6;
 
 export const Player = ({
   position = [0, 0, 0],
@@ -33,7 +37,10 @@ export const Player = ({
   const jumpsLeft = useRef(0);
   const directionPointerRef = useRef<Mesh>(null);
 
-  const touchingFloor = useRef(false);
+  const touchingFloors = useRef(0);
+  const touchingLefts = useRef(0);
+  const touchingRights = useRef(0);
+
   const canJump = useRef(false);
   const jumpPosition = useRef<Vector3>();
   const horizontalMovementAfterJump = useRef(0);
@@ -83,8 +90,9 @@ export const Player = ({
     };
   });
 
-  const changeDirection = React.useCallback(() => {
-    directionRef.current = directionRef.current.multiply(new Vector3(-1, 1, 1));
+  const changeDirection = React.useCallback((dir?: Vector3) => {
+    directionRef.current =
+      dir ?? directionRef.current.multiply(new Vector3(-1, 1, 1));
     directionPointerRef
       .current!.position.copy(directionRef.current)
       .multiplyScalar(0.5);
@@ -105,7 +113,7 @@ export const Player = ({
 
     let state = playerState;
 
-    const collisions = Array.from(collisionMap.current.values());
+    const touchingWall = touchingLefts.current || touchingRights.current;
     const linvel = vec3(player.linvel());
 
     linvel.x = directionRef.current.x * speed * refreshCorrection;
@@ -116,22 +124,16 @@ export const Player = ({
       didJumpRelease.current = true;
     }
 
-    const touchingWall = collisions.some(
-      ({ normal }) => Math.abs(normal.x) === 1
-    );
-
-    if (collisions.length > 0 && lastJumpedAt.current + 20 < Date.now()) {
+    if (lastJumpedAt.current + 100 < Date.now()) {
       if (playerState !== "jumping") {
         jumpsLeft.current = 2;
       }
 
-      const touchingFloor = collisions.some(({ normal }) => normal.y === -1);
-
-      if (touchingFloor) {
+      if (touchingFloors.current) {
         state = "moving";
       }
 
-      if (touchingWall && !touchingFloor) {
+      if (touchingWall && !touchingFloors.current) {
         state = "sliding";
       }
     }
@@ -141,7 +143,7 @@ export const Player = ({
       jumpsLeft.current > 0 &&
       pointerDown.current &&
       didJumpRelease.current &&
-      collisions.length > 0 &&
+      (touchingWall || touchingFloors.current) &&
       lastJumpedAt.current + 200 < Date.now()
     ) {
       didJumpRelease.current = false;
@@ -205,12 +207,6 @@ export const Player = ({
   });
 
   useEffect(() => {
-    if (playerState === "sliding") {
-      changeDirection();
-    }
-  }, [playerState]);
-
-  useEffect(() => {
     set((store) => {
       store.player.ref = ref;
     });
@@ -225,38 +221,83 @@ export const Player = ({
         enabledTranslations={[true, true, false]}
         lockRotations={true}
         ccd={true}
-        onCollisionEnter={({ other, manifold }) => {
-          if (
-            other?.rigidBodyObject?.name === "platform" &&
-            !collisionMap.current.has(other.collider.handle.toString())
-          ) {
-            collisionMap.current.set(other.collider.handle.toString(), {
-              normal: manifold.normal(),
-              collider: other.collider,
-            });
-
-            const collisions = Array.from(collisionMap.current.values());
-
-            const touchingFloor = collisions.some(
-              ({ normal }) => Math.abs(normal.y) === 1
-            );
-            const touchingWall = collisions.some(
-              ({ normal }) => Math.abs(normal.x) === 1
-            );
-
-            // flip the player if they're moving into the wall
-            if (playerState === "moving" && touchingWall && touchingFloor) {
-              changeDirection();
-            }
-          }
-        }}
-        onCollisionExit={({ other }) => {
-          if (other?.rigidBodyObject?.name === "platform") {
-            collisionMap.current.delete(other.collider.handle.toString());
-          }
-        }}
       >
-        <CapsuleCollider args={[0.25, 4 / 6 / 2]} mass={2} />
+        <CapsuleCollider
+          args={[width / 2, height / 2]}
+          mass={2}
+          onCollisionEnter={() => {
+            // fallback when we somehow miss the sensors
+            changeDirection();
+          }}
+        />
+        <CuboidCollider
+          sensor={true}
+          args={[width / 2, height / 2, 0.5]}
+          position={[width / 2, 0, 0]}
+          mass={0}
+          onIntersectionEnter={({ other }) => {
+            if (
+              other?.rigidBodyObject?.name === "platform" &&
+              !other.collider.isSensor()
+            ) {
+              changeDirection(new Vector3(-1, 1, 1));
+              touchingRights.current += 1;
+            }
+          }}
+          onIntersectionExit={({ other }) => {
+            if (
+              other?.rigidBodyObject?.name === "platform" &&
+              !other.collider.isSensor()
+            ) {
+              if (touchingRights.current > 0) touchingRights.current -= 1;
+            }
+          }}
+        />
+        <CuboidCollider
+          sensor={true}
+          args={[width / 2, height / 2, 0.5]}
+          position={[-width / 2, 0, 0]}
+          mass={0}
+          onIntersectionEnter={({ other }) => {
+            if (
+              other?.rigidBodyObject?.name === "platform" &&
+              !other.collider.isSensor()
+            ) {
+              changeDirection(new Vector3(1, 1, 1));
+              touchingLefts.current += 1;
+            }
+          }}
+          onIntersectionExit={({ other }) => {
+            if (
+              other?.rigidBodyObject?.name === "platform" &&
+              !other.collider.isSensor()
+            ) {
+              if (touchingLefts.current > 0) touchingLefts.current -= 1;
+            }
+          }}
+        />
+        <CuboidCollider
+          sensor={true}
+          args={[width / 4, height / 4, 0.5]}
+          position={[0, -height, 0]}
+          mass={0}
+          onIntersectionEnter={({ other }) => {
+            if (
+              other?.rigidBodyObject?.name === "platform" &&
+              !other.collider.isSensor()
+            ) {
+              touchingFloors.current = 1;
+            }
+          }}
+          onIntersectionExit={({ other }) => {
+            if (
+              other?.rigidBodyObject?.name === "platform" &&
+              !other.collider.isSensor()
+            ) {
+              if (touchingFloors.current > 0) touchingFloors.current -= 1;
+            }
+          }}
+        />
         <mesh>
           <planeGeometry args={[0.5, (4 / 6) * 2]} />
           <meshStandardMaterial />
