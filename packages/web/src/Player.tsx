@@ -174,7 +174,7 @@ export const Player = ({
 
     if (player.translation().y > playerHeight)
       set((store) => {
-        store.player.height = Math.floor(player.translation().y);
+        store.player.maxHeight = Math.floor(player.translation().y);
       });
 
     set((store) => {
