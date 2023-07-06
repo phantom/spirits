@@ -7,12 +7,20 @@ import {
   Vector3Object,
   vec3,
 } from "@react-three/rapier";
-import { useControls } from "leva";
+import { button, useControls } from "leva";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Mesh, Vector3, Vector3Tuple } from "three";
 import { lerp } from "three/src/math/MathUtils";
-import { useStore } from "./store";
+import { PlayerState, useStore } from "./store";
+import { SpriteAnimator } from "@react-three/drei";
+
+const animationMap: { [key: PlayerState]: string } = {
+  ["idle"]: "idle",
+  ["moving"]: "run",
+  ["jumping"]: "jump",
+  ["sliding"]: "RightWallslide",
+};
 
 export const Player = ({
   position = [0, 0, 0],
@@ -54,7 +62,26 @@ export const Player = ({
       min: 0,
       max: 5,
     },
+    restartPlayer: button(() => {
+      ref.current?.setTranslation(vec3(), true);
+      ref.current?.setLinvel(vec3(), true);
+      ref.current?.setAngvel(vec3(), true);
+    }),
   });
+
+  const [flipX, setFlipX] = React.useState(false);
+
+  const [frameName, setFrameName] = React.useState("idle");
+
+  const onEnd = ({ currentFrameName, currentFrame }: any) => {
+    if (currentFrameName === "jump") {
+      setFrameName(animationMap["moving"]);
+    }
+  };
+
+  useEffect(() => {
+    setFrameName(animationMap[playerState]);
+  }, [playerState]);
 
   const { gl } = useThree();
 
@@ -80,9 +107,9 @@ export const Player = ({
       dir ?? directionRef.current.clone().multiplyScalar(-1)
     );
 
-    directionPointerRef
-      .current!.position.copy(directionRef.current)
-      .multiplyScalar(0.5);
+    setFlipX(directionRef.current.x < 0);
+
+    // directionPointerRef.current!.copy(directionRef.current).multiplyScalar(0.5);
   }, []);
 
   useEffect(() => {
@@ -121,6 +148,9 @@ export const Player = ({
       impulse.y = jumpHeight;
 
       jumpsLeft.current -= 1;
+      if (state === "sliding") {
+        changeDirection();
+      }
       state = "jumping";
       lastJumpedAt.current = Date.now();
     }
@@ -148,6 +178,7 @@ export const Player = ({
     player.setLinvel(linvel, true);
     player.applyImpulse(impulse, true);
 
+    console.log(state);
     if (player.translation().y > playerHeight)
       set((store) => {
         store.player.maxHeight = Math.floor(player.translation().y);
@@ -158,6 +189,23 @@ export const Player = ({
       store.player.state = playerStateRef.current;
     });
   });
+
+  // useFrame((_, delta) => {
+  //   if (
+  //     playerStateRef.current === "sliding" ||
+  //     playerStateRef.current === "jumping"
+  //   ) {
+  //     const refreshCorrection = delta / (1 / 60);
+  //     // console.log(refreshCorrection);
+
+  //     // apply down impulse the longer the player is jumping
+  //     const impulse = vec3();
+  //     const x = Math.min((Date.now() - lastJumpedAt.current) / 500, 1);
+
+  //     impulse.y = x > 250 ? -jumpHeight * x * x * x * refreshCorrection : 0;
+  //     ref.current?.applyImpulse(impulse, true);
+  //   }
+  // });
 
   useEffect(() => {
     set((store) => {
@@ -211,7 +259,8 @@ export const Player = ({
             }
 
             if (
-              ((state === "moving" && touchingFloor) || state === "sliding") &&
+              state === "moving" &&
+              touchingFloor &&
               (touchingRight || touchingLeft)
             ) {
               changeDirection(new Vector3(touchingRight ? -1 : 1, 0, 0));
@@ -230,14 +279,28 @@ export const Player = ({
         }}
       >
         <CapsuleCollider args={[0.25, 4 / 6 / 2]} mass={2} />
-        <mesh>
+        {/* <mesh>
           <planeGeometry args={[0.5, (4 / 6) * 2]} />
           <meshStandardMaterial />
-        </mesh>
-        <mesh ref={directionPointerRef}>
+        </mesh> */}
+        {/* <mesh ref={directionPointerRef}>
           <boxGeometry args={[0.3, 1, 0.1]} />
-          <meshStandardMaterial color="green" />
-        </mesh>
+          <meshStandardMaterial color="green" opacity={0} transparent={true} />
+        </mesh> */}
+        <SpriteAnimator
+          flipX={flipX}
+          scale={[2, 2, 2]}
+          position={[0, 0, 0]}
+          onLoopEnd={onEnd}
+          frameName={frameName}
+          fps={20}
+          animationNames={["idle", "run", "jump", "RightWallslide"]}
+          autoPlay={true}
+          loop={true}
+          alphaTest={0.01}
+          textureImageURL={"./sprites/spritesheet.png"}
+          textureDataURL={"./sprites/spritesheet.json"}
+        />
       </RigidBody>
     </>
   );
