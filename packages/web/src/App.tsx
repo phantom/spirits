@@ -8,11 +8,15 @@ import * as React from "react";
 import { useStore } from "./store";
 import { useProviderProps } from "./utils/useProviderProps";
 import { NoProvider } from "./NoProvider";
+import { Vector3 } from "three";
 import getProvider from "./utils/getProvider";
 import ConnectRow from "./ConnectRow";
 import { RotatingPlatform } from "./RotatingPlatform";
 import { Entities } from "./Entities";
 import { FloatingSpike } from "./FloatingSpike";
+import { useControls } from "leva";
+import Editor from "./Editor";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 // =============================================================================
 // Constants
@@ -29,6 +33,43 @@ export const App = () => {
   const { publicKey, connectedMethods, handleConnect } = providerProps;
 
   const score = useStore((store) => store.player.score);
+  const isLevelEditing = useStore((store) => store.game.isLevelEditing);
+  const set = useStore((store) => store.set);
+
+  const { debugPhysics } = useControls(
+    {
+      isLevelEditing: {
+        value: false,
+        onChange: (value: boolean) => {
+          set((store) => {
+            store.game.isLevelEditing = value;
+          });
+        },
+      },
+      ...(!isLevelEditing && {
+        debugPhysics: false,
+        // type: {
+        //   value: controlsType,
+        //   options: ControlsEnum,
+        //   onChange: (value) => {
+        //     set((store) => {
+        //       store.controls.type = value;
+        //     });
+        //   },
+        // },
+      }),
+    },
+    [isLevelEditing]
+  );
+
+  React.useEffect(() => {
+    if (!isLevelEditing) {
+      set((store) => {
+        store?.player.ref?.current?.setTranslation(new Vector3(0, 2, 0), false);
+        store?.player.ref?.current?.setLinvel(new Vector3(0, 0, 0), false);
+      });
+    }
+  }, []);
 
   if (!provider) {
     return <NoProvider />;
@@ -50,33 +91,20 @@ export const App = () => {
       <Canvas orthographic>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 5]} />
+
         <Camera />
-        {/* <OrbitControls /> */}
-        <Physics debug>
-          <Player position={[0, 2, 0]} />
+        {isLevelEditing ? (
+          <Editor />
+        ) : (
+          <>
+            <Physics debug>
+              <Player position={[0, 2, 0]} />
 
-          <Platform position={[0, -0.5, 0]} args={[15, 1, 1]} />
-          <Platform position={[-7, 50, 0]} args={[1, 100, 1]} />
-          <Platform position={[7, 50, 0]} args={[1, 100, 1]} />
-          <Platform position={[0, 8, 0]} args={[15, 0.1, 1]} oneWay={true} />
-
-          <Platform position={[-3, 2, 0]} args={[1, 4, 1]} />
-
-          <Platform position={[0, 20, 0]} args={[15, 0.1, 1]} oneWay={true} />
-          <Platform position={[3, 12, 0]} args={[1, 8, 1]} />
-
-          <Platform position={[0, 36, 0]} args={[15, 0.1, 1]} oneWay={true} />
-          <Platform position={[-3, 28, 0]} args={[1, 8, 1]} />
-
-          <Platform position={[0, 36, 0]} args={[15, 0.1, 1]} oneWay={true} />
-          <Platform position={[3, 42, 0]} args={[1, 4, 1]} />
-          <Platform position={[-3, 46, 0]} args={[1, 4, 1]} />
-          <Platform position={[3, 50, 0]} args={[1, 4, 1]} />
-
-          <Platform position={[0, 54, 0]} args={[15, 0.1, 1]} oneWay={true} />
-          {/* Spawns coins and spikes */}
-          <Entities />
-        </Physics>
+              {/* Spawns coins and spikes */}
+              <Entities />
+            </Physics>
+          </>
+        )}
       </Canvas>
     </>
   );

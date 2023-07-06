@@ -16,6 +16,7 @@ const cameraOffset = new Vector3(0, 4, 0);
 export default function Camera() {
   const controlsRef = useRef<CameraControls>(null);
   const playerRef = useStore((store) => store.player.ref);
+  const isLevelEditing = useStore((store) => store.game.isLevelEditing);
 
   const { gl, camera } = useThree();
   const set = useStore((store) => store.set);
@@ -44,37 +45,45 @@ export default function Camera() {
   }, []);
 
   useEffect(() => {
-    controlsRef.current!.mouseButtons.left = CameraControls.ACTION.NONE;
-    controlsRef.current!.mouseButtons.right = CameraControls.ACTION.NONE;
-    controlsRef.current!.mouseButtons.middle = CameraControls.ACTION.NONE;
-    controlsRef.current!.mouseButtons.wheel = CameraControls.ACTION.NONE;
+    if (!isLevelEditing) {
+      controlsRef.current!.mouseButtons.left = CameraControls.ACTION.NONE;
+      controlsRef.current!.mouseButtons.right = CameraControls.ACTION.NONE;
+      controlsRef.current!.mouseButtons.middle = CameraControls.ACTION.NONE;
+      controlsRef.current!.mouseButtons.wheel = CameraControls.ACTION.NONE;
 
-    controlsRef.current!.touches.one = CameraControls.ACTION.NONE;
-    controlsRef.current!.touches.two = CameraControls.ACTION.NONE;
-    controlsRef.current!.touches.three = CameraControls.ACTION.NONE;
-  }, [controlsRef]);
+      controlsRef.current!.touches.one = CameraControls.ACTION.NONE;
+      controlsRef.current!.touches.two = CameraControls.ACTION.NONE;
+      controlsRef.current!.touches.three = CameraControls.ACTION.NONE;
+    } else {
+      controlsRef.current!.mouseButtons.right = CameraControls.ACTION.TRUCK;
+      controlsRef.current!.mouseButtons.middle = CameraControls.ACTION.ZOOM;
+      controlsRef.current!.mouseButtons.wheel = CameraControls.ACTION.ZOOM;
+    }
+  }, [controlsRef, isLevelEditing]);
 
   useFrame((_, delta) => {
-    const cameraPosition = camera.getWorldPosition(new Vector3());
-    const playerPosition = playerRef?.current?.translation();
+    if (playerRef?.current && !isLevelEditing) {
+      const cameraPosition = camera.getWorldPosition(new Vector3());
+      const playerPosition = playerRef?.current?.translation();
 
-    // lerp to playerPosition
-    const newPosition = new Vector3().lerpVectors(
-      cameraPosition,
-      new Vector3(cameraPosition?.x, playerPosition?.y, cameraPosition.z).add(
-        cameraOffset
-      ),
-      cameraSensitivity
-    );
+      // lerp to playerPosition
+      const newPosition = new Vector3().lerpVectors(
+        cameraPosition,
+        new Vector3(cameraPosition?.x, playerPosition?.y, cameraPosition.z).add(
+          cameraOffset
+        ),
+        cameraSensitivity
+      );
 
-    controlsRef.current?.setLookAt(
-      ...newPosition.toArray(),
-      ...vec3(playerPosition)
-        .multiply(new Vector3(0, 1, 0))
-        .add(cameraOffset)
-        .toArray(),
-      true
-    );
+      controlsRef.current?.setLookAt(
+        ...newPosition.toArray(),
+        ...vec3(playerPosition)
+          .multiply(new Vector3(0, 1, 0))
+          .add(cameraOffset)
+          .toArray(),
+        true
+      );
+    }
 
     controlsRef.current!.update(delta);
   });

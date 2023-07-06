@@ -18,9 +18,7 @@ export const Coin = (props: CoinProps) => {
       sensor={true}
       onIntersectionEnter={() => {
         props.remove();
-        console.log("Coin collision detected."); // debug log
         if (!scoredCoinsRef?.current?.has(props.key)) {
-          console.log("Incrementing score."); // debug log
           scoredCoinsRef?.current?.add(props.key);
           set((store) => {
             store.player.score += 1;

@@ -14,33 +14,30 @@ export const Platform = ({
   args = [10, 1, 1],
   oneWay = false,
   ...props
-}: RigidBodyProps & { oneWay?: boolean }) => {
+}: RigidBodyProps & { oneWay?: boolean; color?: THREE.Color }) => {
   const ref = useRef<RapierRigidBody>(null);
   const playerRef = useStore((store) => store.player.ref);
-  const movementRef = useStore((store) => store.controls.actions);
 
-  useFrame(() => {
-    const { down } = movementRef.current!;
-    if (!down.value) return;
+  // useFrame(() => {
 
-    // if player clicks down, we want the platofrm to go back to sensor. (if it's a oneway only)
-    if (oneWay) {
-      const collider = ref.current?.collider(ref.current.handle);
-      collider?.setSensor(true);
-    }
-  });
+  //   // if player clicks down, we want the platofrm to go back to sensor. (if it's a oneway only)
+  //   if (oneWay) {
+  //     const collider = ref.current?.collider(ref.current.handle);
+  //     collider?.setSensor(true);
+  //   }
+  // });
 
   return (
     <RigidBody
       type="fixed"
+      colliders="cuboid"
       position={position}
       rotation={rotation}
       name="platform"
       ref={ref}
       sensor={oneWay ? true : false}
       onIntersectionEnter={({ other }) => {
-        const { down } = movementRef.current!;
-        if (!down.value && other.rigidBodyObject?.name === "player") {
+        if (other.rigidBodyObject?.name === "player") {
           const collider = ref.current?.collider(ref.current.handle);
 
           if (

@@ -3,7 +3,7 @@ import { RapierRigidBody } from "@react-three/rapier";
 import CameraControls from "camera-controls";
 import { setAutoFreeze } from "immer";
 import { createRef, MutableRefObject, RefObject } from "react";
-import { Mesh, Vector2, Vector3 } from "three";
+import { Mesh, Vector2, Vector3, MathUtils } from "three";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
@@ -21,19 +21,22 @@ export type PlayerState =
   | "victory"
   | "sliding";
 
-export type EntityType = "coin";
+export type EntityType = "platform" | "coin" | "spike";
 
 export type Entity = {
   type: EntityType;
   position: [number, number, number];
-  rotation: [number, number, number];
+  rotation?: [number, number, number];
   scale: [number, number, number];
-  color: string;
+  color?: string;
   id: string;
+
+  // platform specific
+  oneWay?: boolean;
 };
 
 export type Level = {
-  entities: Entity[];
+  entities: Map<string, Entity>;
   floor: MutableRefObject<Mesh | null> | null;
 };
 
@@ -78,7 +81,7 @@ export const useStore = create(
       scoredCoinsRef: createRef<Set<string>>() as MutableRefObject<Set<string>>,
     },
     level: {
-      entities: [],
+      entities: new Map(),
       floor: null,
     },
     game: {
@@ -103,26 +106,59 @@ export const useStore = create(
 useStore.setState((store) => {
   store.camera.movement.current = new Vector2();
   store.controls.direction.current = new Vector3(0, 0, 1);
-  store.controls.actions.current = {
-    down: {
-      value: 0,
-      startedAt: 0,
+
+  const level: any = [
+    { position: [0, -0.5, 0], scale: [15, 1, 1], type: "platform" },
+    { position: [-7, 50, 0], scale: [1, 100, 1], type: "platform" },
+    { position: [7, 50, 0], scale: [1, 100, 1], type: "platform" },
+    {
+      position: [0, 8, 0],
+      scale: [15, 0.1, 1],
+      type: "platform",
+      oneWay: true,
     },
-    up: {
-      value: 0,
-      startedAt: 0,
+    { position: [-3, 2, 0], scale: [1, 4, 1], type: "platform" },
+    {
+      position: [0, 20, 0],
+      scale: [15, 0.1, 1],
+      oneWay: true,
+      type: "platform",
     },
-    left: {
-      value: 0,
-      startedAt: 0,
+    { position: [3, 12, 0], scale: [1, 8, 1], type: "platform" },
+    {
+      position: [0, 36, 0],
+      scale: [15, 0.1, 1],
+      oneWay: true,
+      type: "platform",
     },
-    right: {
-      value: 0,
-      startedAt: 0,
+    { position: [-3, 28, 0], scale: [1, 8, 1], type: "platform" },
+    {
+      position: [0, 36, 0],
+      scale: [15, 0.1, 1],
+      oneWay: true,
+      type: "platform",
     },
-    jump: {
-      value: 0,
-      startedAt: 0,
+    { position: [3, 42, 0], scale: [1, 4, 1], type: "platform" },
+    { position: [-3, 46, 0], scale: [1, 4, 1], type: "platform" },
+    { position: [3, 50, 0], scale: [1, 4, 1], type: "platform" },
+    {
+      position: [0, 54, 0],
+      scale: [15, 0.1, 1],
+      oneWay: true,
+      type: "platform",
     },
-  };
+  ];
+
+  store.level.entities = new Map([
+    ...level.map((entity, index) => {
+      const uuid = MathUtils.generateUUID();
+      return [
+        uuid,
+        {
+          ...entity,
+          id: uuid,
+        },
+      ];
+    }),
+  ]);
 });

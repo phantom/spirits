@@ -5,12 +5,14 @@ import { Coin } from "./Coin";
 import React from "react";
 import { button, useControls } from "leva";
 import { FloatingSpike } from "./FloatingSpike";
+import { Platform } from "./Platform";
 
 const coinsCount = 25;
 const spikesCount = 4;
 
 export const Entities = () => {
   const set = useStore((store) => store.set);
+  const blueprints = useStore((store) => store.level.entities);
 
   const entities = useRef(new Map());
   const entitiesRef = useRef<Group | null>(null);
@@ -64,15 +66,30 @@ export const Entities = () => {
   useControls({ spawnCoins: button(spawnCoins) });
   useControls({ spawnSpikes: button(spawnSpikes) });
 
+  // useEffect(() => {
+  //   if (entities.current.size === 0) {
+  //     spawnCoins();
+  //     spawnSpikes();
+  //   }
+  // }, [set, spawnCoins, spawnSpikes]);
+
   useEffect(() => {
-    if (entities.current.size === 0) {
-      spawnCoins();
-      spawnSpikes();
-      set((store: any) => {
-        store.level.entities = entitiesRef;
-      });
-    }
-  }, [set, spawnCoins, spawnSpikes]);
+    blueprints.forEach((blueprint) => {
+      const uuid = MathUtils.generateUUID();
+
+      const platform = (
+        <Platform
+          key={uuid}
+          oneWay={(blueprint as any)?.oneWay}
+          position={blueprint.position}
+          args={blueprint.scale}
+        />
+      );
+
+      entities.current.set(uuid, platform);
+    });
+    refresh();
+  }, []);
 
   return (
     <group ref={entitiesRef}>{Array.from(entities.current.values())}</group>
