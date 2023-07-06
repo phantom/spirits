@@ -37,6 +37,18 @@ function getRectangleCoordinates(
   return coordinates;
 }
 
+function rotateArrayByOne(arr: any[]): any[] {
+  if (arr.length <= 1) {
+    return arr.slice(); // Return a copy of the original array
+  }
+
+  const rotatedArray = [...arr]; // Create a shallow copy of the original array
+  const firstElement = rotatedArray.shift(); // Remove the first element and store it
+
+  rotatedArray.push(firstElement); // Add the first element at the end of the array
+  return rotatedArray;
+}
+
 export function SnakeBody(
   props: RigidBodyProps & { width: number; height: number }
 ) {
@@ -94,10 +106,13 @@ export function Snake(
       snakeData[i] = SnakePartType.Body;
     }
 
-    console.log(snakeData);
     setSnakeData(snakeData);
 
-    const interval = setInterval(() => {}, 1000);
+    const interval = setInterval(() => {
+      setSnakeData((prevSnakeData) =>
+        rotateArrayByOne(prevSnakeData ?? snakeData)
+      );
+    }, 1000);
 
     // Cleanup function to clear the interval when the component unmounts
     return () => {
