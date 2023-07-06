@@ -18,19 +18,11 @@ export const RotatingPlatform = ({
   length,
   width,
   numBlocks = 1,
-  position = [2, 2, 0],
+  position = [3, 3, 0],
   ...props
 }: RotatingPlatformProps) => {
-  const ref = useRef<RapierRigidBody[]>([]);
-  const [blockPositions, setBlockPositions] = useState<
-    Array<[number, number, number]>
-  >(() => {
-    const initialPositions: [number, number, number][] = [];
-    for (let i = 0; i < numBlocks; i++) {
-      initialPositions.push([...position] as [number, number, number]);
-    }
-    return initialPositions;
-  });
+  const ref = useRef<RapierRigidBody>(null);
+  const [blockPosition, setBlockPosition] = useState(position);
   const [stepIndex, setStepIndex] = useState(0);
 
   const blockPath: [number, number, number][] = useMemo(() => {
@@ -60,19 +52,7 @@ export const RotatingPlatform = ({
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setBlockPositions((prevPositions) => {
-        const newPositions = [...prevPositions];
-        const lastBlockPosition = newPositions.pop(); // Remove the last block
-        newPositions.unshift(lastBlockPosition as [number, number, number]); // Place the last block at the front
-
-        // Update the positions of the remaining blocks
-        for (let i = 0; i < newPositions.length; i++) {
-          newPositions[i] = blockPath[(stepIndex + i) % blockPath.length];
-        }
-
-        return newPositions;
-      });
-
+      setBlockPosition(blockPath[stepIndex]);
       setStepIndex((stepIndex + 1) % blockPath.length);
     }, 1000); // Controls the speed
 
@@ -82,24 +62,17 @@ export const RotatingPlatform = ({
   }, [stepIndex, blockPath]);
 
   return (
-    <group>
-      {blockPositions.map((blockPosition, index) => (
-        <RigidBody
-          key={index}
-          type="fixed"
-          position={new Vector3(...blockPosition)}
-          name={`platform-block-${index}`}
-          ref={(el) => {
-            ref.current[index] = el as RapierRigidBody;
-          }}
-          {...props}
-        >
-          <mesh>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="darkgray" />
-          </mesh>
-        </RigidBody>
-      ))}
-    </group>
+    <RigidBody
+      type="fixed"
+      position={new Vector3(...blockPosition)}
+      name="platform-block"
+      ref={ref}
+      {...props}
+    >
+      <mesh>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshStandardMaterial color="darkgray" />
+      </mesh>
+    </RigidBody>
   );
 };
