@@ -116,16 +116,24 @@ useStore.setState((store) => {
   store.controls.direction.current = new Vector3(0, 0, 1);
 
   const level: any = [
-    { position: [0, -0.5, 0], scale: [17, 1, 1], type: "platform" },
-    { position: [-8, 50, 0], scale: [1, 100, 1], type: "platform" },
-    { position: [8, 50, 0], scale: [1, 100, 1], type: "platform" },
+    {
+      position: [-8, -30, 0],
+      scale: [1, 200, 1],
+      type: "platform",
+      rotation: [0, 0, 0],
+    },
+    {
+      position: [8, -30, 0],
+      scale: [1, 200, 1],
+      type: "platform",
+      rotation: [0, 0, 0],
+    },
     {
       position: [0, 8, 0],
       scale: [15, 0.1, 1],
       type: "platform",
       oneWay: true,
     },
-    { position: [-3, 2, 0], scale: [1, 4, 1], type: "platform" },
     {
       position: [0, 20, 0],
       scale: [15, 0.1, 1],
@@ -154,6 +162,42 @@ useStore.setState((store) => {
       scale: [15, 0.1, 1],
       oneWay: true,
       type: "platform",
+    },
+    {
+      type: "platform",
+      position: [0, 0, 7.57424949949359e-17],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [10, 1, 1],
+    },
+    {
+      type: "platform",
+      position: [-4.501453752595175, 0.9903821338516628, 0],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [1, 1, 1],
+    },
+    {
+      type: "platform",
+      position: [4.494184453177482, 1.0089148532462096, 0],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [1, 1, 1],
+    },
+    {
+      type: "snake",
+      position: [-2.1129750155979163, 14.808470144781928, 0],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [5, 5, 1],
+    },
+    {
+      type: "coin",
+      position: [-2.141827620454394, 14.746902928963388, 0],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [1, 1, 1],
+    },
+    {
+      type: "spiked-platform",
+      position: [3, 16.5, 0],
+      rotation: [0, 0, 0],
+      scale: [1, 1, 1],
     },
   ];
 
