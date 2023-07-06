@@ -53,9 +53,9 @@ export const Player = ({
   >(new Map());
 
   const { speed, jumpHeight, jumpDamping, fallDamping } = useControls({
-    speed: 5,
+    speed: 10,
     jumpHeight: {
-      value: 50,
+      value: 100,
       min: 10,
       max: 500,
     },
@@ -65,7 +65,7 @@ export const Player = ({
       max: 1,
     },
     fallDamping: {
-      value: 1.04,
+      value: 1.02,
       min: 0,
       max: 5,
     },
@@ -107,7 +107,7 @@ export const Player = ({
   }, [playerState]);
 
   useFrame((_, delta) => {
-    const refreshCorrection = delta / (1 / 144);
+    const refreshCorrection = delta / (1 / 60);
     const { current: player } = ref;
     if (!player) return;
 
@@ -192,17 +192,24 @@ export const Player = ({
   });
 
   useFrame((_, delta) => {
-    const refreshCorrection = delta / (1 / 144);
-    const y = ref.current?.linvel().y ?? 0;
-    const diffY =
-      y >= 0 ? y * jumpDamping : Math.max(y * fallDamping, -speed * 10);
+    const refreshCorrection = delta / (1 / 60);
 
-    ref.current?.setLinvel(
-      vec3(ref.current.linvel()).sub(
-        new Vector3(0, (y - diffY) / refreshCorrection)
-      ),
-      true
-    );
+    if (
+      playerState === "jumping" ||
+      playerState === "falling" ||
+      playerState === "moving"
+    ) {
+      const y = ref.current?.linvel().y ?? 0;
+      const diffY =
+        y >= 0 ? y * jumpDamping : Math.max(y * fallDamping, -speed * 4);
+
+      ref.current?.setLinvel(
+        vec3(ref.current.linvel()).sub(
+          new Vector3(0, (y - diffY) / refreshCorrection)
+        ),
+        true
+      );
+    }
   });
 
   useEffect(() => {
