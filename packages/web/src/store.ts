@@ -110,9 +110,9 @@ useStore.setState((store) => {
   store.controls.direction.current = new Vector3(0, 0, 1);
 
   const level: any = [
-    { position: [0, -0.5, 0], scale: [15, 1, 1], type: "platform" },
-    { position: [-7, 50, 0], scale: [1, 100, 1], type: "platform" },
-    { position: [7, 50, 0], scale: [1, 100, 1], type: "platform" },
+    { position: [0, -0.5, 0], scale: [17, 1, 1], type: "platform" },
+    { position: [-8, 50, 0], scale: [1, 100, 1], type: "platform" },
+    { position: [8, 50, 0], scale: [1, 100, 1], type: "platform" },
     {
       position: [0, 8, 0],
       scale: [15, 0.1, 1],
