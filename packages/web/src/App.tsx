@@ -101,6 +101,9 @@ export const App = () => {
             <Physics debug>
               <Player position={[0, 2, 0]} />
               <Coin key={"123"} position={[0, 2, 0]} remove={() => {}} />
+              <Coin key={"124"} position={[0, 3, 0]} remove={() => {}} />
+              <Coin key={"125"} position={[0, 4, 0]} remove={() => {}} />
+
               <Snake
                 position={[-3, 12, 0]}
                 width={5}
