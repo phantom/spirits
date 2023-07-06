@@ -124,17 +124,16 @@ export const Player = ({
       didJumpRelease.current = true;
     }
 
+    // check we do to not get stuck to the same wall you junmped from
     if (lastJumpedAt.current + 100 < Date.now()) {
-      if (playerState !== "jumping") {
-        jumpsLeft.current = 2;
-      }
-
       if (touchingFloors.current) {
         state = "moving";
+        jumpsLeft.current = 2;
       }
 
       if (touchingWall && !touchingFloors.current) {
         state = "sliding";
+        jumpsLeft.current = 2;
       }
     }
 
@@ -169,7 +168,7 @@ export const Player = ({
       lastJumpedAt.current = Date.now();
     }
 
-    if (state === "sliding" || playerState === "sliding") {
+    if (playerState === "sliding") {
       const diff = Date.now() - (startedSlidingAt.current ?? 0);
       linvel.multiply(new Vector3(0, 1, 0));
       linvel.y = lerp(
@@ -232,7 +231,7 @@ export const Player = ({
         />
         <CuboidCollider
           sensor={true}
-          args={[width / 2, height / 2, 0.5]}
+          args={[width / 2, height * 0.9, 0.5]}
           position={[width / 2, 0, 0]}
           mass={0}
           onIntersectionEnter={({ other }) => {
@@ -255,7 +254,7 @@ export const Player = ({
         />
         <CuboidCollider
           sensor={true}
-          args={[width / 2, height / 2, 0.5]}
+          args={[width / 2, height * 0.9, 0.5]}
           position={[-width / 2, 0, 0]}
           mass={0}
           onIntersectionEnter={({ other }) => {
