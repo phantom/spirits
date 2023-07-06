@@ -167,21 +167,21 @@ useStore.setState((store) => {
     },
     {
       type: "platform",
-      position: [0, 0, 7.57424949949359e-17],
+      position: [0, -6.412917749024082, 7.57424949949359e-17],
       rotation: [0, 0, 0, "XYZ"],
       scale: [10, 1, 1],
     },
     {
       type: "vertical-platform-small",
-      position: [-4.499381742499162, 0.5, 0],
+      position: [-4.499381742499162, -5.844193797614366, 0],
       rotation: [0, 0, 0, "XYZ"],
       scale: [1, 2, 1],
     },
     {
       type: "vertical-platform-small",
-      position: [4.5, 0.5, 0],
+      position: [4.5, -5.7225584853847895, 0],
       scale: [1, 2, 1],
-      rotation: [0, 0, 0],
+      rotation: [0, 0, 0, "XYZ"],
     },
     {
       type: "snake",
@@ -256,7 +256,6 @@ useStore.setState((store) => {
       scale: [4, 4, 1],
     },
   ];
-
   store.level.entities = new Map([
     ...level.map((entity, index) => {
       const uuid = MathUtils.generateUUID();
