@@ -14,7 +14,6 @@ const xboundary = [-1, 1];
 export function FloatingSpike(props: RigidBodyProps) {
   const store = useStore((store) => store);
   const ref = React.useRef<RapierRigidBody>(null);
-  const [vel, setVel] = React.useState(new Vector3(1, 0, 0));
 
   useFrame(() => {
     const { current: spike } = ref;

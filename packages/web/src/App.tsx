@@ -19,6 +19,7 @@ import Editor from "./Editor";
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { Snake } from "./Snake";
 import { RotatingPlatform } from "./RotatingPlatform";
+import { Coin } from "./Coin";
 
 // =============================================================================
 // Constants
@@ -111,6 +112,8 @@ export const App = () => {
                 snakeLength={7}
                 numSnakes={1}
               />
+
+              <Coin position={[0, 5, 0]} />
 
               <Snake
                 position={[-3, 20, 0]}
