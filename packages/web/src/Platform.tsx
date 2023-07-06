@@ -14,13 +14,15 @@ export enum PlatformSprite {
   SmallHorizontal,
   Square,
   Vertical,
+  VerticalSmall,
 }
 
-export const PlatformSpriteMap = {
-  [PlatformSprite.LargeHorizontal]: "/sprites/platform-variants/large.png",
+export const PlatformSpriteMap: Record<string, string> = {
+  ["platform"]: "/sprites/platform-variants/large.png",
   [PlatformSprite.SmallHorizontal]: "/sprites/platform-variants/small.png",
   [PlatformSprite.Square]: "/sprites/platform-variants/platform-square.png",
-  [PlatformSprite.Vertical]: "/sprites/platform-variants/vertical.png",
+  ["vertical-platform"]: "/sprites/platform-variants/vertical.png",
+  ["vertical-platform-small"]: "/sprites/platform-variants/vertical-small.png",
 };
 
 export const Platform = ({
@@ -32,7 +34,7 @@ export const Platform = ({
 }: RigidBodyProps & {
   oneWay?: boolean;
   color?: THREE.Color;
-  sprite?: PlatformSprite;
+  sprite?: string;
 }) => {
   const ref = useRef<RapierRigidBody>(null);
   const playerRef = useStore((store) => store.player.ref);
@@ -45,6 +47,8 @@ export const Platform = ({
   //     collider?.setSensor(true);
   //   }
   // });
+
+  console.log(props.sprite);
 
   const platformTexture = useLoader(
     TextureLoader,

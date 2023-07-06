@@ -27,7 +27,8 @@ export type EntityType =
   | "coin"
   | "spike"
   | "snake"
-  | "vertical-platform";
+  | "vertical-platform"
+  | "vertical-platform-small";
 
 export type Entity = {
   type: EntityType;
@@ -130,10 +131,11 @@ useStore.setState((store) => {
       rotation: [0, 0, 0],
     },
     {
-      position: [0, 8, 0],
+      position: [0, 5.322533964847794, 0],
       scale: [15, 0.1, 1],
       type: "platform",
       oneWay: true,
+      rotation: [0, 0, 0, "XYZ"],
     },
     {
       position: [0, 20, 0],
@@ -141,7 +143,6 @@ useStore.setState((store) => {
       oneWay: true,
       type: "platform",
     },
-    { position: [3, 12, 0], scale: [1, 8, 1], type: "platform" },
     {
       position: [0, 36, 0],
       scale: [15, 0.1, 1],
@@ -171,33 +172,69 @@ useStore.setState((store) => {
       scale: [10, 1, 1],
     },
     {
-      type: "snake",
-      position: [-2.1129750155979163, 14.808470144781928, 0],
+      type: "vertical-platform-small",
+      position: [-4.499381742499162, 0.5, 0],
       rotation: [0, 0, 0, "XYZ"],
-      scale: [5, 5, 1],
+      scale: [1, 2, 1],
+    },
+    {
+      type: "vertical-platform-small",
+      position: [4.5, 0.5, 0],
+      scale: [1, 2, 1],
+      rotation: [0, 0, 0],
+    },
+    {
+      type: "snake",
+      position: [-3.891601556343022, 8.893988830074525, 0],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [4, 3, 1],
+    },
+    {
+      type: "snake",
+      position: [4.119998203503693, 8.893988830074525, 0],
+      scale: [4, 3, 1],
+      rotation: [0, 0, 0, "XYZ"],
     },
     {
       type: "coin",
-      position: [-2.141827620454394, 14.746902928963388, 0],
+      position: [-0.02221057895379186, 6.497300460656101, 0],
       rotation: [0, 0, 0, "XYZ"],
       scale: [1, 1, 1],
     },
     {
-      type: "spiked-platform",
-      position: [3, 16.5, 0],
-      rotation: [0, 0, 0],
+      type: "coin",
+      position: [4.559074388601773, 13.685183026470849, 0],
       scale: [1, 1, 1],
-    },
-    {
-      type: "vertical-platform",
-      position: [4.494703848999359, 2.5257283546442792, 0],
       rotation: [0, 0, 0, "XYZ"],
-      scale: [1, 6, 1],
     },
     {
-      type: "vertical-platform",
-      position: [-4.497126329561762, 2.5458600034559358, 0],
-      scale: [1, 6, 1],
+      type: "coin",
+      position: [4.559074388601773, 17.74111719010204, 0],
+      scale: [1, 1, 1],
+      rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      type: "coin",
+      position: [-0.02221057895379186, 10.353211028853721, 0],
+      scale: [1, 1, 1],
+      rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      type: "coin",
+      position: [-0.08390797218855028, 23.02250493410345, 0],
+      scale: [1, 1, 1],
+      rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      type: "coin",
+      position: [-2.0659296234159097, 21.402659176349747, 0],
+      scale: [1, 1, 1],
+      rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      type: "coin",
+      position: [1.8367501986419814, 21.276929721102412, 0],
+      scale: [1, 1, 1],
       rotation: [0, 0, 0, "XYZ"],
     },
   ];
