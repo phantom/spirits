@@ -179,10 +179,11 @@ export const Player = ({
   useFrame(() => {
     if (playerState === "jumping" || playerState === "falling") {
       const { x, y, z } = ref.current?.linvel() || { x: 0, y: 0, z: 0 };
+
       ref.current?.setLinvel(
         {
           x: x,
-          y: y >= 0 ? y * jumpDamping : y * fallDamping,
+          y: y >= 0 ? y * jumpDamping : Math.max(y * fallDamping, -speed * 10),
           z,
         },
         true
