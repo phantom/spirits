@@ -15,7 +15,7 @@ export function Saw(props: RigidBodyProps) {
 
   const texture = useLoader(
     TextureLoader,
-    "src/sprites/saw.png",
+    "/sprites/saw.png",
     (_) => null
   ) as Texture;
 

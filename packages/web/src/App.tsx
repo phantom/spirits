@@ -7,7 +7,6 @@ import Camera from "./Camera";
 import ConnectRow from "./ConnectRow";
 import Editor from "./Editor";
 import { Entities } from "./Entities";
-import { NoProvider } from "./NoProvider";
 import { Player } from "./Player";
 import { useStore } from "./store";
 import getProvider from "./utils/getProvider";
