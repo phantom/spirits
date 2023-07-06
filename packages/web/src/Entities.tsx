@@ -107,6 +107,8 @@ export const Entities = () => {
             />
           );
           break;
+        case "vertical-platform":
+        case "vertical-platform-small":
         case "platform":
           entities.current.set(
             uuid,
@@ -115,18 +117,7 @@ export const Entities = () => {
               oneWay={(blueprint as any)?.oneWay}
               position={blueprint.position}
               args={blueprint.scale}
-            />
-          );
-          break;
-        case "vertical-platform":
-          entities.current.set(
-            uuid,
-            <Platform
-              key={uuid}
-              oneWay={(blueprint as any)?.oneWay}
-              position={blueprint.position}
-              args={blueprint.scale}
-              sprite={PlatformSprite.Vertical}
+              sprite={blueprint.type}
             />
           );
           break;

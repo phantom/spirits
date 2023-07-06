@@ -59,6 +59,7 @@ export default function Editor() {
             "snake",
             "coin",
             "vertical-platform",
+            "vertical-platform-small",
           ],
           onChange: (value: EntityType) => {
             setEntityType(value);
@@ -252,11 +253,7 @@ export default function Editor() {
         return <cylinderGeometry />;
       case "checkpoint":
         return <boxGeometry args={[0.5, 1, 0.5]} />;
-      case "snake":
-        return <boxGeometry />;
-      case "vertical-platform":
-        return <boxGeometry />;
-      case "coin":
+      default:
         return <boxGeometry />;
     }
   }, []);
