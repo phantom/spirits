@@ -17,6 +17,7 @@ import { FloatingSpike } from "./FloatingSpike";
 import { useControls } from "leva";
 import Editor from "./Editor";
 import { useEffect, useLayoutEffect, useRef } from "react";
+import { Snake } from "./Snake";
 
 // =============================================================================
 // Constants
@@ -100,6 +101,12 @@ export const App = () => {
           <>
             <Physics debug>
               <Player position={[0, 2, 0]} />
+              <Snake
+                position={[0, 4, 0]}
+                width={4}
+                height={5}
+                snakeLength={7}
+              />
 
               {/* Spawns coins and spikes */}
               <Entities />
