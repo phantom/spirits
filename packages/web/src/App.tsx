@@ -12,10 +12,9 @@ import { Player } from "./Player";
 import { useStore } from "./store";
 import getProvider from "./utils/getProvider";
 import { useProviderProps } from "./utils/useProviderProps";
-import { SpikedPlatform } from "./SpikedPlatform";
 import { Coin } from "./Coin";
 import { Snake } from "./Snake";
-import { Platform } from "./Platform";
+import { Background } from "./Background";
 
 // =============================================================================
 // Constants
@@ -90,32 +89,36 @@ export const App = () => {
       <Leva collapsed={true} />
 
       <Canvas orthographic>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 5]} />
+        <React.Suspense fallback={null}>
+          <Background />
 
-        <Camera />
-        {isLevelEditing ? (
-          <Editor />
-        ) : (
-          <>
-            <Physics debug>
-              <Player position={[0, 2, 0]} />
-              <Coin key={"123"} position={[0, 2, 0]} remove={() => {}} />
-              <Coin key={"124"} position={[0, 3, 0]} remove={() => {}} />
-              <Coin key={"125"} position={[0, 4, 0]} remove={() => {}} />
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 5]} />
 
-              <Snake
-                position={[-3, 12, 0]}
-                width={5}
-                height={4}
-                snakeLength={4}
-                numSnakes={1}
-              />
-              {/* Spawns coins, spikes, platforms */}
-              <Entities />
-            </Physics>
-          </>
-        )}
+          <Camera />
+          {isLevelEditing ? (
+            <Editor />
+          ) : (
+            <>
+              <Physics debug>
+                <Player position={[0, 2, 0]} />
+                <Coin key={"123"} position={[0, 2, 0]} remove={() => {}} />
+                <Coin key={"124"} position={[0, 3, 0]} remove={() => {}} />
+                <Coin key={"125"} position={[0, 4, 0]} remove={() => {}} />
+
+                <Snake
+                  position={[-3, 12, 0]}
+                  width={5}
+                  height={4}
+                  snakeLength={4}
+                  numSnakes={1}
+                />
+                {/* Spawns coins, spikes, platforms */}
+                <Entities />
+              </Physics>
+            </>
+          )}
+        </React.Suspense>
       </Canvas>
     </>
   );
