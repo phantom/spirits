@@ -26,7 +26,8 @@ export type EntityType =
   | "spiked-platform"
   | "coin"
   | "spike"
-  | "snake";
+  | "snake"
+  | "vertical-platform";
 
 export type Entity = {
   type: EntityType;
@@ -170,18 +171,6 @@ useStore.setState((store) => {
       scale: [10, 1, 1],
     },
     {
-      type: "platform",
-      position: [-4.501453752595175, 0.9903821338516628, 0],
-      rotation: [0, 0, 0, "XYZ"],
-      scale: [1, 1, 1],
-    },
-    {
-      type: "platform",
-      position: [4.494184453177482, 1.0089148532462096, 0],
-      rotation: [0, 0, 0, "XYZ"],
-      scale: [1, 1, 1],
-    },
-    {
       type: "snake",
       position: [-2.1129750155979163, 14.808470144781928, 0],
       rotation: [0, 0, 0, "XYZ"],
@@ -198,6 +187,18 @@ useStore.setState((store) => {
       position: [3, 16.5, 0],
       rotation: [0, 0, 0],
       scale: [1, 1, 1],
+    },
+    {
+      type: "vertical-platform",
+      position: [4.494703848999359, 2.5257283546442792, 0],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [1, 6, 1],
+    },
+    {
+      type: "vertical-platform",
+      position: [-4.497126329561762, 2.5458600034559358, 0],
+      scale: [1, 6, 1],
+      rotation: [0, 0, 0, "XYZ"],
     },
   ];
 

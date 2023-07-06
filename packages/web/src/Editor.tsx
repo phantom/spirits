@@ -58,6 +58,7 @@ export default function Editor() {
             "checkpoint",
             "snake",
             "coin",
+            "vertical-platform",
           ],
           onChange: (value: EntityType) => {
             setEntityType(value);
@@ -253,6 +254,8 @@ export default function Editor() {
         return <boxGeometry args={[0.5, 1, 0.5]} />;
       case "snake":
         return <boxGeometry />;
+      case "vertical-platform":
+        return <boxGeometry />;
       case "coin":
         return <boxGeometry />;
     }
@@ -271,6 +274,7 @@ export default function Editor() {
               onObjectChange={(e) => {
                 if (!e) {
                   return;
+                  ("");
                 }
 
                 changeTimeout.current && clearTimeout(changeTimeout.current);
