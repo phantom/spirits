@@ -10,14 +10,8 @@ export const Background = () => {
   return (
     <group position={[0, 20, 0]} renderOrder={1}>
       <mesh position={[0, 20, 0]}>
-        <primitive
-          object={new THREE.PlaneGeometry(16, 100)}
-          attach="geometry"
-        />
-        <primitive
-          object={new THREE.MeshBasicMaterial({ map: texture })}
-          attach="material"
-        />
+        <planeGeometry args={[16, 100]} attach="geometry" />
+        <meshStandardMaterial map={texture} attach="material" />
       </mesh>
     </group>
   );
