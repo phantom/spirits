@@ -68,18 +68,16 @@ export const App = () => {
     }
   }, []);
 
-  if (!provider) {
-    return <NoProvider />;
-  }
-
   return (
     <>
       {/* Provider Connection */}
-      <ConnectRow
-        publicKey={publicKey}
-        connectedMethods={connectedMethods}
-        connect={handleConnect}
-      />
+      {provider && (
+        <ConnectRow
+          publicKey={publicKey}
+          connectedMethods={connectedMethods}
+          connect={handleConnect}
+        />
+      )}
 
       <div>
         <h1>Score: {score}</h1>
