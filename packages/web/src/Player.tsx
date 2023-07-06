@@ -44,7 +44,7 @@ export const Player = ({
     Map<string, { normal: Vector3Object; collider: RapierCollider }>
   >(new Map());
 
-  const { speed, jumpHeight, jumpDamping } = useControls({
+  const { speed, jumpHeight, jumpDamping, fallDamping } = useControls({
     speed: 5,
     jumpHeight: {
       value: 90,
@@ -55,6 +55,11 @@ export const Player = ({
       value: 0.96,
       min: 0,
       max: 1,
+    },
+    fallDamping: {
+      value: 1.04,
+      min: 0,
+      max: 5,
     },
   });
 
@@ -177,7 +182,7 @@ export const Player = ({
       ref.current?.setLinvel(
         {
           x: x,
-          y: y >= 0 ? y * jumpDamping : y - 0.25,
+          y: y >= 0 ? y * jumpDamping : y * fallDamping,
           z,
         },
         true
