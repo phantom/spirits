@@ -96,7 +96,7 @@ export const App = () => {
           <Editor />
         ) : (
           <>
-            <Physics debug>
+            <Physics debug timeStep={1 / 144}>
               <Player position={[0, 2, 0]} />
 
               {/* Spawns coins and spikes */}
