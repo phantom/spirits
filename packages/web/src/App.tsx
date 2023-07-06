@@ -55,29 +55,25 @@ export const App = () => {
         <Physics debug>
           <Player position={[0, 2, 0]} />
 
-          <Platform position={[0, 0, 0]} args={[11, 1, 1]} />
-          <Platform position={[-50, 5, 0]} args={[1, 10, 1]} />
-          <Platform position={[-5, 25, 0]} args={[1, 50, 1]} />
-          <Platform position={[5, 25, 0]} args={[1, 50, 1]} />
+          <Platform position={[0, -0.5, 0]} args={[15, 1, 1]} />
+          <Platform position={[-7, 50, 0]} args={[1, 100, 1]} />
+          <Platform position={[7, 50, 0]} args={[1, 100, 1]} />
+          <Platform position={[0, 8, 0]} args={[15, 0.1, 1]} oneWay={true} />
 
-          <Platform position={[0, 6, 0]} args={[10, 0.1, 1]} oneWay={true} />
+          <Platform position={[-3, 2, 0]} args={[1, 4, 1]} />
 
-          <RotatingPlatform position={[-1.5, 10, 0]} args={[6, 1, 1]} />
-          <Platform position={[-1.5, 18, 0]} args={[7, 1, 1]} />
-          <Platform position={[2, 14, 0]} args={[1, 9, 1]} />
+          <Platform position={[0, 20, 0]} args={[15, 0.1, 1]} oneWay={true} />
+          <Platform position={[3, 12, 0]} args={[1, 8, 1]} />
 
-          <Platform position={[0, 20, 0]} args={[3, 1, 1]} />
-          <Platform position={[1.5, 21.5, 0]} args={[1, 4, 1]} />
-          <Platform position={[-1.5, 21.5, 0]} args={[1, 4, 1]} />
-          <Platform position={[0, 23, 0]} args={[3, 1, 1]} />
+          <Platform position={[0, 36, 0]} args={[15, 0.1, 1]} oneWay={true} />
+          <Platform position={[-3, 28, 0]} args={[1, 8, 1]} />
 
-          <Platform position={[0, 26, 0]} args={[10, 0.1, 1]} oneWay={true} />
+          <Platform position={[0, 36, 0]} args={[15, 0.1, 1]} oneWay={true} />
+          <Platform position={[3, 42, 0]} args={[1, 4, 1]} />
+          <Platform position={[-3, 46, 0]} args={[1, 4, 1]} />
+          <Platform position={[3, 50, 0]} args={[1, 4, 1]} />
 
-          <Platform position={[0, 30, 0]} args={[3, 1, 1]} />
-          <Platform position={[1.5, 31.5, 0]} args={[1, 4, 1]} />
-          <Platform position={[-1.5, 31.5, 0]} args={[1, 4, 1]} />
-          <Platform position={[0, 33, 0]} args={[3, 1, 1]} />
-
+          <Platform position={[0, 54, 0]} args={[15, 0.1, 1]} oneWay={true} />
           {/* Spawns coins and spikes */}
           <Entities />
         </Physics>

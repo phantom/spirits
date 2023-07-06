@@ -22,12 +22,12 @@ export default function Camera() {
 
   const { cameraSensitivity, zoom } = useControls({
     zoom: {
-      value: 30,
+      value: 20,
       min: 10,
       max: 100,
     },
     cameraSensitivity: {
-      value: 0.9,
+      value: 1,
       min: 0,
       max: 1,
     },

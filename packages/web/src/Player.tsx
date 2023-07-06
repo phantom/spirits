@@ -44,12 +44,17 @@ export const Player = ({
     Map<string, { normal: Vector3Object; collider: RapierCollider }>
   >(new Map());
 
-  const { speed, jumpHeight } = useControls({
+  const { speed, jumpHeight, jumpDamping } = useControls({
     speed: 5,
     jumpHeight: {
-      value: 50,
+      value: 90,
       min: 10,
       max: 100,
+    },
+    jumpDamping: {
+      value: 0.96,
+      min: 0,
+      max: 1,
     },
   });
 
@@ -102,8 +107,10 @@ export const Player = ({
       ({ normal }) => Math.abs(normal.x) === 1
     );
 
-    if (collisions.length > 0 && lastJumpedAt.current + 100 < Date.now()) {
-      jumpsLeft.current = 2;
+    if (collisions.length > 0 && lastJumpedAt.current + 20 < Date.now()) {
+      if (playerState !== "jumping") {
+        jumpsLeft.current = 2;
+      }
 
       const touchingFloor = collisions.some(({ normal }) => normal.y === -1);
 
@@ -119,11 +126,12 @@ export const Player = ({
     player.setLinvel(linvel, true);
 
     if (
+      playerState !== "jumping" &&
       jumpsLeft.current > 0 &&
       pointerDown.current &&
       didJumpRelease.current &&
       collisions.length > 0 &&
-      lastJumpedAt.current + 100 < Date.now()
+      lastJumpedAt.current + 200 < Date.now()
     ) {
       didJumpRelease.current = false;
       linvel.y = 0;
@@ -166,11 +174,10 @@ export const Player = ({
   useFrame(() => {
     if (playerState === "jumping" || playerState === "falling") {
       const { x, y, z } = ref.current?.linvel() || { x: 0, y: 0, z: 0 };
-      const diff = Date.now() - lastJumpedAt.current;
       ref.current?.setLinvel(
         {
           x: x,
-          y: y >= 0 ? (diff > 100 ? y * 0.9 : y * 1) : y - 0.25,
+          y: y >= 0 ? y * jumpDamping : y - 0.25,
           z,
         },
         true
