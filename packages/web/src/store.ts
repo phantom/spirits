@@ -27,6 +27,7 @@ export type EntityType =
   | "coin"
   | "spike"
   | "snake"
+  | "enemy"
   | "vertical-platform"
   | "vertical-platform-small"
   | "platform-section"
@@ -164,6 +165,11 @@ useStore.setState((store) => {
       scale: [1, 1, 1],
       type: "spiked-platform",
       orientation: "left",
+    },
+    {
+      position: [-6.33, 2.33, 0],
+      scale: [1, 1, 1],
+      type: "enemy",
     },
     {
       position: [0, 54, 0],
