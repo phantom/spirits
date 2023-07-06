@@ -13,14 +13,12 @@ export enum PlatformSprite {
   LargeHorizontal,
   SmallHorizontal,
   Square,
-  Vertical,
 }
 
 export const PlatformSpriteMap = {
   [PlatformSprite.LargeHorizontal]: "/sprites/platform-variants/large.png",
   [PlatformSprite.SmallHorizontal]: "/sprites/platform-variants/small.png",
-  [PlatformSprite.Square]: "/sprites/platform-variants/platform-square.png",
-  [PlatformSprite.Vertical]: "/sprites/platform-variants/vertical.png",
+  [PlatformSprite.Square]: "/sprites/platform-variants/square.png",
 };
 
 export const Platform = ({

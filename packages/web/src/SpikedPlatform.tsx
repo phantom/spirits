@@ -20,7 +20,7 @@ export const SpikedPlatform = ({
 }: SpikedPlatformProps) => {
   const store = useStore((store) => store);
 
-  const spikeTexture = useLoader(TextureLoader, "src/sprites/spike.png");
+  const spikeTexture = useLoader(TextureLoader, "/sprites/spike.png");
   const spikeMaterial = new SpriteMaterial({ map: spikeTexture });
   const spikeSprite = new Sprite(spikeMaterial);
   spikeSprite.scale.set(spikeSize.x, spikeSize.y, 1);

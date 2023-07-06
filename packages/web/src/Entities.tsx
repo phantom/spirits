@@ -6,7 +6,7 @@ import React from "react";
 import { button, useControls } from "leva";
 import { FloatingSpike } from "./FloatingSpike";
 import { SpikedPlatform } from "./SpikedPlatform";
-import { Platform } from "./Platform";
+import { Platform, PlatformSprite } from "./Platform";
 import { Snake } from "./Snake";
 
 const coinsCount = 25;
@@ -115,6 +115,18 @@ export const Entities = () => {
               oneWay={(blueprint as any)?.oneWay}
               position={blueprint.position}
               args={blueprint.scale}
+            />
+          );
+          break;
+        case "vertical-platform":
+          entities.current.set(
+            uuid,
+            <Platform
+              key={uuid}
+              oneWay={(blueprint as any)?.oneWay}
+              position={blueprint.position}
+              args={blueprint.scale}
+              sprite={PlatformSprite.Vertical}
             />
           );
           break;
