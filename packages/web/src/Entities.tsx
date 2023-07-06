@@ -77,16 +77,31 @@ export const Entities = () => {
     blueprints.forEach((blueprint) => {
       const uuid = MathUtils.generateUUID();
 
-      const platform = (
-        <Platform
-          key={uuid}
-          oneWay={(blueprint as any)?.oneWay}
-          position={blueprint.position}
-          args={blueprint.scale}
-        />
-      );
-
-      entities.current.set(uuid, platform);
+      switch (blueprint.type) {
+        case "coin":
+          entities.current.set(
+            uuid,
+            <Coin
+              position={blueprint.position}
+              rotation={blueprint.rotation}
+              key={uuid}
+              remove={() => {
+                entities.current.delete(uuid);
+              }}
+            />
+          );
+          break;
+        case "platform":
+          entities.current.set(
+            uuid,
+            <Platform
+              key={uuid}
+              oneWay={(blueprint as any)?.oneWay}
+              position={blueprint.position}
+              args={blueprint.scale}
+            />
+          );
+      }
     });
     refresh();
   }, [blueprints]);

@@ -16,6 +16,7 @@ import { OrbitControls as ThreeOrbitControls } from "three/examples/jsm/controls
 import { TransformControls as ThreeTransformControls } from "three/examples/jsm/controls/TransformControls";
 import { Entity, EntityType, useStore } from "./store";
 import * as React from "react";
+import { Snake } from "./Snake";
 
 type Props = {};
 
@@ -46,6 +47,10 @@ export default function Editor(_: Props) {
   const [selected, setSelected] = useState<string>();
   const [entityType, setEntityType] = useState<string>("platform");
 
+  const getEntityType = () => {
+    return entityType;
+  };
+
   const [{ mode, entityTypeSelection, entitySelection, color }, setControls] =
     useControls(
       () => ({
@@ -62,12 +67,12 @@ export default function Editor(_: Props) {
             "wheel",
             "barrel",
             "checkpoint",
+            "snake",
+            "coin",
           ],
-          // onChange: (value: EntityType) => {
-          //   const entity = entitiesRef.current.find((e) => e.id === selected);
-          //   if (entity) {
-          //     entity.type = value;
-          //   }
+          onChange: (value: EntityType) => {
+            setEntityType(value);
+          },
         },
         entitySelection: {
           options: [
@@ -101,7 +106,16 @@ export default function Editor(_: Props) {
         }),
         addEntity: button(() => {
           const id = MathUtils.generateUUID();
+          console.log("addEntity", getEntityType());
           entitiesRef.current.set(id, {
+            id,
+            type: entityType as EntityType,
+            position: [0, 0, 0],
+            rotation: [0, 0, 0],
+            scale: [1, 4, 1],
+            color: seedColor(`${id}`).toHex(),
+          });
+          console.log({
             id,
             type: entityType as EntityType,
             position: [0, 0, 0],
@@ -170,7 +184,7 @@ export default function Editor(_: Props) {
           },
         }),
       }),
-      [selected]
+      [selected, entityType]
     );
 
   const onEntitySelect = useCallback(
@@ -255,6 +269,10 @@ export default function Editor(_: Props) {
         return <cylinderGeometry />;
       case "checkpoint":
         return <boxGeometry args={[0.5, 1, 0.5]} />;
+      case "snake":
+        return <boxGeometry />;
+      case "coin":
+        return <boxGeometry />;
     }
   }, []);
 
