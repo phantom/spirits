@@ -112,7 +112,7 @@ export const App = () => {
               {/* Spawns coins and spikes */}
               <Entities />
 
-              <RotatingPlatform length={3} width={3} />
+              <RotatingPlatform length={4} width={4} numBlocks={3} />
             </Physics>
           </>
         )}
