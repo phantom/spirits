@@ -1,4 +1,9 @@
-import { RigidBody, RigidBodyProps } from "@react-three/rapier";
+import {
+  RapierRigidBody,
+  RigidBody,
+  RigidBodyProps,
+  vec3,
+} from "@react-three/rapier";
 import * as React from "react";
 
 // TODO: Change direction of player when it hits a spike

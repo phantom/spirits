@@ -12,6 +12,7 @@ import getProvider from "./utils/getProvider";
 import ConnectRow from "./ConnectRow";
 import { RotatingPlatform } from "./RotatingPlatform";
 import { Entities } from "./Entities";
+import { FloatingSpike } from "./FloatingSpike";
 
 // =============================================================================
 // Constants
