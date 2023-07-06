@@ -53,7 +53,7 @@ export function SnakeBody(
   props: RigidBodyProps & { width: number; height: number }
 ) {
   return (
-    <RigidBody name="snake" type="fixed" sensor={true} {...props}>
+    <RigidBody name="platform" type="fixed" sensor={false} {...props}>
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="gray" />
@@ -66,7 +66,7 @@ export function SnakeHead(
   props: RigidBodyProps & { width: number; height: number }
 ) {
   return (
-    <RigidBody name="snake" type="fixed" sensor={true} {...props}>
+    <RigidBody name="platform" type="fixed" sensor={false} {...props}>
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="blue" />
@@ -80,7 +80,7 @@ export function SnakeTransparent(
   props: RigidBodyProps & { width: number; height: number }
 ) {
   return (
-    <RigidBody name="snake" type="fixed" sensor={true} {...props}>
+    <RigidBody name="platform" type="fixed" sensor={true} {...props}>
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial transparent color="gray" opacity={0.5} />
