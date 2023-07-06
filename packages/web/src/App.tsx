@@ -103,7 +103,7 @@ export const App = () => {
             <Physics debug>
               <Player position={[0, 2, 0]} />
               <Snake
-                position={[0, 4, 0]}
+                position={[-3, 10, 0]}
                 width={4}
                 height={5}
                 snakeLength={7}
