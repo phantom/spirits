@@ -48,7 +48,7 @@ export const Player = ({
   const { speed, jumpHeight, jumpDamping, fallDamping } = useControls({
     speed: 5,
     jumpHeight: {
-      value: 90,
+      value: 50,
       min: 10,
       max: 500,
     },
@@ -192,19 +192,16 @@ export const Player = ({
 
   useFrame((_, delta) => {
     const refreshCorrection = delta / (1 / 144);
+    const y = ref.current?.linvel().y ?? 0;
+    const diffY =
+      y >= 0 ? y * jumpDamping : Math.max(y * fallDamping, -speed * 10);
 
-    if (playerState === "jumping" || playerState === "falling") {
-      const y = ref.current?.linvel().y ?? 0;
-      const diffY =
-        y >= 0 ? y * jumpDamping : Math.max(y * fallDamping, -speed * 10);
-
-      ref.current?.setLinvel(
-        vec3(ref.current.linvel()).sub(
-          new Vector3(0, (y - diffY) / refreshCorrection)
-        ),
-        true
-      );
-    }
+    ref.current?.setLinvel(
+      vec3(ref.current.linvel()).sub(
+        new Vector3(0, (y - diffY) / refreshCorrection)
+      ),
+      true
+    );
   });
 
   useEffect(() => {
@@ -259,9 +256,9 @@ export const Player = ({
           }
         }}
       >
-        <CapsuleCollider args={[0.25, 0.5]} mass={2} />
+        <CapsuleCollider args={[0.25, 4 / 6 / 2]} mass={2} />
         <mesh>
-          <boxGeometry args={[1, 1.5, 1]} />
+          <planeGeometry args={[0.5, (4 / 6) * 2]} />
           <meshStandardMaterial />
         </mesh>
         <mesh ref={directionPointerRef}>
