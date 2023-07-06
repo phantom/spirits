@@ -91,7 +91,12 @@ export function SnakeTransparent(
 
 // TODO: Change direction of player when it hits a spike
 export function Snake(
-  props: RigidBodyProps & { width: number; height: number; snakeLength: number }
+  props: RigidBodyProps & {
+    width: number;
+    height: number;
+    snakeLength: number;
+    numSnakes: number;
+  }
 ) {
   const [snakeData, setSnakeData] = React.useState<SnakePartType[]>();
   const rectCoordinates = React.useMemo(() => {
@@ -105,7 +110,14 @@ export function Snake(
     for (let i = 1; i < props.snakeLength; i++) {
       snakeData[i] = SnakePartType.Body;
     }
-
+    // TODO: Add n snakes
+    if (props.numSnakes > 1) {
+      const halfLength = Math.round(totalLength / 2 - props.snakeLength / 2);
+      snakeData[halfLength] = SnakePartType.Head;
+      for (let i = halfLength + 1; i < halfLength + props.snakeLength; i++) {
+        snakeData[i] = SnakePartType.Body;
+      }
+    }
     setSnakeData(snakeData);
 
     const interval = setInterval(() => {

@@ -111,6 +111,14 @@ export const App = () => {
                 snakeLength={7}
               />
 
+              <Snake
+                position={[-3, 20, 0]}
+                width={8}
+                height={5}
+                snakeLength={5}
+                numSnakes={2}
+              />
+
               {/* Spawns coins and spikes */}
               <Entities />
 
