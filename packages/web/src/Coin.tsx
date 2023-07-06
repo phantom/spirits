@@ -40,12 +40,12 @@ export const Coin = (props: CoinProps) => {
     const position = props.position as Vector3;
 
     if (linvel.y === 0) {
-      linvel.y = 3;
+      linvel.y = 0.5;
     }
     if (coin.translation().y >= position[1] + yboundary[1]) {
-      linvel.y = -1;
+      linvel.y = -0.5;
     } else if (coin.translation().y <= position[1] + yboundary[0]) {
-      linvel.y = 1;
+      linvel.y = 0.5;
     }
     coin.setLinvel(linvel, true);
   });
@@ -67,7 +67,7 @@ export const Coin = (props: CoinProps) => {
       {...props}
     >
       <mesh>
-        <planeGeometry args={[0.75, 0.75]} />
+        <planeGeometry args={[1, 1]} />
         <meshBasicMaterial
           map={coinTexture}
           color={0xffffff}
