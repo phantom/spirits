@@ -57,7 +57,7 @@ export function SnakeHead(
     <RigidBody name="snake" type="fixed" sensor={true} {...props}>
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="red" />
+        <meshStandardMaterial color="blue" />
       </mesh>
     </RigidBody>
   );
@@ -71,7 +71,7 @@ export function SnakeTransparent(
     <RigidBody name="snake" type="fixed" sensor={true} {...props}>
       <mesh>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="blue" />
+        <meshStandardMaterial transparent color="gray" opacity={0.5} />
       </mesh>
     </RigidBody>
   );
