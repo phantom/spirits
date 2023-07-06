@@ -49,7 +49,7 @@ export const Player = ({
     jumpHeight: {
       value: 90,
       min: 10,
-      max: 100,
+      max: 200,
     },
     jumpDamping: {
       value: 0.96,
