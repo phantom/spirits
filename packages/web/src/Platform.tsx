@@ -1,4 +1,4 @@
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useLoader } from "@react-three/fiber";
 import {
   RapierRigidBody,
   RigidBody,
@@ -7,6 +7,7 @@ import {
 import * as React from "react";
 import { useRef } from "react";
 import { useStore } from "./store";
+import { TextureLoader } from "three";
 
 export const Platform = ({
   position = [0, 0, 0],
@@ -26,6 +27,8 @@ export const Platform = ({
   //     collider?.setSensor(true);
   //   }
   // });
+
+  const platformTexture = useLoader(TextureLoader, "src/sprites/block.png");
 
   return (
     <RigidBody
@@ -84,7 +87,7 @@ export const Platform = ({
     >
       <mesh>
         <boxGeometry args={args} />
-        <meshStandardMaterial color="lightblue" />
+        <meshBasicMaterial map={platformTexture} />
       </mesh>
     </RigidBody>
   );
