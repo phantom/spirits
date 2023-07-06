@@ -8,6 +8,7 @@ import { FloatingSpike } from "./FloatingSpike";
 import { SpikedPlatform } from "./SpikedPlatform";
 import { Platform, PlatformSprite } from "./Platform";
 import { Snake } from "./Snake";
+import { Enemy } from "./Enemy";
 
 const coinsCount = 25;
 const spikesCount = 4;
@@ -105,6 +106,12 @@ export const Entities = () => {
               snakeLength={5}
               numSnakes={1}
             />
+          );
+          break;
+        case "enemy":
+          entities.current.set(
+            uuid,
+            <Enemy key={uuid} position={blueprint.position} />
           );
           break;
         case "square-platform":
