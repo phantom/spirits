@@ -7,46 +7,63 @@ import { useLoader } from "@react-three/fiber";
 interface SpikedPlatformProps extends RigidBodyProps {
   position?: Vector3;
   platformSize?: Vector3;
-  spikeSize?: Vector3;
-  orientation?: "top" | "bottom" | "left" | "right";
+  orientation?: "up" | "down" | "left" | "right";
 }
 
 export const SpikedPlatform = ({
-  position = new Vector3(0, 2, 0),
+  position = new Vector3(5, 2, 0),
   platformSize = new Vector3(1, 1, 0),
-  spikeSize = new Vector3(1, 1, 0),
-  orientation = "top",
+  orientation = "up",
   ...props
 }: SpikedPlatformProps) => {
   const store = useStore((store) => store);
 
+<<<<<<< HEAD
   const spikeTexture = useLoader(TextureLoader, "/sprites/spike.png");
   const spikeMaterial = new SpriteMaterial({ map: spikeTexture });
   const spikeSprite = new Sprite(spikeMaterial);
   spikeSprite.scale.set(spikeSize.x, spikeSize.y, 1);
+=======
+  const platformTexture = useLoader(
+    TextureLoader,
+    "src/sprites/platform-variants/large.png"
+  );
+
+  const spikeUp = useLoader(TextureLoader, "src/sprites/spike-up.png");
+  const spikeDown = useLoader(TextureLoader, "src/sprites/spike-down.png");
+  const spikeLeft = useLoader(TextureLoader, "src/sprites/spike-left.png");
+  const spikeRight = useLoader(TextureLoader, "src/sprites/spike-right.png");
+>>>>>>> 965e6c6 (use different orientations for spiked platform)
 
   const spikePosition = new Vector3();
+  let spikeMaterial;
+
   switch (orientation) {
-    case "top":
-      spikePosition.y += platformSize.y / 2 + spikeSize.y - 0.5;
+    case "up":
+      spikePosition.y += platformSize.y / 2 + 0.5;
+      spikeMaterial = new SpriteMaterial({ map: spikeUp });
       break;
-    case "bottom":
-      spikePosition.y -= platformSize.y / 2 + spikeSize.y - 0.5;
+    case "down":
+      spikePosition.y -= platformSize.y / 2 + 0.5;
+      spikeMaterial = new SpriteMaterial({ map: spikeDown });
       break;
     case "left":
-      spikePosition.x -= platformSize.x / 2 + spikeSize.x - 0.5;
+      spikePosition.x -= platformSize.x / 2 + 0.5;
+      spikeMaterial = new SpriteMaterial({ map: spikeLeft });
       break;
     case "right":
-      spikePosition.x += platformSize.x / 2 + spikeSize.x - 0.5;
+      spikePosition.x += platformSize.x / 2 + 0.5;
+      spikeMaterial = new SpriteMaterial({ map: spikeRight });
       break;
   }
+  const spikeSprite = new Sprite(spikeMaterial);
 
   return (
     <group position={position}>
       <RigidBody name="platform" type="fixed" colliders="hull" {...props}>
         <mesh>
           <boxGeometry args={platformSize.toArray()} />
-          <meshStandardMaterial color="gray" />
+          <meshStandardMaterial map={platformTexture} transparent={true} />
         </mesh>
       </RigidBody>
       <RigidBody
@@ -63,7 +80,7 @@ export const SpikedPlatform = ({
         {...props}
       >
         <mesh>
-          <boxGeometry args={spikeSize.toArray()} />
+          <boxGeometry args={[1, 1, 0]} />
           <primitive object={spikeSprite} />
         </mesh>
       </RigidBody>

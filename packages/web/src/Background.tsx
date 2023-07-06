@@ -8,12 +8,17 @@ export const Background = () => {
   texture.repeat.set(1, 3); // Adjust the repeat values as needed
 
   return (
-    <mesh position={[0, 20, 0]}>
-      <primitive object={new THREE.PlaneGeometry(16, 100)} attach="geometry" />
-      <primitive
-        object={new THREE.MeshBasicMaterial({ map: texture })}
-        attach="material"
-      />
-    </mesh>
+    <group position={[0, 47, 0]} renderOrder={1}>
+      <mesh position={[0, 20, 0]}>
+        <primitive
+          object={new THREE.PlaneGeometry(16, 100)}
+          attach="geometry"
+        />
+        <primitive
+          object={new THREE.MeshBasicMaterial({ map: texture })}
+          attach="material"
+        />
+      </mesh>
+    </group>
   );
 };
