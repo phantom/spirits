@@ -40,7 +40,7 @@ export const Coin = (props: CoinProps) => {
       {...props}
     >
       <mesh>
-        <planeGeometry args={[1, 1]} />
+        <planeGeometry args={[0.75, 0.75]} />
         <meshBasicMaterial
           map={coinTexture}
           color={0xffffff}
