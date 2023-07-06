@@ -1,27 +1,16 @@
-import { OrbitControls, TransformControls } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
+import { TransformControls } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
 import { button, useControls } from "leva";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import seedColor from "seed-color";
-import {
-  Color,
-  Euler,
-  MathUtils,
-  Mesh,
-  PerspectiveCamera,
-  Quaternion,
-  Vector3,
-} from "three";
-import { OrbitControls as ThreeOrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { Euler, MathUtils, Mesh, Quaternion, Vector3 } from "three";
 import { TransformControls as ThreeTransformControls } from "three/examples/jsm/controls/TransformControls";
 import { Entity, EntityType, useStore } from "./store";
 import * as React from "react";
 
-type Props = {};
-
 const backgroundDistance = 50;
 
-export default function Editor(_: Props) {
+export default function Editor() {
   // const orbit = useRef<ThreeOrbitControls>(null);
   const transform = useRef<ThreeTransformControls>(null);
   const meshRef = useRef<Mesh>(null);
@@ -46,6 +35,10 @@ export default function Editor(_: Props) {
   const [selected, setSelected] = useState<string>();
   const [entityType, setEntityType] = useState<string>("platform");
 
+  const getEntityType = () => {
+    return entityType;
+  };
+
   const [{ mode, entityTypeSelection, entitySelection, color }, setControls] =
     useControls(
       () => ({
@@ -57,17 +50,18 @@ export default function Editor(_: Props) {
           value: "platform" as EntityType,
           options: [
             "platform",
+            "spiked-platform",
             "rock",
             "ball",
             "wheel",
             "barrel",
             "checkpoint",
+            "snake",
+            "coin",
           ],
-          // onChange: (value: EntityType) => {
-          //   const entity = entitiesRef.current.find((e) => e.id === selected);
-          //   if (entity) {
-          //     entity.type = value;
-          //   }
+          onChange: (value: EntityType) => {
+            setEntityType(value);
+          },
         },
         entitySelection: {
           options: [
@@ -101,14 +95,16 @@ export default function Editor(_: Props) {
         }),
         addEntity: button(() => {
           const id = MathUtils.generateUUID();
+          console.log("addEntity", getEntityType());
           entitiesRef.current.set(id, {
             id,
             type: entityType as EntityType,
             position: [0, 0, 0],
             rotation: [0, 0, 0],
-            scale: [1, 4, 1],
+            scale: [1, 1, 1],
             color: seedColor(`${id}`).toHex(),
           });
+
           onEntitySelect(id);
         }),
         duplicate: button(() => {
@@ -170,7 +166,7 @@ export default function Editor(_: Props) {
           },
         }),
       }),
-      [selected]
+      [selected, entityType]
     );
 
   const onEntitySelect = useCallback(
@@ -255,6 +251,10 @@ export default function Editor(_: Props) {
         return <cylinderGeometry />;
       case "checkpoint":
         return <boxGeometry args={[0.5, 1, 0.5]} />;
+      case "snake":
+        return <boxGeometry />;
+      case "coin":
+        return <boxGeometry />;
     }
   }, []);
 

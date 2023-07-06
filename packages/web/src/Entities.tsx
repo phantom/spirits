@@ -5,7 +5,9 @@ import { Coin } from "./Coin";
 import React from "react";
 import { button, useControls } from "leva";
 import { FloatingSpike } from "./FloatingSpike";
+import { SpikedPlatform } from "./SpikedPlatform";
 import { Platform } from "./Platform";
+import { Snake } from "./Snake";
 
 const coinsCount = 25;
 const spikesCount = 4;
@@ -77,16 +79,55 @@ export const Entities = () => {
     blueprints.forEach((blueprint) => {
       const uuid = MathUtils.generateUUID();
 
-      const platform = (
-        <Platform
-          key={uuid}
-          oneWay={(blueprint as any)?.oneWay}
-          position={blueprint.position}
-          args={blueprint.scale}
-        />
-      );
-
-      entities.current.set(uuid, platform);
+      switch (blueprint.type) {
+        case "coin":
+          entities.current.set(
+            uuid,
+            <Coin
+              position={blueprint.position}
+              rotation={blueprint.rotation}
+              key={uuid}
+              remove={() => {
+                entities.current.delete(uuid);
+              }}
+            />
+          );
+          break;
+        case "snake":
+          entities.current.set(
+            uuid,
+            <Snake
+              position={blueprint.position}
+              rotation={blueprint.rotation}
+              key={uuid}
+              width={blueprint.scale[0]}
+              height={blueprint.scale[1]}
+              snakeLength={5}
+              numSnakes={1}
+            />
+          );
+          break;
+        case "platform":
+          entities.current.set(
+            uuid,
+            <Platform
+              key={uuid}
+              oneWay={(blueprint as any)?.oneWay}
+              position={blueprint.position}
+              args={blueprint.scale}
+            />
+          );
+          break;
+        case "spiked-platform":
+          entities.current.set(
+            uuid,
+            <SpikedPlatform
+              key={uuid}
+              position={new Vector3(...blueprint.position)}
+              orientation={(blueprint as any)?.orientation}
+            />
+          );
+      }
     });
     refresh();
   }, [blueprints]);
