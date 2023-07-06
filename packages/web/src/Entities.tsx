@@ -107,6 +107,7 @@ export const Entities = () => {
             />
           );
           break;
+        case "square-platform":
         case "vertical-platform":
         case "vertical-platform-small":
         case "platform":

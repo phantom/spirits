@@ -58,6 +58,7 @@ export default function Editor() {
             "checkpoint",
             "snake",
             "coin",
+            "square-platform",
             "vertical-platform",
             "vertical-platform-small",
           ],

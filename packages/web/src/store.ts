@@ -28,7 +28,8 @@ export type EntityType =
   | "spike"
   | "snake"
   | "vertical-platform"
-  | "vertical-platform-small";
+  | "vertical-platform-small"
+  | "square-platform";
 
 export type Entity = {
   type: EntityType;
@@ -247,6 +248,12 @@ useStore.setState((store) => {
       position: [3.0779681057399877, 27.65106647242851, 0],
       scale: [1, 6, 1],
       rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      type: "square-platform",
+      position: [-0.06645426104332186, 15.276031419509122, 0],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [4, 4, 1],
     },
   ];
 
