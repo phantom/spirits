@@ -120,10 +120,11 @@ export function Snake(
     };
   }, []);
 
-  if (!props.position || !snakeData || !rectCoordinates) return null;
+  if (!snakeData || !rectCoordinates) return null;
 
   return snakeData.map((sd, idx) => {
     const pos = rectCoordinates[idx];
+    if (!props.position) return null;
     switch (sd) {
       case SnakePartType.Body:
         return (
