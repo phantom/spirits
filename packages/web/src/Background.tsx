@@ -4,6 +4,8 @@ import React from "react";
 
 export const Background = () => {
   const texture = useLoader(THREE.TextureLoader, "src/sprites/background.png");
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(1, 3); // Adjust the repeat values as needed
 
   return (
     <mesh position={[0, 20, 0]}>
