@@ -112,7 +112,7 @@ export function Snake(
       setSnakeData((prevSnakeData) =>
         rotateArrayByOne(prevSnakeData ?? snakeData)
       );
-    }, 1000);
+    }, 500);
 
     // Cleanup function to clear the interval when the component unmounts
     return () => {
