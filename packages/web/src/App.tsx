@@ -12,6 +12,7 @@ import { Player } from "./Player";
 import { useStore } from "./store";
 import getProvider from "./utils/getProvider";
 import { useProviderProps } from "./utils/useProviderProps";
+import { SpikedPlatform } from "./SpikedPlatform";
 
 // =============================================================================
 // Constants
@@ -97,8 +98,10 @@ export const App = () => {
             <Physics debug>
               <Player position={[0, 2, 0]} />
 
-              {/* Spawns coins and spikes */}
+              {/* Spawns coins, spikes, platforms */}
               <Entities />
+
+              <SpikedPlatform />
             </Physics>
           </>
         )}
