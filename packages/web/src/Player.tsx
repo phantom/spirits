@@ -50,7 +50,7 @@ export const Player = ({
     jumpHeight: {
       value: 90,
       min: 10,
-      max: 200,
+      max: 500,
     },
     jumpDamping: {
       value: 0.96,
@@ -83,6 +83,10 @@ export const Player = ({
     };
   });
 
+  const changeDirection = React.useCallback(() => {
+    directionRef.current = directionRef.current.multiply(new Vector3(-1, 1, 1));
+  }, []);
+
   useEffect(() => {
     if (playerState === "sliding") {
       startedSlidingAt.current = Date.now();
@@ -101,8 +105,7 @@ export const Player = ({
     const collisions = Array.from(collisionMap.current.values());
     const linvel = vec3(player.linvel());
 
-    // walk in the direction we're going
-    linvel.x = directionRef.current.x * speed;
+    linvel.x = directionRef.current.x * speed * refreshCorrection;
 
     const impulse = vec3();
 
@@ -163,13 +166,16 @@ export const Player = ({
 
     if (state === "sliding" || playerState === "sliding") {
       const diff = Date.now() - (startedSlidingAt.current ?? 0);
-      const timeToMaxSlide = 1000;
       linvel.multiply(new Vector3(0, 1, 0));
-      linvel.y = lerp(0, -speed, Math.min(diff / timeToMaxSlide, 0.9));
+      linvel.y = lerp(
+        player.linvel().y,
+        -speed,
+        diff > 20 ? 0.05 * refreshCorrection : 0
+      );
     }
 
-    player.setLinvel(linvel.multiplyScalar(refreshCorrection), true);
-    player.applyImpulse(impulse.multiplyScalar(refreshCorrection), true);
+    player.setLinvel(linvel, true);
+    player.applyImpulse(impulse, true);
 
     if (player.translation().y > playerHeight)
       set((store) => {
@@ -182,19 +188,17 @@ export const Player = ({
   });
 
   useFrame((_, delta) => {
-    const refreshCorrection = 1 / 144 / delta;
+    const refreshCorrection = delta / (1 / 144);
+
     if (playerState === "jumping" || playerState === "falling") {
-      const { x, y, z } = ref.current?.linvel() || { x: 0, y: 0, z: 0 };
+      const y = ref.current?.linvel().y ?? 0;
+      const diffY =
+        y >= 0 ? y * jumpDamping : Math.max(y * fallDamping, -speed * 10);
 
       ref.current?.setLinvel(
-        {
-          x: x,
-          y:
-            y >= 0
-              ? y * jumpDamping * refreshCorrection
-              : Math.max(y * fallDamping, -speed * 10) * refreshCorrection,
-          z,
-        },
+        vec3(ref.current.linvel()).sub(
+          new Vector3(0, (y - diffY) / refreshCorrection)
+        ),
         true
       );
     }
@@ -202,9 +206,7 @@ export const Player = ({
 
   useEffect(() => {
     if (playerState === "sliding") {
-      directionRef.current = directionRef.current.multiply(
-        new Vector3(-1, 1, 1)
-      );
+      changeDirection();
     }
   }, [playerState]);
 
@@ -244,9 +246,7 @@ export const Player = ({
 
             // flip the player if they're moving into the wall
             if (playerState === "moving" && touchingWall && touchingFloor) {
-              directionRef.current = directionRef.current.multiply(
-                new Vector3(-1, 1, 1)
-              );
+              changeDirection();
             }
           }
         }}
