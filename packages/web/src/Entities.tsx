@@ -47,7 +47,7 @@ export const Entities = () => {
         uuid,
         <FloatingSpike
           position={
-            new Vector3(MathUtils.randFloatSpread(5), Math.random() * 50, 0)
+            new Vector3(MathUtils.randFloatSpread(5), Math.random() * 44 + 6, 0)
           }
           key={uuid}
         />
