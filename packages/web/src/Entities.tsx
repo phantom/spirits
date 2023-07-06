@@ -63,8 +63,8 @@ export const Entities = () => {
   }, []);
 
   // Controls for testing
-  useControls({ spawnCoins: button(spawnCoins) });
-  useControls({ spawnSpikes: button(spawnSpikes) });
+  // useControls({ spawnCoins: button(spawnCoins) });
+  // useControls({ spawnSpikes: button(spawnSpikes) });
 
   // useEffect(() => {
   //   if (entities.current.size === 0) {

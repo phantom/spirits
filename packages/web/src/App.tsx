@@ -36,7 +36,7 @@ export const App = () => {
   const isLevelEditing = useStore((store) => store.game.isLevelEditing);
   const set = useStore((store) => store.set);
 
-  const { debugPhysics } = useControls(
+  const _ = useControls(
     {
       isLevelEditing: {
         value: false,
@@ -46,18 +46,19 @@ export const App = () => {
           });
         },
       },
-      ...(!isLevelEditing && {
-        debugPhysics: false,
-        // type: {
-        //   value: controlsType,
-        //   options: ControlsEnum,
-        //   onChange: (value) => {
-        //     set((store) => {
-        //       store.controls.type = value;
-        //     });
-        //   },
-        // },
-      }),
+      ...(!isLevelEditing &&
+        {
+          // debugPhysics: false,
+          // type: {
+          //   value: controlsType,
+          //   options: ControlsEnum,
+          //   onChange: (value) => {
+          //     set((store) => {
+          //       store.controls.type = value;
+          //     });
+          //   },
+          // },
+        }),
     },
     [isLevelEditing]
   );

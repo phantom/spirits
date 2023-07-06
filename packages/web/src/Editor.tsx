@@ -215,16 +215,6 @@ export default function Editor(_: Props) {
     }
   }, [entityTypeSelection]);
 
-  useEffect(() => {
-    if (transform.current) {
-      const controls = transform.current;
-      controls.setMode(mode as any);
-      const callback = (event: any) => (orbit.current!.enabled = !event.value);
-      controls.addEventListener("dragging-changed", callback);
-      return () => controls.removeEventListener("dragging-changed", callback);
-    }
-  }, [selected, mode]);
-
   const geometry = useCallback((_entityType: string) => {
     switch (_entityType) {
       case "platform":
