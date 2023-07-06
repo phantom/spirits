@@ -100,8 +100,6 @@ export const App = () => {
 
               {/* Spawns coins, spikes, platforms */}
               <Entities />
-
-              {/* <SpikedPlatform /> */}
             </Physics>
           </>
         )}
