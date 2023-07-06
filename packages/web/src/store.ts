@@ -139,6 +139,12 @@ useStore.setState((store) => {
       rotation: [0, 0, 0, "XYZ"],
     },
     {
+      position: [0, 3.75, 0],
+      scale: [1, 1, 1],
+      type: "spiked-platform",
+      orientation: "up",
+    },
+    {
       position: [0, 20, 0],
       scale: [15, 0.1, 1],
       oneWay: true,
@@ -160,6 +166,12 @@ useStore.setState((store) => {
     { position: [-3, 46, 0], scale: [1, 4, 1], type: "platform" },
     { position: [3, 50, 0], scale: [1, 4, 1], type: "platform" },
     {
+      position: [7, 15, 0],
+      scale: [1, 1, 1],
+      type: "spiked-platform",
+      orientation: "left",
+    },
+    {
       position: [0, 54, 0],
       scale: [15, 0.1, 1],
       oneWay: true,
@@ -170,6 +182,12 @@ useStore.setState((store) => {
       position: [0, -6.412917749024082, 7.57424949949359e-17],
       rotation: [0, 0, 0, "XYZ"],
       scale: [10, 1, 1],
+    },
+    {
+      position: [0, 28, 0],
+      scale: [1, 1, 1],
+      type: "spiked-platform",
+      orientation: "down",
     },
     {
       type: "vertical-platform-small",
