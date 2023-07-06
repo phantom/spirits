@@ -22,8 +22,6 @@ export function FloatingSpike(props: RigidBodyProps) {
 
     const linvel = vec3(spike.linvel());
 
-    console.log(spike.translation().x, props.position.x, xboundary[1]);
-
     // Sweep back and forth
     if (spike.translation().x >= props.position.x + xboundary[1]) {
       linvel.x = -1;
