@@ -91,7 +91,8 @@ export const Player = ({
     }
   }, [playerState]);
 
-  useFrame(() => {
+  useFrame((_, delta) => {
+    const refreshCorrection = delta / (1 / 144);
     const { current: player } = ref;
     if (!player) return;
 
@@ -128,8 +129,6 @@ export const Player = ({
         state = "sliding";
       }
     }
-
-    player.setLinvel(linvel, true);
 
     if (
       playerState !== "jumping" &&
@@ -169,8 +168,8 @@ export const Player = ({
       linvel.y = lerp(0, -speed, Math.min(diff / timeToMaxSlide, 0.9));
     }
 
-    player.setLinvel(linvel, true);
-    player.applyImpulse(impulse, true);
+    player.setLinvel(linvel.multiplyScalar(refreshCorrection), true);
+    player.applyImpulse(impulse.multiplyScalar(refreshCorrection), true);
 
     if (player.translation().y > playerHeight)
       set((store) => {
@@ -182,14 +181,18 @@ export const Player = ({
     });
   });
 
-  useFrame(() => {
+  useFrame((_, delta) => {
+    const refreshCorrection = 1 / 144 / delta;
     if (playerState === "jumping" || playerState === "falling") {
       const { x, y, z } = ref.current?.linvel() || { x: 0, y: 0, z: 0 };
 
       ref.current?.setLinvel(
         {
           x: x,
-          y: y >= 0 ? y * jumpDamping : Math.max(y * fallDamping, -speed * 10),
+          y:
+            y >= 0
+              ? y * jumpDamping * refreshCorrection
+              : Math.max(y * fallDamping, -speed * 10) * refreshCorrection,
           z,
         },
         true

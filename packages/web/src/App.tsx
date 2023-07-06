@@ -1,25 +1,17 @@
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
-import Camera from "./Camera";
-import { OrbitControls } from "@react-three/drei";
-import { Platform } from "./Platform";
-import { Player } from "./Player";
+import { Leva, useControls } from "leva";
 import * as React from "react";
-import { useStore } from "./store";
-import { useProviderProps } from "./utils/useProviderProps";
-import { NoProvider } from "./NoProvider";
 import { Vector3 } from "three";
-import getProvider from "./utils/getProvider";
+import Camera from "./Camera";
 import ConnectRow from "./ConnectRow";
-import { PassThroughPlatform } from "./PassThroughPlatform";
-import { Entities } from "./Entities";
-import { FloatingSpike } from "./FloatingSpike";
-import { useControls } from "leva";
 import Editor from "./Editor";
-import { useEffect, useLayoutEffect, useRef } from "react";
-import { Snake } from "./Snake";
-import { RotatingPlatform } from "./RotatingPlatform";
-import { Coin } from "./Coin";
+import { Entities } from "./Entities";
+import { NoProvider } from "./NoProvider";
+import { Player } from "./Player";
+import { useStore } from "./store";
+import getProvider from "./utils/getProvider";
+import { useProviderProps } from "./utils/useProviderProps";
 
 // =============================================================================
 // Constants
@@ -93,6 +85,7 @@ export const App = () => {
         <h1>Score: {score}</h1>
         <h1>Max Height: {height}</h1>
       </div>
+      <Leva collapsed={true} />
 
       <Canvas orthographic>
         <ambientLight intensity={0.5} />
@@ -105,23 +98,6 @@ export const App = () => {
           <>
             <Physics debug>
               <Player position={[0, 2, 0]} />
-              <Snake
-                position={[-3, 10, 0]}
-                width={4}
-                height={5}
-                snakeLength={7}
-                numSnakes={1}
-              />
-
-              <Coin position={[0, 5, 0]} />
-
-              <Snake
-                position={[-3, 20, 0]}
-                width={8}
-                height={5}
-                snakeLength={5}
-                numSnakes={2}
-              />
 
               {/* Spawns coins and spikes */}
               <Entities />
