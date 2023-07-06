@@ -81,7 +81,7 @@ export default function Editor(_: Props) {
             JSON.stringify(
               Array.from(entitiesRef.current.values()).map((entity) => {
                 // strip off id
-                const { id, ...props } = entity;
+                const { id, color, ...props } = entity;
                 return props;
               })
             )
