@@ -23,6 +23,7 @@ export const PlatformSpriteMap: Record<string, string> = {
   ["square-platform"]: "/sprites/platform-variants/platform-square.png",
   ["vertical-platform"]: "/sprites/platform-variants/vertical.png",
   ["vertical-platform-small"]: "/sprites/platform-variants/vertical-small.png",
+  ["platform-section"]: "/sprites/platform-variants/section.png",
 };
 
 export const Platform = ({

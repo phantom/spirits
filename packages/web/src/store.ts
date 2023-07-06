@@ -29,6 +29,7 @@ export type EntityType =
   | "snake"
   | "vertical-platform"
   | "vertical-platform-small"
+  | "platform-section"
   | "square-platform";
 
 export type Entity = {
@@ -130,13 +131,6 @@ useStore.setState((store) => {
       scale: [1, 200, 1],
       type: "platform",
       rotation: [0, 0, 0],
-    },
-    {
-      position: [0, 1.7916432444330859, 0],
-      scale: [15, 0.1, 1],
-      type: "platform",
-      oneWay: true,
-      rotation: [0, 0, 0, "XYZ"],
     },
     {
       position: [0, 3.75, 0],
@@ -284,6 +278,18 @@ useStore.setState((store) => {
       position: [4.559074388601773, 15.699383745062503, 0],
       scale: [1, 1, 1],
       rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      type: "platform-section",
+      position: [0, 0, 0],
+      rotation: [0, 0, 0],
+      scale: [0, 0, 0],
+    },
+    {
+      type: "platform-section",
+      position: [0, 1.3631882861304385, 0],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [15, 0.3, 1],
     },
   ];
   store.level.entities = new Map([

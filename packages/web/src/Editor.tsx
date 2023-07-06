@@ -61,6 +61,7 @@ export default function Editor() {
             "square-platform",
             "vertical-platform",
             "vertical-platform-small",
+            "platform-section",
           ],
           onChange: (value: EntityType) => {
             setEntityType(value);

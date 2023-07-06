@@ -110,6 +110,7 @@ export const Entities = () => {
         case "square-platform":
         case "vertical-platform":
         case "vertical-platform-small":
+        case "platform-section":
         case "platform":
           entities.current.set(
             uuid,
