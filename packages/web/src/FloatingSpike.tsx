@@ -23,9 +23,9 @@ export function FloatingSpike(props: RigidBodyProps) {
     const linvel = vec3(spike.linvel());
 
     // Sweep back and forth
-    if (spike.translation().x > xboundary[1]) {
+    if (spike.translation().x > props.position[0] + xboundary[1]) {
       linvel.x = -1;
-    } else if (spike.translation().x <= props.position[0]) {
+    } else if (spike.translation().x <= props.position[0] + xboundary[0]) {
       linvel.x = 1;
     }
     spike.setLinvel(linvel, true);

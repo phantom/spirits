@@ -4,7 +4,6 @@ import { useStore } from "./store";
 import { Coin } from "./Coin";
 import React from "react";
 import { button, useControls } from "leva";
-import { Spike } from "./Spike";
 import { FloatingSpike } from "./FloatingSpike";
 
 const coinsCount = 25;
