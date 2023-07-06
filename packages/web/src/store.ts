@@ -149,7 +149,6 @@ useStore.setState((store) => {
       oneWay: true,
       type: "platform",
     },
-    { position: [-3, 28, 0], scale: [1, 8, 1], type: "platform" },
     {
       position: [0, 36, 0],
       scale: [15, 0.1, 1],
@@ -221,20 +220,32 @@ useStore.setState((store) => {
     },
     {
       type: "coin",
-      position: [-0.08390797218855028, 23.02250493410345, 0],
+      position: [-0.08390797218855028, 21.849417803831358, 0],
       scale: [1, 1, 1],
       rotation: [0, 0, 0, "XYZ"],
     },
     {
       type: "coin",
-      position: [-2.0659296234159097, 21.402659176349747, 0],
+      position: [-2.0659296234159097, 29.710784076978296, 0],
       scale: [1, 1, 1],
       rotation: [0, 0, 0, "XYZ"],
     },
     {
       type: "coin",
-      position: [1.8367501986419814, 21.276929721102412, 0],
+      position: [1.8419104059598934, 26.14319634068337, 0],
       scale: [1, 1, 1],
+      rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      type: "vertical-platform",
+      position: [-3.452178695683413, 27.65106647242851, 0],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [1, 6, 1],
+    },
+    {
+      type: "vertical-platform",
+      position: [3.0779681057399877, 27.65106647242851, 0],
+      scale: [1, 6, 1],
       rotation: [0, 0, 0, "XYZ"],
     },
   ];
