@@ -178,12 +178,6 @@ useStore.setState((store) => {
       scale: [1, 2, 1],
     },
     {
-      type: "vertical-platform-small",
-      position: [4.5, -5.7225584853847895, 0],
-      scale: [1, 2, 1],
-      rotation: [0, 0, 0, "XYZ"],
-    },
-    {
       type: "snake",
       position: [-3.891601556343022, 8.893988830074525, 0],
       rotation: [0, 0, 0, "XYZ"],
@@ -254,6 +248,12 @@ useStore.setState((store) => {
       position: [-0.06645426104332186, 15.276031419509122, 0],
       rotation: [0, 0, 0, "XYZ"],
       scale: [4, 4, 1],
+    },
+    {
+      type: "vertical-platform",
+      position: [4.505331771475527, -3.9174472773313003, 0],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [1, 6, 1],
     },
   ];
   store.level.entities = new Map([
