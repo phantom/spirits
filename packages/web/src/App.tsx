@@ -4,7 +4,6 @@ import { Leva, button, useControls } from "leva";
 import * as React from "react";
 import { MathUtils, TextureLoader } from "three";
 import Camera from "./Camera";
-import ConnectRow from "./ConnectRow";
 import Editor from "./Editor";
 import { Entities } from "./Entities";
 import { Player } from "./Player";
@@ -157,6 +156,8 @@ export const App = () => {
                   >
                     {score > 0 ? "Resume" : "Play"}
                   </button>
+                  <br></br>
+                  <span>Connected to {publicKey?.toString()}</span>
                 </>
               ) : (
                 <div className="flex flex-col items-center">
