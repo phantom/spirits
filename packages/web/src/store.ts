@@ -6,7 +6,13 @@ import { createRef, MutableRefObject, RefObject } from "react";
 import { Mesh, Vector2, Vector3, MathUtils, Quaternion } from "three";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { checkpointsTestLevel, firstLevel, levels } from "./levels";
+import {
+  checkpointsTestLevel,
+  endLevel,
+  firstLevel,
+  levels,
+  tutorialLevel,
+} from "./levels";
 
 setAutoFreeze(false);
 enableMapSet();
@@ -54,7 +60,7 @@ export type Level = {
   entities: Map<string, Entity>;
   floor: MutableRefObject<Mesh | null> | null;
   checkpoint: Vector3;
-  loadLevel: (name: any[]) => void;
+  loadLevel: (entities: any[]) => void;
 };
 
 export type Actions = {
@@ -107,7 +113,7 @@ export const useStore = create(
         get().player.ref?.current?.setTranslation(
           checkpoint.equals(new Vector3())
             ? new Vector3()
-            : checkpoint.add(new Vector3(0, -1.5, 0)),
+            : checkpoint.add(new Vector3(0, -0.5, 0)),
           false
         );
         get().player.ref?.current?.setLinvel(new Vector3(0, 0, 0), false);
@@ -160,5 +166,57 @@ export const useStore = create(
 
 useStore.setState((store) => {
   store.camera.movement.current = new Vector2();
-  store.level.loadLevel([...checkpointsTestLevel]);
+
+  let height = 0;
+  const entities = [endLevel].reduce((agg, init) => {
+    const entities = init(height);
+    height += entities.sort((a, b) => b.position[1] - a.position[1])[0]
+      .position[1];
+
+    // offset
+    // height += 4;
+
+    return [...agg, ...(entities as any)];
+  }, []) as unknown as any[];
+
+  entities.push(
+    {
+      position: [-8, height / 2 - 1, 0],
+      scale: [1, height, 1],
+      type: "platform",
+      rotation: [0, 0, 0],
+    },
+    {
+      position: [8, height / 2 - 1, 0],
+      scale: [1, height, 1],
+      type: "platform",
+      rotation: [0, 0, 0],
+    },
+    {
+      position: [0, -1, 0],
+      scale: [17, 1, 1],
+      type: "platform",
+      rotation: [0, 0, 0],
+    },
+    {
+      position: [-8, height + 3, 0],
+      scale: [1, 8, 1],
+      type: "platform",
+      rotation: [0, 0, 0],
+    },
+    {
+      position: [8, height + 3, 0],
+      scale: [1, 8, 1],
+      type: "platform",
+      rotation: [0, 0, 0],
+    },
+    {
+      position: [0, height + 7, 0],
+      scale: [17, 1, 1],
+      type: "platform",
+      rotation: [0, 0, 0],
+    }
+  );
+
+  store.level.loadLevel(entities as any);
 });

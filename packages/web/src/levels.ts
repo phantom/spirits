@@ -1,59 +1,49 @@
-export const checkpointsTestLevel = [
-  {
-    position: [-8, -30, 0],
-    scale: [1, 200, 1],
-    type: "platform",
-    rotation: [0, 0, 0],
-  },
-  {
-    position: [8, -30, 0],
-    scale: [1, 200, 1],
-    type: "platform",
-    rotation: [0, 0, 0],
-  },
-  {
-    position: [8, -30, 0],
-    scale: [1, 200, 1],
-    type: "platform",
-    rotation: [0, 0, 0],
-  },
-  {
-    position: [0, -1, 0],
-    scale: [17, 1, 1],
-    type: "platform",
-    rotation: [0, 0, 0],
-  },
+export const tutorialLevel = (offset: number) => [
   {
     type: "platform-section",
-    position: [0, 6, 0],
+    position: [0, offset + 6, 0],
     scale: [15, 0.3, 1],
     rotation: [0, 0, 0, "XYZ"],
     oneWay: true,
   },
   {
-    position: [0, 8, 0],
+    position: [0, offset + 8, 0],
     type: "checkpoint",
     rotation: [0, 0, 0],
   },
   {
     type: "platform-section",
-    position: [0, 16, 0],
+    position: [0, offset + 16, 0],
     scale: [15, 0.3, 1],
     rotation: [0, 0, 0, "XYZ"],
     oneWay: true,
   },
   {
-    position: [0, 18, 0],
+    position: [0, offset + 18, 0],
     // scale: [17, 1, 1],
     type: "checkpoint",
     rotation: [0, 0, 0],
   },
   {
     type: "platform-section",
-    position: [0, 16, 0],
+    position: [0, offset + 16, 0],
     scale: [15, 0.3, 1],
     rotation: [0, 0, 0, "XYZ"],
     oneWay: true,
+  },
+];
+
+export const endLevel = (offset: number) => [
+  {
+    type: "square-platform",
+    position: [0, offset + 8, 0],
+    rotation: [0, 0, 0, "XYZ"],
+    scale: [4, 4, 1],
+  },
+  {
+    type: "trophy",
+    position: [0, offset + 11, 0],
+    scale: [2, 2, 1],
   },
 ];
 
@@ -241,6 +231,5 @@ export const levelBlock1 = [
 ];
 
 export const levels = {
-  "checkpoint-test": checkpointsTestLevel,
   first: firstLevel,
 };

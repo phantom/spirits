@@ -92,7 +92,7 @@ export default function Camera() {
   });
 
   useEffect(() => {
-    controlsRef.current?.fitToBox(scalerRef.current, true);
+    controlsRef.current?.fitToBox(scalerRef.current, false);
   }, []);
 
   return (

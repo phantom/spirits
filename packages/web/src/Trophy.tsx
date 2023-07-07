@@ -46,7 +46,7 @@ export function Trophy(props: RigidBodyProps) {
       {...props}
       linearVelocity={[1, 0, 0]}
     >
-      <mesh>
+      <mesh scale={[2, 2, 2]}>
         <planeGeometry args={[1, 1]} />
         <meshStandardMaterial
           map={trophyTexture}
