@@ -31,12 +31,6 @@ export const tutorialLevel = (offset: number) => [
     rotation: [0, 0, 0, "XYZ"],
     oneWay: true,
   },
-  // {
-  //   position: [0, offset + 18, 0],
-  //   // scale: [17, 1, 1],
-  //   type: "checkpoint",
-  //   rotation: [0, 0, 0],
-  // },
   {
     type: "platform",
     position: [-5, offset + 20, 0],
@@ -75,13 +69,6 @@ export const testRoom = (offset: number) => [
     position: [0, offset + 8, 0],
     type: "checkpoint",
     rotation: [0, 0, 0],
-  },
-  {
-    type: "platform-section",
-    position: [0, offset + 14, 0],
-    scale: [15, 0.3, 1],
-    rotation: [0, 0, 0, "XYZ"],
-    oneWay: true,
   },
   {
     type: "platform",
@@ -314,12 +301,6 @@ export const testRoom = (offset: number) => [
   {
     type: "spiked-platform",
     position: [-3.692146330917902, offset + 31.826457227779127, 0],
-    scale: [1, 1, 1],
-    rotation: [0, 0, 0, "XYZ"],
-  },
-  {
-    type: "spiked-platform",
-    position: [1.7635997534412624, offset + 29.339753976056787, 0],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
   },
