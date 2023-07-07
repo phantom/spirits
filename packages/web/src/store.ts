@@ -167,7 +167,7 @@ useStore.setState((store) => {
       orientation: "left",
     },
     {
-      position: [-6.33, 2.33, 0],
+      position: [-6.33, 2.05, 0],
       scale: [1, 1, 1],
       type: "enemy",
     },

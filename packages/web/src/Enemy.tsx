@@ -28,7 +28,11 @@ export function Enemy(props: RigidBodyProps) {
     >
       <mesh>
         <boxGeometry args={[1, 1]} />
-        <meshStandardMaterial map={enemyTexture} />
+        <meshStandardMaterial
+          map={enemyTexture}
+          color={0xffffff}
+          transparent={true}
+        />
       </mesh>
     </RigidBody>
   );
