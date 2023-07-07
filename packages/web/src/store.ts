@@ -168,7 +168,7 @@ useStore.setState((store) => {
   store.camera.movement.current = new Vector2();
 
   let height = 0;
-  const entities = [endLevel].reduce((agg, init) => {
+  const entities = [tutorialLevel, endLevel].reduce((agg, init) => {
     const entities = init(height);
     height += entities.sort((a, b) => b.position[1] - a.position[1])[0]
       .position[1];
