@@ -174,7 +174,7 @@ useStore.setState((store) => {
 
   let height = 0;
 
-  const entities = [tutorialLevel, testRoom, endLevel].reduce((agg, init) => {
+  const entities = [tutorialLevel, testRoom].reduce((agg, init) => {
     const newEntities = init.map((e) => {
       return {
         ...e,
@@ -192,13 +192,13 @@ useStore.setState((store) => {
   // side, top and bottom platforms get automatically added
   entities.push(
     {
-      position: [-8, height / 2 - 20, 0],
+      position: [-8, height / 2 - 1, 0],
       scale: [1, height, 1],
       type: "platform",
       rotation: [0, 0, 0],
     },
     {
-      position: [8, height / 2 - 20, 0],
+      position: [8, height / 2 - 1, 0],
       scale: [1, height, 1],
       type: "platform",
       rotation: [0, 0, 0],
