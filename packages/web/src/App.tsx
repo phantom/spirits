@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Leva, useControls } from "leva";
-import * as React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Vector3 } from "three";
 import Camera from "./Camera";
 import ConnectRow from "./ConnectRow";
@@ -17,6 +17,7 @@ import { Background } from "./Background";
 import { SpikedPlatform } from "./SpikedPlatform";
 import { Enemy } from "./Enemy";
 import { Trophy } from "./Trophy";
+import background from "./sounds/background.mp3";
 
 // =============================================================================
 // Constants
@@ -37,6 +38,11 @@ export const App = () => {
   const isLevelEditing = useStore((store) => store.game.isLevelEditing);
   const set = useStore((store) => store.set);
   const isGamePaused = useStore((store) => store.game.isPaused);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+  };
 
   const _ = useControls(
     {
@@ -72,10 +78,19 @@ export const App = () => {
         store?.player.ref?.current?.setLinvel(new Vector3(0, 0, 0), false);
       });
     }
+    setIsPlaying(true);
   }, []);
 
   return (
     <>
+      <div>
+        {isPlaying && (
+          <audio autoPlay loop>
+            <source src={"/sounds/backgroundMusic.mp3"} type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        )}
+      </div>
       {/* Provider Connection */}
       {provider && (
         <ConnectRow
@@ -118,7 +133,7 @@ export const App = () => {
           ) : (
             <>
               <Physics debug>
-                <Player position={[0, 2, 0]} />
+                <Player position={[0, 2, 0]} playMusic={handlePlay} />
 
                 {/* Spawns coins, spikes, platforms */}
                 <Entities />

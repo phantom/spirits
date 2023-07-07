@@ -24,8 +24,10 @@ const animationMap: { [key: PlayerState]: string } = {
 
 export const Player = ({
   position = [0, 0, 0],
+  playMusic,
 }: {
   position: Vector3Tuple;
+  playMusic: () => void;
 }) => {
   const ref = useRef<RapierRigidBody>(null);
 
@@ -153,6 +155,7 @@ export const Player = ({
       }
       state = "jumping";
       lastJumpedAt.current = Date.now();
+      playMusic();
     }
 
     if (
