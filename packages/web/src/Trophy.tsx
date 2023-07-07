@@ -23,6 +23,7 @@ export function Trophy(props: RigidBodyProps) {
     if (other.rigidBodyObject?.name !== "player") return;
 
     set((store) => {
+      store.game.isPaused = true;
       store.level.levelFinished = true;
     });
 

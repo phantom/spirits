@@ -108,23 +108,21 @@ export const App = () => {
         </audio>
       )}
       {/* Provider Connection */}
-      {provider && (
+      {/* {provider && (
         <ConnectRow
           publicKey={publicKey}
           connectedMethods={connectedMethods}
           connect={handleConnect}
         />
-      )}
+      )} */}
 
       {isGamePaused ? (
         <div>
-          <div className="absolute z-50 flex items-center justify-center h-full w-full p-2">
-            <div className="p-8 bg-[#232326] rounded-lg flex flex-col gap-4 text-white">
-              {isLevelFinished ? (
+          <div className="absolute z-50 bg-[#232326] flex items-center justify-center h-full w-full p-2">
+            <div className="p-8  rounded-lg flex flex-col gap-4 text-white">
+              {!isLevelFinished ? (
                 <>
-                  <h1 className="text-white text-4xl font-bold">
-                    Spirit Sprint
-                  </h1>
+                  <h1 className="text-white text-4xl font-bold">Spirit Jump</h1>
                   <span>content here</span>
                   <button
                     className="bg-[#6E56CF] px-4 py-2 rounded-lg text-white font-bold"
@@ -138,23 +136,39 @@ export const App = () => {
                   </button>
                 </>
               ) : (
-                <>
-                  <h1 className="text-white text-4xl font-bold">GG</h1>
+                <div className="flex flex-col items-center">
+                  <h1 className="text-white text-6xl font-bold mb-2">GG</h1>
                   <span>You Climbed</span>
-                  <span className="text-4xl font-bold">{height}m</span>
-                  <span className="text-4xl font-bold">{score} coins</span>
+                  <div className="flex gap-4 mb-4">
+                    <span className="text-2xl font-bold">{height}m</span>
+                    <span className="text-2xl font-bold">{score} coins</span>
+                  </div>
 
-                  <h2 className="text-white text-4xl font-bold">You Earned</h2>
-                  <img src="/images/coin.png" className="w-20 h-20" />
+                  <h2 className="text-white text-4xl font-bold mb-4">
+                    You Earned
+                  </h2>
+                  <img src="/images/coin.png" className="w-20 h-20 mb-4" />
                   <button
-                    className="bg-[#6E56CF] px-4 py-2 rounded-lg text-white font-bold"
+                    className="bg-[#6E56CF] px-4 py-2  mb-2  rounded-lg text-white font-bold"
                     onClick={() => {
                       alert("claim");
                     }}
                   >
                     Claim
                   </button>
-                </>
+                  <button
+                    className="bg-[#6E56CF] px-4 py-2 rounded-lg text-white font-bold"
+                    onClick={() => {
+                      resetPlayer();
+                      set((store) => {
+                        store.game.isPaused = false;
+                        store.level.levelFinished = false;
+                      });
+                    }}
+                  >
+                    Restart
+                  </button>
+                </div>
               )}
             </div>
           </div>
