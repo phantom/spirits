@@ -100,6 +100,20 @@ export const roomAfterTutorial = [
     rotation: [0, 0, 0, "XYZ"],
     orientation: "up",
   })),
+  ...[...Array(4)].map((_, i) => ({
+    type: "coin",
+    position: [-5, 9 + i * 2, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+    orientation: "up",
+  })),
+  ...[...Array(4)].map((_, i) => ({
+    type: "coin",
+    position: [5, 9 + i * 2, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+    orientation: "up",
+  })),
   {
     type: "platform-section",
     position: [0, 18, 0],
