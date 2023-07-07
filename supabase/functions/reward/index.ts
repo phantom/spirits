@@ -84,13 +84,13 @@ router.get("/reward", async (context) => {
     numLeftInCollection: filteredCollectibles.length,
   };
 
-  // const transferHash = await metaplex.nfts().transfer({
-  //   nftOrSft: {
-  //     address: new PublicKey(sweepstakes.chainData.mint),
-  //     tokenStandard: 3,
-  //   },
-  //   toOwner: new PublicKey(pubkey),
-  // });
+  const transferHash = await metaplex.nfts().transfer({
+    nftOrSft: {
+      address: new PublicKey(sweepstakes.chainData.mint),
+      tokenStandard: 3,
+    },
+    toOwner: new PublicKey(pubkey),
+  });
 
   // Insert into database
   await insertSweepstakes(pool, pubkey, sweepstakesObj);
