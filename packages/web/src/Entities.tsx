@@ -9,6 +9,7 @@ import { SpikedPlatform } from "./SpikedPlatform";
 import { Platform, PlatformSprite } from "./Platform";
 import { Snake } from "./Snake";
 import { Enemy } from "./Enemy";
+import { Trophy } from "./Trophy";
 
 const coinsCount = 25;
 const spikesCount = 4;
@@ -137,6 +138,16 @@ export const Entities = () => {
               key={uuid}
               position={new Vector3(...blueprint.position)}
               orientation={(blueprint as any)?.orientation}
+            />
+          );
+          break;
+        case "trophy":
+          entities.current.set(
+            uuid,
+            <Trophy
+              key={uuid}
+              position={new Vector3(...blueprint.position)}
+              scale={blueprint.scale}
             />
           );
       }

@@ -15,7 +15,7 @@ export function Trophy(props: RigidBodyProps) {
   return (
     <RigidBody
       type="fixed"
-      scale={[2, 2, 1]}
+      scale={props.scale}
       onCollisionEnter={({ other }) => {
         if (other.rigidBodyObject?.name !== "player") return;
         console.log("Trophy collected!");

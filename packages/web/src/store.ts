@@ -28,6 +28,7 @@ export type EntityType =
   | "spike"
   | "snake"
   | "enemy"
+  | "trophy"
   | "vertical-platform"
   | "vertical-platform-small"
   | "platform-section"
@@ -284,6 +285,11 @@ useStore.setState((store) => {
       scale: [15, 0.3, 1],
       rotation: [0, 0, 0, "XYZ"],
       oneWay: true,
+    },
+    {
+      type: "trophy",
+      position: [0, 65, 0],
+      scale: [2, 2, 1],
     },
   ];
   store.level.entities = new Map([
