@@ -1,8 +1,8 @@
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useLoader } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Leva, button, useControls } from "leva";
 import * as React from "react";
-import { MathUtils } from "three";
+import { MathUtils, TextureLoader } from "three";
 import Camera from "./Camera";
 import ConnectRow from "./ConnectRow";
 import Editor from "./Editor";
@@ -34,6 +34,8 @@ export const App = () => {
   const isGamePaused = useStore((store) => store.game.isPaused);
   const isLevelFinished = useStore((store) => store.level.levelFinished);
   const [isPlaying, setIsPlaying] = React.useState(false);
+
+  useLoader(TextureLoader, "/sprites/spritesheet.png");
 
   const handlePlay = () => {
     setIsPlaying(true);

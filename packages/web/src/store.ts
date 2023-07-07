@@ -148,6 +148,7 @@ export const useStore = create(
       },
     },
     game: {
+      isLoaded: false,
       isPaused: true,
       isPlaying: true,
       isLevelEditing: false,

@@ -293,26 +293,28 @@ export const Player = ({
           <boxGeometry args={[0.3, 1, 0.1]} />
           <meshStandardMaterial color="green" opacity={0} transparent={true} />
         </mesh> */}
-        <SpriteAnimator
-          flipX={flipX}
-          scale={[2, 2, 2]}
-          position={[0, 0, 0]}
-          onLoopEnd={onEnd}
-          frameName={frameName}
-          fps={20}
-          animationNames={[
-            "idle",
-            "run",
-            "jump",
-            "RightWallslide",
-            "doublejump",
-          ]}
-          autoPlay={true}
-          loop={true}
-          alphaTest={0.01}
-          textureImageURL={"./sprites/spritesheet.png"}
-          textureDataURL={"./sprites/spritesheet.json"}
-        />
+        <React.Suspense fallback={null}>
+          <SpriteAnimator
+            flipX={flipX}
+            scale={[2, 2, 2]}
+            position={[0, 0, 0]}
+            onLoopEnd={onEnd}
+            frameName={frameName}
+            fps={20}
+            animationNames={[
+              "idle",
+              "run",
+              "jump",
+              "RightWallslide",
+              "doublejump",
+            ]}
+            autoPlay={true}
+            loop={true}
+            alphaTest={0.01}
+            textureImageURL={"./sprites/spritesheet.png"}
+            textureDataURL={"./sprites/spritesheet.json"}
+          />
+        </React.Suspense>
       </RigidBody>
     </>
   );
