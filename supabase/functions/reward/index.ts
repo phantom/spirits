@@ -99,7 +99,7 @@ router.get("/reward", async (context) => {
     ...sweepstakesObj,
     freshSweepstakes: true,
     mint: sweepstakes.chainData.mint,
-    // transferHash,
+    transferHash,
   };
 });
 
