@@ -121,7 +121,6 @@ export const useStore = create(
       publicKey: null,
       reset: () => {
         const checkpoint = get().level.checkpoint.clone();
-        console.log(checkpoint);
         get().player.ref?.current?.setTranslation(
           checkpoint.equals(new Vector3())
             ? new Vector3()
