@@ -7,6 +7,11 @@ export const tutorialLevel = [
     oneWay: true,
   },
   {
+    position: [0, 8, 0],
+    type: "checkpoint",
+    rotation: [0, 0, 0],
+  },
+  {
     type: "tip",
     position: [-4.5, 8, -0.1],
     rotation: [0, 0, 0, "XYZ"],
