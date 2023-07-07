@@ -42,6 +42,7 @@ export type EntityType =
   | "vertical-platform"
   | "vertical-platform-small"
   | "platform-section"
+  | "tip"
   | "square-platform";
 
 export type Entity = {

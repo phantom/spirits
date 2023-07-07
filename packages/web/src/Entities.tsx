@@ -11,6 +11,7 @@ import { Snake } from "./Snake";
 import { Enemy } from "./Enemy";
 import { Checkpoint } from "./Checkpoint";
 import { Trophy } from "./Trophy";
+import { Tip } from "./Tip";
 
 const coinsCount = 25;
 const spikesCount = 4;
@@ -152,6 +153,16 @@ export const Entities = () => {
           entities.current.set(
             uuid,
             <Trophy
+              key={uuid}
+              position={new Vector3(...blueprint.position)}
+              scale={blueprint.scale}
+            />
+          );
+          break;
+        case "tip":
+          entities.current.set(
+            uuid,
+            <Tip
               key={uuid}
               position={new Vector3(...blueprint.position)}
               scale={blueprint.scale}

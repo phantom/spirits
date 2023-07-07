@@ -7,6 +7,12 @@ export const tutorialLevel = [
     oneWay: true,
   },
   {
+    type: "tip",
+    position: [-4.5, 8, -0.1],
+    rotation: [0, 0, 0, "XYZ"],
+    scale: [5.25, 3, 1],
+  },
+  {
     type: "coin",
     position: [-2, 10, 0],
     scale: [1, 1, 1],

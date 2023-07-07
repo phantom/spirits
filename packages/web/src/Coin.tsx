@@ -54,7 +54,8 @@ export const Coin = (props: CoinProps) => {
     <RigidBody
       name="coin"
       sensor={true}
-      onIntersectionEnter={() => {
+      onIntersectionEnter={(other) => {
+        if (other.rigidBodyObject?.name !== "player") return;
         props.remove();
         if (!scoredCoinsRef?.current?.has(props.key)) {
           scoredCoinsRef?.current?.add(props.key);
