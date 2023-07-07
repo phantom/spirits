@@ -26,7 +26,9 @@ const provider = getProvider();
 
 export const App = () => {
   const providerProps = useProviderProps();
-  const { publicKey, connectedMethods, handleConnect } = providerProps;
+  const { publicKey, handleConnect } = providerProps;
+
+  console.log("publicKey", publicKey?.toString());
 
   const score = useStore((store) => store.player.score);
   const height = useStore((store) => store.player.maxHeight);
@@ -135,14 +137,25 @@ export const App = () => {
                     checkpoint
                   </span>
                   <button
-                    className="bg-[#6E56CF] px-4 py-2 rounded-lg w-full text-white font-bold"
+                    className="bg-[#6E56CF] px-4 py-2 rounded-full w-full text-white font-bold"
+                    onClick={() => {
+                      handleConnect();
+                    }}
+                  >
+                    Connect Wallet
+                  </button>
+                  <button
+                    className={`bg-[#6E56CF] px-4 py-2 rounded-full w-full text-white font-bold ${
+                      publicKey === null ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    disabled={publicKey === null}
                     onClick={() => {
                       set((store) => {
                         store.game.isPaused = false;
                       });
                     }}
                   >
-                    {score > 0 ? "Resume" : "Start"}
+                    {score > 0 ? "Resume" : "Play"}
                   </button>
                 </>
               ) : (
