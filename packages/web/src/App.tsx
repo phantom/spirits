@@ -122,8 +122,13 @@ export const App = () => {
             <div className="p-8  rounded-lg flex flex-col gap-4 text-white">
               {!isLevelFinished ? (
                 <>
-                  <h1 className="text-white text-4xl font-bold">Spirit Jump</h1>
-                  <span>content here</span>
+                  <h1 className="text-white text-6xl font-bold">Spirit Jump</h1>
+                  <span className="text-4xl font-bold">
+                    Click / tap to play.
+                  </span>
+                  <span className=" text-center">
+                    Top Right button or R for restart to last checkpoint
+                  </span>
                   <button
                     className="bg-[#6E56CF] px-4 py-2 rounded-lg text-white font-bold"
                     onClick={() => {
