@@ -30,7 +30,6 @@ export const Player = ({
   playMusic: () => void;
 }) => {
   const ref = useRef<RapierRigidBody>(null);
-
   const set = useStore((store) => store.set);
   const playerState = useStore((store) => store.player.state);
   const playerStateRef = useRef(playerState);
@@ -125,6 +124,8 @@ export const Player = ({
   useFrame((_, delta) => {
     const { current: player } = ref;
     if (!player) return;
+
+    if (player.translation().y < -10) resetPlayer();
 
     let state = playerStateRef.current;
 
