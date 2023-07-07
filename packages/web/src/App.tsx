@@ -166,7 +166,14 @@ export const App = () => {
                     {score > 0 ? "Resume" : "Play"}
                   </button>
                   <br></br>
-                  <span>Connected to {publicKey?.toString()}</span>
+                  {publicKey ? (
+                    <span>
+                      Connected to{" "}
+                      {`${publicKey?.toString().substring(0, 10)}...`}
+                    </span>
+                  ) : (
+                    <span>Not connected</span>
+                  )}
                 </>
               ) : (
                 <div className="flex flex-col items-center">
@@ -182,7 +189,7 @@ export const App = () => {
                   </h2>
                   <img src="/images/coin.png" className="w-20 h-20 mb-4" />
                   <button
-                    className="bg-[#6E56CF] px-4 py-2 w-full mb-2  rounded-lg text-white font-bold"
+                    className="bg-[#6E56CF] px-4 py-2 w-full mb-2 rounded-full text-white font-bold"
                     onClick={() => {
                       fetchAirdrop();
                     }}
