@@ -101,19 +101,16 @@ export const App = () => {
     if (!isLevelEditing) {
       resetPlayer();
     }
-    setIsPlaying(true);
   }, []);
 
   return (
     <>
-      <div>
-        {isPlaying && (
-          <audio autoPlay loop>
-            <source src={"/sounds/backgroundMusic.mp3"} type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
-        )}
-      </div>
+      {isPlaying && (
+        <audio autoPlay loop>
+          <source src={"/sounds/backgroundMusic.mp3"} type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+      )}
       {/* Provider Connection */}
       {provider && (
         <ConnectRow
