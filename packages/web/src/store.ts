@@ -12,6 +12,7 @@ import {
   firstLevel,
   levels,
   roomOne,
+  roomTwo,
   testRoom,
   tutorialLevel,
 } from "./levels";
@@ -43,6 +44,7 @@ export type EntityType =
   | "vertical-platform"
   | "vertical-platform-small"
   | "platform-section"
+  | "platform-small"
   | "tip"
   | "square-platform";
 
@@ -57,6 +59,8 @@ export type Entity = {
   // platform specific
   oneWay?: boolean;
   orientation?: string;
+  snakeLength?: number;
+  numSnakes?: number;
 };
 
 export type Level = {
@@ -176,13 +180,10 @@ useStore.setState((store) => {
   let height = 0;
 
   const entities = [
-    tutorialLevel,
-    roomOne, // custom room starting with checkpoint
-    // testRoom, // custom room starting with checkpoint
-    // testRoom, // custom room starting with checkpoint
-    // testRoom, // custom room starting with checkpoint
-    // testRoom, // custom room starting with checkpoint
-    endLevel,
+    // tutorialLevel,
+    // roomOne, // custom room starting with checkpoint
+    roomTwo, // custom room starting with checkpoint
+    // endLevel,
   ].reduce((agg, init) => {
     const newEntities = init.map((e) => {
       return {

@@ -106,8 +106,8 @@ export const Entities = () => {
               key={uuid}
               width={blueprint.scale[0]}
               height={blueprint.scale[1]}
-              snakeLength={5}
-              numSnakes={1}
+              snakeLength={blueprint.snakeLength ?? 5}
+              numSnakes={blueprint.numSnakes ?? 1}
             />
           );
           break;
@@ -127,6 +127,7 @@ export const Entities = () => {
         case "vertical-platform":
         case "vertical-platform-small":
         case "platform-section":
+        case "platform-small":
         case "platform":
           entities.current.set(
             uuid,
