@@ -54,3 +54,12 @@ export interface TLog {
   message: string;
   messageTwo?: string;
 }
+
+export interface Airdrop {
+  id: string;
+  name: string;
+  image: string;
+  expiration: string;
+  numLeftInCollection: number;
+  freshSweepstake: boolean;
+}

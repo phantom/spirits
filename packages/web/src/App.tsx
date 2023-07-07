@@ -4,7 +4,6 @@ import { Leva, button, useControls } from "leva";
 import * as React from "react";
 import { MathUtils, TextureLoader } from "three";
 import Camera from "./Camera";
-import ConnectRow from "./ConnectRow";
 import Editor from "./Editor";
 import { Entities } from "./Entities";
 import { Player } from "./Player";
@@ -13,6 +12,7 @@ import getProvider from "./utils/getProvider";
 import { useProviderProps } from "./utils/useProviderProps";
 import { Background } from "./Background";
 import { levels } from "./levels";
+import { Airdrop } from "./types";
 
 // =============================================================================
 // Constants
@@ -36,6 +36,7 @@ export const App = () => {
   const isGamePaused = useStore((store) => store.game.isPaused);
   const isLevelFinished = useStore((store) => store.level.levelFinished);
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const [airdrop, setAirdrop] = React.useState<Airdrop>();
 
   useLoader(TextureLoader, "/sprites/spritesheet.png", () => {
     // console.log("loaded");
@@ -105,6 +106,13 @@ export const App = () => {
     }
   }, []);
 
+  const fetchAirdrop = async () => {
+    const res = await fetch(
+      `https://fmeabzbszutxkewzxuwb.supabase.co/functions/v1/reward?pubkey=${publicKey}`
+    );
+    const data: Airdrop = await res.json();
+  };
+
   return (
     <>
       {isPlaying && (
@@ -130,9 +138,9 @@ export const App = () => {
                 <>
                   <img
                     src="/screen/splash-screen.png"
-                    className="w-36 h-36 mb-4"
+                    className="w-40 h-40 mb-4"
                   />
-                  <h1 className="text-white text-6xl font-bold">Spirit Jump</h1>
+                  <h1 className="text-white text-5xl font-bold">Spirit Jump</h1>
                   <span>Earn rewards by completing challenges every day</span>
                   <span>
                     Click / tap to play. Press R to restart from the last
@@ -159,6 +167,15 @@ export const App = () => {
                   >
                     {score > 0 ? "Resume" : "Play"}
                   </button>
+                  <br></br>
+                  {publicKey ? (
+                    <span>
+                      Connected to{" "}
+                      {`${publicKey?.toString().substring(0, 10)}...`}
+                    </span>
+                  ) : (
+                    <span>Not connected</span>
+                  )}
                 </>
               ) : (
                 <div className="flex flex-col items-center">
@@ -174,9 +191,9 @@ export const App = () => {
                   </h2>
                   <img src="/images/coin.png" className="w-20 h-20 mb-4" />
                   <button
-                    className="bg-[#6E56CF] px-4 py-2 w-full mb-2  rounded-lg text-white font-bold"
+                    className="bg-[#6E56CF] px-4 py-2 w-full mb-2 rounded-full text-white font-bold"
                     onClick={() => {
-                      alert("claim");
+                      fetchAirdrop();
                     }}
                   >
                     Claim
@@ -222,7 +239,7 @@ export const App = () => {
                 <Editor />
               ) : isGamePaused ? null : (
                 <>
-                  <Physics debug>
+                  <Physics>
                     <Player position={[0, 2, 0]} playMusic={handlePlay} />
 
                     {/* Spawns coins, spikes, platforms */}

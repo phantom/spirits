@@ -20,7 +20,7 @@ const connection = new Connection(
 );
 const metaplex = new Metaplex(connection).use(keypairIdentity(keypair));
 
-const COLLECTION_ID = "BSSKxxsMXEFozV4kQoqNqhfvjpQxJBCf2jB7mR2Bqx4p";
+const COLLECTION_ID = "3Lw12XTn5nH1C61jRVcZ4SoxFndoGuVJdH6ZgRszKs7L";
 
 // Database pool
 const databaseUrl = Deno.env.get("SUPABASE_DB_URL");
@@ -48,21 +48,15 @@ router.get("/reward", async (context) => {
   const databaseSweepstakes = await lookupSweepstakes(pool, pubkey);
 
   // Shortcut if user already has a sweepstakes entry
-  // if (databaseSweepstakes.length > 0) {
-  //   const parsedSweeptakes = JSON.parse(databaseSweepstakes[0].sweepstakes);
-  //   // Check the expiration date
-  //   const currentDate = new Date();
-  //   const expiration = new Date(parsedSweeptakes.expiration);
-  //   if (currentDate < expiration) {
-  //     context.response.body = {
-  //       ...parsedSweeptakes,
-  //       freshSweepstake: false,
-  //     };
-  //     return;
-  //   } else {
-  //     await deleteSweepstakes(pool, pubkey);
-  //   }
-  // }
+  if (databaseSweepstakes.length > 0) {
+    const parsedSweeptakes = JSON.parse(databaseSweepstakes[0].sweepstakes);
+    context.response.headers.set("Access-Control-Allow-Origin", "*");
+    context.response.body = {
+      ...parsedSweeptakes,
+      freshSweepstake: false,
+    };
+    return;
+  }
 
   // Fetch all collectibles
   const collectibles = await getCollectiblesByWallet(keypair.publicKey);
@@ -90,13 +84,13 @@ router.get("/reward", async (context) => {
     numLeftInCollection: filteredCollectibles.length,
   };
 
-  const transferHash = await metaplex.nfts().transfer({
-    nftOrSft: {
-      address: new PublicKey(sweepstakes.chainData.mint),
-      tokenStandard: 3,
-    },
-    toOwner: new PublicKey(pubkey),
-  });
+  // const transferHash = await metaplex.nfts().transfer({
+  //   nftOrSft: {
+  //     address: new PublicKey(sweepstakes.chainData.mint),
+  //     tokenStandard: 3,
+  //   },
+  //   toOwner: new PublicKey(pubkey),
+  // });
 
   // Insert into database
   await insertSweepstakes(pool, pubkey, sweepstakesObj);
@@ -105,7 +99,7 @@ router.get("/reward", async (context) => {
     ...sweepstakesObj,
     freshSweepstakes: true,
     mint: sweepstakes.chainData.mint,
-    transferHash,
+    // transferHash,
   };
 });
 
