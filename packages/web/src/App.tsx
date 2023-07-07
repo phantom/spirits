@@ -16,6 +16,7 @@ import { Snake } from "./Snake";
 import { Background } from "./Background";
 import { SpikedPlatform } from "./SpikedPlatform";
 import { Enemy } from "./Enemy";
+import { Trophy } from "./Trophy";
 
 // =============================================================================
 // Constants
