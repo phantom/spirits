@@ -114,7 +114,7 @@ export const useStore = create(
         get().player.ref?.current?.setTranslation(
           checkpoint.equals(new Vector3())
             ? new Vector3()
-            : checkpoint.add(new Vector3(0, -0.5, 0)),
+            : checkpoint.add(new Vector3(0, -1.5, 0)),
           false
         );
         get().player.ref?.current?.setLinvel(new Vector3(0, 0, 0), false);

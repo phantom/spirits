@@ -217,7 +217,7 @@ export const App = () => {
               <Camera />
               {isLevelEditing ? (
                 <Editor />
-              ) : (
+              ) : isGamePaused ? null : (
                 <>
                   <Physics debug>
                     <Player position={[0, 2, 0]} playMusic={handlePlay} />
