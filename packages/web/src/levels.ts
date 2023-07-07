@@ -6,7 +6,6 @@ export const tutorialLevel = [
     rotation: [0, 0, 0, "XYZ"],
     oneWay: true,
   },
-  { type: "enemy", position: [3.33, 0, 0], scale: [1, 1, 1] },
   {
     type: "tip",
     position: [-4.5, 8, -0.1],
