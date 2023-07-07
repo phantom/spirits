@@ -147,7 +147,7 @@ export const App = () => {
               />
             )}
             <div className="p-8  rounded-lg flex flex-col gap-4 text-white items-center">
-              {isLevelFinished ? (
+              {!isLevelFinished ? (
                 <>
                   <img
                     src="/screen/splash-screen.png"
