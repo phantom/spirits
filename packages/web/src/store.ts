@@ -160,8 +160,8 @@ export const useStore = create(
     },
     game: {
       isLoaded: false,
-      isPaused: false,
-      isPlaying: true,
+      isPaused: true,
+      isPlaying: false,
       isLevelEditing: false,
     },
     camera: {
