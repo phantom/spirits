@@ -174,7 +174,7 @@ useStore.setState((store) => {
 
   let height = 0;
 
-  const entities = [tutorialLevel, testRoom].reduce((agg, init) => {
+  const entities = [testRoom].reduce((agg, init) => {
     const newEntities = init.map((e) => {
       return {
         ...e,
