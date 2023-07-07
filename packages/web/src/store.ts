@@ -269,18 +269,21 @@ useStore.setState((store) => {
       position: [0, 35.877653185562046, 0],
       scale: [15, 0.3, 1],
       rotation: [0, 0, 0, "XYZ"],
+      oneWay: true,
     },
     {
       type: "platform-section",
       position: [0, 19.797101295537235, 0],
       scale: [15, 0.3, 1],
       rotation: [0, 0, 0, "XYZ"],
+      oneWay: true,
     },
     {
       type: "platform-section",
       position: [0, 55.234174650312546, 0],
       scale: [15, 0.3, 1],
       rotation: [0, 0, 0, "XYZ"],
+      oneWay: true,
     },
   ];
   store.level.entities = new Map([
