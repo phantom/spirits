@@ -6,88 +6,159 @@ export const tutorialLevel = [
     rotation: [0, 0, 0, "XYZ"],
     oneWay: true,
   },
+  { type: "enemy", position: [3.33, 0, 0], scale: [1, 1, 1] },
   {
     type: "tip",
     position: [-4.5, 8, -0.1],
     rotation: [0, 0, 0, "XYZ"],
     scale: [5.25, 3, 1],
   },
-  {
+  ...[...Array(3)].map((_, i) => ({
     type: "coin",
-    position: [1, 10, 0],
+    position: [1 + i * 2, 10, 0],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
-  },
-  {
-    type: "coin",
-    position: [3, 10, 0],
-    scale: [1, 1, 1],
-    rotation: [0, 0, 0, "XYZ"],
-  },
-  {
-    type: "coin",
-    position: [5, 10, 0],
-    scale: [1, 1, 1],
-    rotation: [0, 0, 0, "XYZ"],
-  },
+  })),
+  // {
+  //   type: "platform-section",
+  //   position: [0, 20, 0],
+  //   scale: [5, 0.3, 1],
+  //   rotation: [0, 0, 0, "XYZ"],
+  //   oneWay: true,
+  // },
+  // {
+  //   type: "coin",
+  //   position: [1, 22, 0],
+  //   scale: [1, 1, 1],
+  //   rotation: [0, 0, 0, "XYZ"],
+  // },
+  // {
+  //   type: "coin",
+  //   position: [-1, 22, 0],
+  //   scale: [1, 1, 1],
+  //   rotation: [0, 0, 0, "XYZ"],
+  // },
+  // {
+  //   type: "platform-section",
+  //   position: [6, 25, 0],
+  //   scale: [4, 0.3, 1],
+  //   rotation: [0, 0, 0, "XYZ"],
+  //   oneWay: true,
+  // },
+  // {
+  //   type: "coin",
+  //   position: [-6, 27, 0],
+  //   scale: [1, 1, 1],
+  //   rotation: [0, 0, 0, "XYZ"],
+  // },
+  // {
+  //   type: "coin",
+  //   position: [6, 27, 0],
+  //   scale: [1, 1, 1],
+  //   rotation: [0, 0, 0, "XYZ"],
+  // },
+  // {
+  //   type: "platform-section",
+  //   position: [-6, 25, 0],
+  //   scale: [4, 0.3, 1],
+  //   rotation: [0, 0, 0, "XYZ"],
+  //   oneWay: true,
+  // },
+  // {
+  //   type: "platform-section",
+  //   position: [0, 29, 0],
+  //   scale: [5, 0.3, 1],
+  //   rotation: [0, 0, 0, "XYZ"],
+  //   oneWay: true,
+  // },
+];
+
+export const roomAfterTutorial = [
   {
     type: "platform-section",
-    position: [0, 16, 0],
-    scale: [15, 0.3, 1],
+    position: [0, 5, 0],
+    scale: [17, 0.3, 1],
     rotation: [0, 0, 0, "XYZ"],
     oneWay: true,
   },
   {
+    type: "square-platform",
+    position: [0, 12, 0],
+    rotation: [0, 0, 0, "XYZ"],
+    scale: [4, 4, 1],
+  },
+  ...[...Array(4)].map((_, i) => ({
+    type: "spiked-platform",
+    position: [-1.5 + i, 11, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+    orientation: "down",
+  })),
+  ...[...Array(4)].map((_, i) => ({
+    type: "spiked-platform",
+    position: [-1.5 + i, 13, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+    orientation: "up",
+  })),
+  {
     type: "platform-section",
-    position: [0, 20, 0],
-    scale: [5, 0.3, 1],
+    position: [0, 18, 0],
+    scale: [17, 0.3, 1],
     rotation: [0, 0, 0, "XYZ"],
     oneWay: true,
   },
+  { type: "enemy", position: [0, 19, 0], scale: [1, 1, 1] },
+];
+
+export const roomAfterTutorial2 = [
   {
+    type: "platform",
+    position: [-4.5, 4, 0],
+    scale: [8, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+  },
+  ...[...Array(10)].map((_, i) => ({
     type: "coin",
-    position: [1, 22, 0],
+    position: [
+      Math.cos((i / 5) * Math.PI) + 4,
+      4 + Math.sin((i / 5) * Math.PI),
+      0,
+    ],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
-  },
-  {
+  })),
+  ...[...Array(10)].map((_, i) => ({
     type: "coin",
-    position: [-1, 22, 0],
+    position: [
+      Math.cos((i / 5) * Math.PI) - 4,
+      12 + Math.sin((i / 5) * Math.PI),
+      0,
+    ],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
-  },
-  {
-    type: "platform-section",
-    position: [6, 25, 0],
-    scale: [4, 0.3, 1],
-    rotation: [0, 0, 0, "XYZ"],
-    oneWay: true,
-  },
-  {
+  })),
+  ...[...Array(10)].map((_, i) => ({
     type: "coin",
-    position: [-6, 27, 0],
+    position: [
+      Math.cos((i / 5) * Math.PI) + 4,
+      20 + Math.sin((i / 5) * Math.PI),
+      0,
+    ],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
-  },
+  })),
   {
-    type: "coin",
-    position: [6, 27, 0],
-    scale: [1, 1, 1],
+    type: "platform",
+    position: [4.5, 12, 0],
+    scale: [8, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
   },
   {
-    type: "platform-section",
-    position: [-6, 25, 0],
-    scale: [4, 0.3, 1],
+    type: "platform",
+    position: [-4.5, 20, 0],
+    scale: [8, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
-    oneWay: true,
-  },
-  {
-    type: "platform-section",
-    position: [0, 29, 0],
-    scale: [5, 0.3, 1],
-    rotation: [0, 0, 0, "XYZ"],
-    oneWay: true,
   },
 ];
 
@@ -111,7 +182,6 @@ export const roomThree = [
     rotation: [0, 0, 0, "XYZ"],
     oneWay: true,
   },
-  { position: [0, 8, 0], type: "checkpoint", rotation: [0, 0, 0] },
   {
     type: "decor",
     position: [0, 11.04, -1],
@@ -129,12 +199,6 @@ export const roomThree = [
     position: [3.3885348978911427, 22.93746458108008, 0],
     scale: [3, 10, 1],
     rotation: [0, 0, 0, "XYZ"],
-  },
-  {
-    type: "enemy",
-    position: [-2.1014793079935146, 32.611818299107625, 0],
-    rotation: [0, 0, 0, "XYZ"],
-    scale: [1, 1, 1],
   },
   {
     type: "coin",
@@ -157,12 +221,6 @@ export const roomThree = [
   {
     type: "coin",
     position: [0, 18.65213015333094, 0],
-    scale: [1, 1, 1],
-    rotation: [0, 0, 0, "XYZ"],
-  },
-  {
-    type: "enemy",
-    position: [2.282317048853363, 32.611818299107625, 0],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
   },
@@ -197,7 +255,7 @@ export const roomTwo = [
   },
   ...[...Array(4)].map((_, i) => ({
     type: "coin",
-    position: [-3 + i * 1.5, 30, 0],
+    position: [-2.5 + i * 1.5, 30, 0],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
   })),
