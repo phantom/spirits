@@ -29,7 +29,6 @@ router.get("/sweepstakes", async (context) => {
 
   // Lookup user in database for sweepstakes
   const databaseSweepstakes = await lookupSweepstakes(pool, pubkey);
-  console.log("databaseSweepstakes", databaseSweepstakes);
 
   // Shortcut if user already has a sweepstakes entry
   if (databaseSweepstakes.length > 0) {
