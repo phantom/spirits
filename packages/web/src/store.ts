@@ -191,23 +191,36 @@ useStore.setState((store) => {
   // side, top and bottom platforms get automatically added
   entities.push(
     {
-      position: [-8, height / 2 - 1, 0],
+      position: [-8, height / 2 - 20, 0],
       scale: [1, height, 1],
       type: "platform",
       rotation: [0, 0, 0],
     },
     {
-      position: [8, height / 2 - 1, 0],
+      position: [8, height / 2 - 20, 0],
       scale: [1, height, 1],
       type: "platform",
       rotation: [0, 0, 0],
     },
     {
-      position: [0, -1, 0],
-      scale: [17, 1, 1],
+      position: [0, 0, 0],
+      scale: [12, 1, 1],
       type: "platform",
       rotation: [0, 0, 0],
     },
+    {
+      position: [-5.5, 1, 0],
+      scale: [1, 2, 1],
+      type: "vertical-platform-small",
+      rotation: [0, 1, 0],
+    },
+    {
+      position: [5.5, 1, 0],
+      scale: [1, 2, 1],
+      type: "vertical-platform-small",
+      rotation: [0, 0, 0],
+    },
+
     {
       position: [-8, height + 3, 0],
       scale: [1, 8, 1],
