@@ -13,6 +13,7 @@ import { useProviderProps } from "./utils/useProviderProps";
 import { Background } from "./Background";
 import { levels } from "./levels";
 import { Airdrop } from "./types";
+import Confetti from "react-confetti";
 
 // =============================================================================
 // Constants
@@ -37,6 +38,7 @@ export const App = () => {
   const isLevelFinished = useStore((store) => store.level.levelFinished);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [airdrop, setAirdrop] = React.useState<Airdrop>();
+  const [loadingAirdrop, setLoadingAirdrop] = React.useState(false);
 
   useLoader(TextureLoader, "/sprites/spritesheet.png");
 
@@ -105,10 +107,13 @@ export const App = () => {
   }, []);
 
   const fetchAirdrop = async () => {
+    setLoadingAirdrop(true);
     const res = await fetch(
       `https://fmeabzbszutxkewzxuwb.supabase.co/functions/v1/reward?pubkey=${publicKey}`
     );
-    const data: Airdrop = await res.json();
+    const airdrop: Airdrop = await res.json();
+    setAirdrop(airdrop);
+    setLoadingAirdrop(false);
   };
 
   return (
@@ -131,8 +136,16 @@ export const App = () => {
       {isGamePaused ? (
         <div>
           <div className="absolute z-50 bg-[#232326] flex items-center justify-center h-full w-full p-2">
+            {airdrop && (
+              <Confetti
+                width={window.innerWidth}
+                height={window.innerHeight}
+                numberOfPieces={100}
+                friction={0.99}
+              />
+            )}
             <div className="p-8  rounded-lg flex flex-col gap-4 text-white items-center">
-              {!isLevelFinished ? (
+              {isLevelFinished ? (
                 <>
                   <img
                     src="/screen/splash-screen.png"
@@ -176,19 +189,37 @@ export const App = () => {
                     <span className="text-2xl font-bold">{height}m</span>
                     <span className="text-2xl font-bold">{score} coins</span>
                   </div>
-
                   <h2 className="text-white text-4xl font-bold mb-4">
                     You Earned
                   </h2>
-                  <img src="/images/coin.png" className="w-20 h-20 mb-4" />
-                  <button
-                    className="bg-[#6E56CF] px-4 py-2 w-full mb-2  rounded-lg text-white font-bold"
-                    onClick={() => {
-                      fetchAirdrop();
-                    }}
-                  >
-                    Claim
-                  </button>
+                  {airdrop ? (
+                    <img src={airdrop.image} className="w-40 h-40 mb-4" />
+                  ) : loadingAirdrop ? (
+                    <div className="w-40 h-40 mb-4 relative rounded-lg overflow-hidden animate-spin">
+                      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white opacity-0 animate-pulse"></div>
+                    </div>
+                  ) : (
+                    <div className="w-40 h-40 mb-4 relative rounded-lg overflow-hidden">
+                      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white opacity-0 animate-pulse"></div>
+                    </div>
+                  )}
+                  {!airdrop ? (
+                    <button
+                      className="bg-[#6E56CF] px-4 py-2 w-full mb-2  rounded-lg text-white font-bold"
+                      onClick={() => {
+                        fetchAirdrop();
+                      }}
+                    >
+                      Claim
+                    </button>
+                  ) : (
+                    <button
+                      className="bg-[#6E56CF] px-4 py-2 w-full mb-2  rounded-lg text-white font-bold"
+                      onClick={() => {}}
+                    >
+                      Play Again
+                    </button>
+                  )}
                 </div>
               )}
             </div>

@@ -15,7 +15,7 @@ export function Trophy(props: RigidBodyProps) {
 
   const set = useStore((store) => store.set);
   const publicKey = useStore((store) => store.player.publicKey || "");
-  const AIRDROP_ENDPOINT = `https://fmeabzbszutxkewzxuwb.supabase.co/functions/v1/reward?pubkey=${publicKey}`;
+  // const AIRDROP_ENDPOINT = `https://fmeabzbszutxkewzxuwb.supabase.co/functions/v1/reward?pubkey=${publicKey}`;
 
   // const [isCapured, setIsCaptured] = React.useState(false);
 
@@ -27,19 +27,19 @@ export function Trophy(props: RigidBodyProps) {
       store.level.levelFinished = true;
     });
 
-    fetch(AIRDROP_ENDPOINT)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    // fetch(AIRDROP_ENDPOINT)
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Network response was not ok");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     console.log(data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
   };
 
   return (
