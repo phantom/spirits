@@ -22,6 +22,7 @@
     "nipplejs": "^0.10.1",
     "postcss": "^8.4.24",
     "react": "^18.2.0",
+    "react-confetti": "^6.1.0",
     "react-dom": "^18.2.0",
     "seed-color": "^2.0.1",
     "styled-components": "^6.0.2",
