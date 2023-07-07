@@ -136,9 +136,9 @@ export const App = () => {
                 <>
                   <img
                     src="/screen/splash-screen.png"
-                    className="w-36 h-36 mb-4"
+                    className="w-40 h-40 mb-4"
                   />
-                  <h2 className="text-white text-6xl font-bold">Spirit Jump</h2>
+                  <h1 className="text-white text-5xl font-bold">Spirit Jump</h1>
                   <span>Earn rewards by completing challenges every day</span>
                   <span>
                     Click / tap to play. Press R to restart from the last
