@@ -115,58 +115,83 @@ export const App = () => {
         />
       )}
 
-      <div className="absolute z-50 flex justify-between w-full p-2">
-        <div className="flex gap-2">
-          <div className="bg-[#232326] px-6 py-2 rounded-lg text-white font-bold">
-            🪙 {score}
-          </div>
-          <div className="bg-[#232326] px-4 py-2 rounded-lg text-white font-bold">
-            🔼 {height}
+      {isGamePaused ? (
+        <div>
+          <div className="absolute z-50 flex items-center justify-center h-full w-full p-2">
+            <div className="p-8 bg-[#232326] rounded-lg flex flex-col gap-4">
+              <h1 className="text-white text-4xl font-bold">Spirit Sprint</h1>
+              <span>content here</span>
+              <button
+                className="bg-[#6E56CF] px-4 py-2 rounded-lg text-white font-bold"
+                onClick={() => {
+                  set((store) => {
+                    store.game.isPaused = false;
+                  });
+                }}
+              >
+                {score > 0 ? "Resume" : "Start"}
+              </button>
+            </div>
           </div>
         </div>
-        <div className="flex gap-2">
-          <button
-            className="bg-[#232326] px-4 py-2 rounded-lg text-white font-bold"
-            onClick={() => {
-              resetPlayer();
-            }}
-          >
-            🔄{""}
-          </button>
-          <button
-            className="bg-[#232326] px-4 py-2 rounded-lg text-white font-bold"
-            onClick={() => {
-              alert("pause");
-            }}
-          >
-            {isGamePaused ? "Play" : "Pause"}
-          </button>
-        </div>
-      </div>
+      ) : (
+        <>
+          <div className="absolute z-50 flex justify-between w-full p-2">
+            <div className="flex gap-2">
+              <div className="bg-[#232326] px-6 py-2 rounded-lg text-white font-bold">
+                🪙 {score}
+              </div>
+              <div className="bg-[#232326] px-4 py-2 rounded-lg text-white font-bold">
+                🔼 {height}
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button
+                className="bg-[#232326] px-4 py-2 rounded-lg text-white font-bold"
+                onClick={() => {
+                  resetPlayer();
+                }}
+              >
+                🔄{""}
+              </button>
+              <button
+                className="bg-[#232326] px-4 py-2 rounded-lg text-white font-bold"
+                onClick={() => {
+                  set((store) => {
+                    store.game.isPaused = true;
+                  });
+                }}
+              >
+                Menu
+              </button>
+            </div>
+          </div>
 
-      <Canvas orthographic>
-        <color attach={"background"} args={["#232326"]} />
-        <React.Suspense fallback={null}>
-          <Background />
+          <Canvas orthographic>
+            <color attach={"background"} args={["#232326"]} />
+            <React.Suspense fallback={null}>
+              <Background />
 
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 5]} />
+              <ambientLight intensity={0.5} />
+              <pointLight position={[10, 10, 5]} />
 
-          <Camera />
-          {isLevelEditing ? (
-            <Editor />
-          ) : (
-            <>
-              <Physics>
-                <Player position={[0, 2, 0]} playMusic={handlePlay} />
+              <Camera />
+              {isLevelEditing ? (
+                <Editor />
+              ) : (
+                <>
+                  <Physics debug>
+                    <Player position={[0, 2, 0]} playMusic={handlePlay} />
 
-                {/* Spawns coins, spikes, platforms */}
-                <Entities />
-              </Physics>
-            </>
-          )}
-        </React.Suspense>
-      </Canvas>
+                    {/* Spawns coins, spikes, platforms */}
+                    <Entities />
+                  </Physics>
+                </>
+              )}
+            </React.Suspense>
+          </Canvas>
+        </>
+      )}
 
       <div className="absolute bottom-0 right-0">
         <Leva collapsed={true} fill />
