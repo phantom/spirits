@@ -51,16 +51,14 @@ export default function Editor() {
           options: [
             "platform",
             "spiked-platform",
-            "rock",
-            "ball",
-            "wheel",
-            "barrel",
             "checkpoint",
             "snake",
+            "enemy",
             "coin",
             "square-platform",
             "vertical-platform",
             "vertical-platform-small",
+            "platform-section",
           ],
           onChange: (value: EntityType) => {
             setEntityType(value);

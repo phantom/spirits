@@ -27,8 +27,10 @@ export type EntityType =
   | "coin"
   | "spike"
   | "snake"
+  | "enemy"
   | "vertical-platform"
   | "vertical-platform-small"
+  | "platform-section"
   | "square-platform";
 
 export type Entity = {
@@ -132,35 +134,10 @@ useStore.setState((store) => {
       rotation: [0, 0, 0],
     },
     {
-      position: [0, 1.7916432444330859, 0],
-      scale: [15, 0.1, 1],
-      type: "platform",
-      oneWay: true,
-      rotation: [0, 0, 0, "XYZ"],
-    },
-    {
       position: [0, 3.75, 0],
       scale: [1, 1, 1],
       type: "spiked-platform",
       orientation: "up",
-    },
-    {
-      position: [0, 20, 0],
-      scale: [15, 0.1, 1],
-      oneWay: true,
-      type: "platform",
-    },
-    {
-      position: [0, 36, 0],
-      scale: [15, 0.1, 1],
-      oneWay: true,
-      type: "platform",
-    },
-    {
-      position: [0, 36, 0],
-      scale: [15, 0.1, 1],
-      oneWay: true,
-      type: "platform",
     },
     { position: [3, 42, 0], scale: [1, 4, 1], type: "platform" },
     { position: [-3, 46, 0], scale: [1, 4, 1], type: "platform" },
@@ -171,12 +148,7 @@ useStore.setState((store) => {
       type: "spiked-platform",
       orientation: "left",
     },
-    {
-      position: [0, 54, 0],
-      scale: [15, 0.1, 1],
-      oneWay: true,
-      type: "platform",
-    },
+    { position: [-6.33, 2.05, 0], scale: [1, 1, 1], type: "enemy" },
     {
       type: "platform",
       position: [0, -6.412917749024082, 7.57424949949359e-17],
@@ -283,6 +255,31 @@ useStore.setState((store) => {
       type: "coin",
       position: [4.559074388601773, 15.699383745062503, 0],
       scale: [1, 1, 1],
+      rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      type: "platform-section",
+      position: [0, 1.3631882861304385, 0],
+      rotation: [0, 0, 0, "XYZ"],
+      scale: [15, 0.3, 1],
+      oneWay: true,
+    },
+    {
+      type: "platform-section",
+      position: [0, 35.877653185562046, 0],
+      scale: [15, 0.3, 1],
+      rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      type: "platform-section",
+      position: [0, 19.797101295537235, 0],
+      scale: [15, 0.3, 1],
+      rotation: [0, 0, 0, "XYZ"],
+    },
+    {
+      type: "platform-section",
+      position: [0, 55.234174650312546, 0],
+      scale: [15, 0.3, 1],
       rotation: [0, 0, 0, "XYZ"],
     },
   ];
