@@ -8,6 +8,25 @@
 - if moving in a certain direction and jumping, remain the x velocity from before the jump
 - force portrait mode
 
+# Spirit Sprint
+
+# Spirit Jump
+
+https://spiritjump.netlify.app/
+
+## Game
+
+- r3f
+- three js
+- zustand
+- ...
+
+To run locally
+
+```
+yarn web
+```
+
 # Backend Airdropper 🪂
 
 ```
@@ -22,7 +41,9 @@ npx supabase functions new postgres
 ```
 
 ### Developing in VSCode
+
 Add the following to your .vscode settings.json.
+
 ```
 {
   "deno.enablePaths": ["./supabase"],

@@ -72,6 +72,72 @@ export const tutorialLevel = [
   // },
 ];
 
+export const roomAfterTutorial3 = [
+  {
+    type: "platform-section",
+    position: [0, 6, 0],
+    scale: [15, 0.3, 1],
+    rotation: [0, 0, 0, "XYZ"],
+    oneWay: true,
+  },
+  {
+    type: "platform",
+    position: [-5, 12, 0],
+    rotation: [0, 0, 0, "XYZ"],
+    scale: [5, 5, 1],
+  },
+  ...[...Array(5)].map((_, i) => ({
+    type: "spiked-platform",
+    position: [-7 + i, 14, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+    orientation: "up",
+  })),
+  {
+    type: "platform",
+    position: [4, 16, 0],
+    rotation: [0, 0, 0, "XYZ"],
+    scale: [3, 3, 1],
+  },
+  {
+    type: "platform",
+    position: [-4, 20, 0],
+    rotation: [0, 0, 0, "XYZ"],
+    scale: [3, 3, 1],
+  },
+  {
+    type: "platform",
+    position: [5, 24, 0],
+    rotation: [0, 0, 0, "XYZ"],
+    scale: [5, 5, 1],
+  },
+  ...[...Array(5)].map((_, i) => ({
+    type: "spiked-platform",
+    position: [7 - i, 26, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+    orientation: "up",
+  })),
+  {
+    type: "platform",
+    position: [-4, 28, 0],
+    rotation: [0, 0, 0, "XYZ"],
+    scale: [3, 3, 1],
+  },
+  {
+    type: "platform",
+    position: [4, 32, 0],
+    rotation: [0, 0, 0, "XYZ"],
+    scale: [3, 3, 1],
+  },
+  ...[...Array(10)].map((_, i) => ({
+    type: "coin",
+    position: [Math.cos(i) * -1.5, 12 + i * 2, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+  })),
+];
+
 export const roomAfterTutorial = [
   {
     type: "platform-section",

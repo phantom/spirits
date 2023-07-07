@@ -13,6 +13,7 @@ import {
   levels,
   roomAfterTutorial,
   roomAfterTutorial2,
+  roomAfterTutorial3,
   roomOne,
   roomThree,
   roomTwo,
@@ -187,6 +188,7 @@ useStore.setState((store) => {
     // roomOne, // custom room starting with checkpoint
     roomAfterTutorial,
     roomAfterTutorial2,
+    roomAfterTutorial3,
     roomTwo, // custom room starting with checkpoint
     roomThree, // custom room starting with checkpoint
     endLevel,
