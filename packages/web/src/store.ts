@@ -174,16 +174,20 @@ useStore.setState((store) => {
 
   let height = 0;
 
-  const entities = [tutorialLevel, firstLevel, testRoom, endLevel].reduce(
-    (agg, init) => {
-      const entities = init(height);
-      height += entities.sort((a, b) => b.position[1] - a.position[1])[0]
-        .position[1];
+  const entities = [tutorialLevel, testRoom, endLevel].reduce((agg, init) => {
+    const newEntities = init.map((e) => {
+      return {
+        ...e,
+        position: [e.position[0], e.position[1] + height, e.position[2]],
+      };
+    });
+    const additionalHeight = init.sort(
+      (a, b) => b.position[1] - a.position[1]
+    )[0].position[1];
+    height += additionalHeight;
 
-      return [...agg, ...(entities as any)];
-    },
-    []
-  ) as unknown as any[];
+    return [...agg, ...(newEntities as any)];
+  }, []) as unknown as any[];
 
   // side, top and bottom platforms get automatically added
   entities.push(
