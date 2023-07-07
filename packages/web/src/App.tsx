@@ -37,7 +37,9 @@ export const App = () => {
   const isLevelFinished = useStore((store) => store.level.levelFinished);
   const [isPlaying, setIsPlaying] = React.useState(false);
 
-  useLoader(TextureLoader, "/sprites/spritesheet.png");
+  useLoader(TextureLoader, "/sprites/spritesheet.png", () => {
+    // console.log("loaded");
+  });
 
   const handlePlay = () => {
     setIsPlaying(true);
