@@ -37,7 +37,6 @@ router.get("/reward", async (context) => {
   const keypair = getEnvKeypair();
   const pubkey = context.request.url.searchParams.get("pubkey");
 
-<<<<<<< HEAD
   // Validate fields
   if (!pubkey) {
     context.response.status = 400;
@@ -108,10 +107,6 @@ router.get("/reward", async (context) => {
     mint: sweepstakes.chainData.mint,
     transferHash,
   };
-=======
-  context.response.headers.set("Access-Control-Allow-Origin", "*");
-  context.response.body = { data: "Rewards" };
->>>>>>> cffbafd (hook up to airdrop (still needs a small fix))
 });
 
 const app = new Application();
