@@ -40,7 +40,9 @@ export const App = () => {
   const [airdrop, setAirdrop] = React.useState<Airdrop>();
   const [loadingAirdrop, setLoadingAirdrop] = React.useState(false);
 
-  useLoader(TextureLoader, "/sprites/spritesheet.png");
+  useLoader(TextureLoader, "/sprites/spritesheet.png", () => {
+    // console.log("loaded");
+  });
 
   const handlePlay = () => {
     setIsPlaying(true);
@@ -149,9 +151,9 @@ export const App = () => {
                 <>
                   <img
                     src="/screen/splash-screen.png"
-                    className="w-36 h-36 mb-4"
+                    className="w-40 h-40 mb-4"
                   />
-                  <h1 className="text-white text-6xl font-bold">Spirit Jump</h1>
+                  <h1 className="text-white text-5xl font-bold">Spirit Jump</h1>
                   <span>Earn rewards by completing challenges every day</span>
                   <span>
                     Click / tap to play. Press R to restart from the last
@@ -179,7 +181,14 @@ export const App = () => {
                     {score > 0 ? "Resume" : "Play"}
                   </button>
                   <br></br>
-                  <span>Connected to {publicKey?.toString()}</span>
+                  {publicKey ? (
+                    <span>
+                      Connected to{" "}
+                      {`${publicKey?.toString().substring(0, 10)}...`}
+                    </span>
+                  ) : (
+                    <span>Not connected</span>
+                  )}
                 </>
               ) : (
                 <div className="flex flex-col items-center">
