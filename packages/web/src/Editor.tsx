@@ -39,137 +39,154 @@ export default function Editor() {
     return entityType;
   };
 
-  const [{ mode, entityTypeSelection, entitySelection, color }, setControls] =
-    useControls(
-      () => ({
-        mode: {
-          value: "translate",
-          options: ["scale", "rotate", "translate"],
+  const [
+    { mode, checkpointSelected, entityTypeSelection, entitySelection, color },
+    setControls,
+  ] = useControls(
+    () => ({
+      mode: {
+        value: "translate",
+        options: ["scale", "rotate", "translate"],
+      },
+      entityTypeSelection: {
+        value: "platform" as EntityType,
+        options: [
+          "platform",
+          "spiked-platform",
+          "checkpoint",
+          "snake",
+          "enemy",
+          "coin",
+          "trophy",
+          "square-platform",
+          "vertical-platform",
+          "vertical-platform-small",
+          "platform-section",
+        ],
+        onChange: (value: EntityType) => {
+          setEntityType(value);
         },
-        entityTypeSelection: {
-          value: "platform" as EntityType,
-          options: [
-            "platform",
-            "spiked-platform",
-            "checkpoint",
-            "snake",
-            "enemy",
-            "coin",
-            "trophy",
-            "square-platform",
-            "vertical-platform",
-            "vertical-platform-small",
-            "platform-section",
-          ],
-          onChange: (value: EntityType) => {
-            setEntityType(value);
-          },
-        },
-        entitySelection: {
-          options: [
-            undefined,
-            ...Array.from(entitiesRef.current.values()).map((e) => e.id),
-          ],
-          value: selected,
-        },
-        save: button(() => {
-          console.log(
-            JSON.stringify(
-              Array.from(entitiesRef.current.values()).map((entity) => {
-                // strip off id
-                const { id, color, ...props } = entity;
-                return props;
-              })
-            )
-          );
-        }),
-        load: button(() => {
-          const entities = JSON.parse(
-            prompt("Paste entities JSON here") ?? "[]"
-          );
-
-          entitiesRef.current.clear();
-          entities.map((entity: Entity) => {
-            const id = MathUtils.generateUUID();
-            entitiesRef.current.set(id, { ...entity, id });
-          });
-          onEntitySelect(entitiesRef.current.values().next().value.id);
-        }),
-        addEntity: button(() => {
-          const id = MathUtils.generateUUID();
-          console.log("addEntity", getEntityType());
-          entitiesRef.current.set(id, {
-            id,
-            type: entityType as EntityType,
-            position: [0, 0, 0],
-            rotation: [0, 0, 0],
-            scale: [1, 1, 1],
-            color: seedColor(`${id}`).toHex(),
-          });
-
-          onEntitySelect(id);
-        }),
-        duplicate: button(() => {
-          const id = MathUtils.generateUUID();
-          const entity = entitiesRef.current.get(selected)!;
-
-          entitiesRef.current.set(id, {
-            id,
-            type: entity.type,
-            position: [...entity.position],
-            scale: [...entity.scale],
-            rotation: [...(entity.rotation ?? [0, 0, 0])],
-
-            color: seedColor(`${id}`).toHex(),
-          });
-
-          onEntitySelect(id);
-        }),
-        removeEntity: button(() => {
-          // entitiesRef.current = Array.from(entitiesRef.current.values()).filter(
-          //   (e) => e.id !== selected
-          // );
-
-          entitiesRef.current.delete(selected!);
-          onEntitySelect(undefined);
-        }),
-        ...(selected && {
-          position: {
-            value: [0, 0, 0],
-            onEditEnd: (value: [number, number, number]) => {
-              transform.current?.object?.position.set(...value);
-              entitiesRef.current.get(selected)!.position = value;
-            },
-          },
-          rotation: {
-            value: [0, 0, 0],
-            onEditEnd: (_value: [number, number, number]) => {
-              const value = [_value[0], _value[1], _value[2]] as [
-                number,
-                number,
-                number
-              ];
-              transform.current?.object?.rotation.set(...value);
-              entitiesRef.current.get(selected)!.rotation = value;
-            },
-          },
-          scale: {
-            value: [0, 0, 0],
-            onEditEnd: (value: [number, number, number]) => {
-              transform.current?.object?.scale.set(...value);
-              entitiesRef.current.get(selected)!.scale = value;
-            },
-          },
-          color: {
-            value: entitiesRef.current.get(selected)!.color ?? "#ffffff",
-            onEditEnd: (v) => {
-              entitiesRef.current.get(selected)!.color = v;
-            },
-          },
-        }),
+      },
+      entitySelection: {
+        options: [
+          undefined,
+          ...Array.from(entitiesRef.current.values()).map((e) => e.id),
+        ],
+        value: selected,
+      },
+      checkpointSelected: {
+        options: [
+          undefined,
+          ...Array.from(entitiesRef.current.values())
+            .filter((e) => e.type === "checkpoint")
+            .map((e) => e.id),
+        ],
+        value: undefined,
+      },
+      save: button(() => {
+        console.log(
+          JSON.stringify(
+            Array.from(entitiesRef.current.values()).map((entity) => {
+              // strip off id
+              const { id, color, ...props } = entity;
+              return props;
+            })
+          )
+        );
       }),
-      [selected, entityType]
-    );
+      load: button(() => {
+        const entities = JSON.parse(prompt("Paste entities JSON here") ?? "[]");
+
+        entitiesRef.current.clear();
+        entities.map((entity: Entity) => {
+          const id = MathUtils.generateUUID();
+          entitiesRef.current.set(id, { ...entity, id });
+        });
+        onEntitySelect(entitiesRef.current.values().next().value.id);
+      }),
+      addEntity: button(() => {
+        const id = MathUtils.generateUUID();
+        console.log("addEntity", getEntityType());
+        entitiesRef.current.set(id, {
+          id,
+          type: entityType as EntityType,
+          position: [0, 0, 0],
+          rotation: [0, 0, 0],
+          scale: [1, 1, 1],
+          color: seedColor(`${id}`).toHex(),
+        });
+
+        onEntitySelect(id);
+      }),
+      duplicate: button(() => {
+        const id = MathUtils.generateUUID();
+        const entity = entitiesRef.current.get(selected)!;
+
+        entitiesRef.current.set(id, {
+          id,
+          type: entity.type,
+          position: [...entity.position],
+          scale: [...entity.scale],
+          rotation: [...(entity.rotation ?? [0, 0, 0])],
+
+          color: seedColor(`${id}`).toHex(),
+        });
+
+        onEntitySelect(id);
+      }),
+      removeEntity: button(() => {
+        // entitiesRef.current = Array.from(entitiesRef.current.values()).filter(
+        //   (e) => e.id !== selected
+        // );
+
+        entitiesRef.current.delete(selected!);
+        onEntitySelect(undefined);
+      }),
+      ...(selected && {
+        position: {
+          value: [0, 0, 0],
+          onEditEnd: (value: [number, number, number]) => {
+            transform.current?.object?.position.set(...value);
+            entitiesRef.current.get(selected)!.position = value;
+          },
+        },
+        rotation: {
+          value: [0, 0, 0],
+          onEditEnd: (_value: [number, number, number]) => {
+            const value = [_value[0], _value[1], _value[2]] as [
+              number,
+              number,
+              number
+            ];
+            transform.current?.object?.rotation.set(...value);
+            entitiesRef.current.get(selected)!.rotation = value;
+          },
+        },
+        scale: {
+          value: [0, 0, 0],
+          onEditEnd: (value: [number, number, number]) => {
+            transform.current?.object?.scale.set(...value);
+            entitiesRef.current.get(selected)!.scale = value;
+          },
+        },
+        color: {
+          value: entitiesRef.current.get(selected)!.color ?? "#ffffff",
+          onEditEnd: (v) => {
+            entitiesRef.current.get(selected)!.color = v;
+          },
+        },
+      }),
+    }),
+    [selected, entityType]
+  );
+
+  useEffect(() => {
+    set((store) => {
+      store.level.checkpoint = new Vector3().fromArray(
+        entitiesRef.current.get(checkpointSelected!)?.position ?? [0, 0, 0]
+      );
+    });
+  }, [checkpointSelected]);
 
   const onEntitySelect = useCallback(
     (id: string | undefined) => {
