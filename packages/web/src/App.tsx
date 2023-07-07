@@ -215,7 +215,7 @@ export const App = () => {
                       <button
                         className="bg-[#6E56CF] px-4 py-2 w-full mb-2  rounded-lg text-white font-bold"
                         onClick={() => {
-                          fetchAirdrop();
+                          if (!loadingAirdrop) fetchAirdrop();
                         }}
                       >
                         Claim now
