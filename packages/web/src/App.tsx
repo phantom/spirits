@@ -162,7 +162,7 @@ export const App = () => {
             <Editor />
           ) : (
             <>
-              <Physics debug>
+              <Physics>
                 <Player position={[0, 2, 0]} playMusic={handlePlay} />
 
                 {/* Spawns coins, spikes, platforms */}

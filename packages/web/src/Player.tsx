@@ -181,7 +181,7 @@ export const Player = ({
     player.setLinvel(linvel, true);
     player.applyImpulse(impulse, true);
 
-    console.log(state);
+    // console.log(state);
     if (player.translation().y > playerHeight)
       set((store) => {
         store.player.maxHeight = Math.floor(player.translation().y);
