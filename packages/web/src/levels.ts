@@ -346,13 +346,13 @@ export const roomTwo = [
   })),
   ...[...Array(4)].map((_, i) => ({
     type: "coin",
-    position: [-6, 13.5 + i * 3, 0],
+    position: [-6.5, 13.5 + i * 3, 0],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
   })),
   ...[...Array(4)].map((_, i) => ({
     type: "coin",
-    position: [6, 13.5 + i * 3, 0],
+    position: [6.5, 13.5 + i * 3, 0],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
   })),
