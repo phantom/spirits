@@ -1,8 +1,8 @@
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
-import { Leva, useControls } from "leva";
+import { Leva, button, useControls } from "leva";
 import React, { useState, useEffect, useRef } from "react";
-import { Vector3 } from "three";
+import { MathUtils, Vector3 } from "three";
 import Camera from "./Camera";
 import ConnectRow from "./ConnectRow";
 import Editor from "./Editor";
@@ -17,7 +17,7 @@ import { Background } from "./Background";
 import { SpikedPlatform } from "./SpikedPlatform";
 import { Enemy } from "./Enemy";
 import { Trophy } from "./Trophy";
-import background from "./sounds/background.mp3";
+import { levels } from "./levels";
 
 // =============================================================================
 // Constants
@@ -44,6 +44,8 @@ export const App = () => {
     setIsPlaying(true);
   };
 
+  const resetPlayer = useStore((store) => store.player.reset);
+
   const _ = useControls(
     {
       isLevelEditing: {
@@ -54,6 +56,30 @@ export const App = () => {
           });
         },
       },
+      loadLevelFromName: button(() => {
+        const levelName = prompt("level name") || "";
+
+        const level = levels[levelName];
+
+        set((store) => {
+          store.level.entities = new Map([
+            ...level.map((entity, index) => {
+              const uuid = MathUtils.generateUUID();
+              return [
+                uuid,
+                {
+                  ...entity,
+                  id: uuid,
+                },
+              ];
+            }),
+          ]);
+          store.level.checkpoint = level.checkpoint;
+          store.game.isLevelEditing = false;
+        });
+
+        resetPlayer();
+      }),
       ...(!isLevelEditing &&
         {
           // debugPhysics: false,
@@ -73,10 +99,7 @@ export const App = () => {
 
   React.useEffect(() => {
     if (!isLevelEditing) {
-      set((store) => {
-        store?.player.ref?.current?.setTranslation(new Vector3(0, 2, 0), false);
-        store?.player.ref?.current?.setLinvel(new Vector3(0, 0, 0), false);
-      });
+      resetPlayer();
     }
     setIsPlaying(true);
   }, []);
@@ -109,14 +132,24 @@ export const App = () => {
             🔼 {height}
           </div>
         </div>
-        <button
-          className="bg-[#232326] px-4 py-2 rounded-lg text-white font-bold"
-          onClick={() => {
-            alert("pause");
-          }}
-        >
-          {isGamePaused ? "Play" : "Pause"}
-        </button>
+        <div className="flex gap-2">
+          <button
+            className="bg-[#232326] px-4 py-2 rounded-lg text-white font-bold"
+            onClick={() => {
+              resetPlayer();
+            }}
+          >
+            🔄{""}
+          </button>
+          <button
+            className="bg-[#232326] px-4 py-2 rounded-lg text-white font-bold"
+            onClick={() => {
+              alert("pause");
+            }}
+          >
+            {isGamePaused ? "Play" : "Pause"}
+          </button>
+        </div>
       </div>
 
       <Canvas orthographic>

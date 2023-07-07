@@ -43,6 +43,8 @@ export const Player = ({
   const jumpsLeft = useRef(0);
   const directionPointerRef = useRef<Mesh>(null);
 
+  const resetPlayer = useStore((store) => store.player.reset);
+
   const collisionMap = useRef<
     Map<string, { normal: Vector3Object; collider: RapierCollider }>
   >(new Map());
@@ -65,9 +67,7 @@ export const Player = ({
       max: 5,
     },
     restartPlayer: button(() => {
-      ref.current?.setTranslation(vec3(), true);
-      ref.current?.setLinvel(vec3(), true);
-      ref.current?.setAngvel(vec3(), true);
+      resetPlayer();
     }),
   });
 

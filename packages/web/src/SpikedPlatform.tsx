@@ -23,6 +23,8 @@ export const SpikedPlatform = ({
     "/sprites/platform-variants/large.png"
   );
 
+  const resetPlayer = useStore((store) => store.player.reset);
+
   const spikeUp = useLoader(TextureLoader, "/sprites/spike-up.png");
   const spikeDown = useLoader(TextureLoader, "/sprites/spike-down.png");
   const spikeLeft = useLoader(TextureLoader, "/sprites/spike-left.png");
@@ -64,11 +66,7 @@ export const SpikedPlatform = ({
         position={spikePosition}
         onCollisionEnter={({ other }) => {
           if (other.rigidBodyObject?.name !== "player") return;
-          store?.player.ref?.current?.setTranslation(
-            new Vector3(0, 2, 0),
-            false
-          );
-          store?.player.ref?.current?.setLinvel(new Vector3(0, 0, 0), false);
+          resetPlayer();
         }}
         {...props}
       >
