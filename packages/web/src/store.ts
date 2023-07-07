@@ -60,6 +60,7 @@ export type Level = {
   entities: Map<string, Entity>;
   floor: MutableRefObject<Mesh | null> | null;
   checkpoint: Vector3;
+  levelFinished: boolean;
   loadLevel: (entities: any[]) => void;
 };
 
@@ -127,6 +128,7 @@ export const useStore = create(
       entities: new Map(),
       floor: null,
       checkpoint: new Vector3(0, 0, 0),
+      levelFinished: false,
       loadLevel: (entities: any) => {
         // set((store) => {
         get().level.entities = new Map([

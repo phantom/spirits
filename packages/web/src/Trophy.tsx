@@ -17,14 +17,14 @@ export function Trophy(props: RigidBodyProps) {
   const publicKey = useStore((store) => store.player.publicKey || "");
   const AIRDROP_ENDPOINT = `https://fmeabzbszutxkewzxuwb.supabase.co/functions/v1/reward?pubkey=${publicKey}`;
 
-  const [isCapured, setIsCaptured] = React.useState(false);
+  // const [isCapured, setIsCaptured] = React.useState(false);
 
   const handleAirdrop = ({ other }) => {
-    if (isCapured) return;
     if (other.rigidBodyObject?.name !== "player") return;
 
-    alert("Level complete!");
-    setIsCaptured(true);
+    set((store) => {
+      store.level.levelFinished = true;
+    });
 
     // fetch(AIRDROP_ENDPOINT)
     //   .then((response) => {
