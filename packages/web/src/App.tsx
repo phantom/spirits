@@ -38,6 +38,20 @@ export const App = () => {
     setIsPlaying(true);
   };
 
+  React.useEffect(() => {
+    const resetHandler = (e) => {
+      // if r get's pressed, reset
+      if (e.key === "r") {
+        resetPlayer();
+      }
+    };
+
+    window.addEventListener("keydown", resetHandler);
+    return () => {
+      window.removeEventListener("keydown", resetHandler);
+    };
+  }, []);
+
   const set = useStore((store) => store.set);
   const resetPlayer = useStore((store) => store.player.reset);
   const loadLevel = useStore((store) => store.level.loadLevel);
@@ -58,7 +72,8 @@ export const App = () => {
       },
       loadLevelFromName: button(() => {
         const name = prompt("level name") ?? "";
-        loadLevel(name);
+        const level = levels[name];
+        loadLevel(level);
       }),
       ...(!isLevelEditing &&
         {

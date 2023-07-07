@@ -6,7 +6,7 @@ import { createRef, MutableRefObject, RefObject } from "react";
 import { Mesh, Vector2, Vector3, MathUtils, Quaternion } from "three";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { levels } from "./levels";
+import { checkpointsTestLevel, firstLevel, levels } from "./levels";
 
 setAutoFreeze(false);
 enableMapSet();
@@ -54,7 +54,7 @@ export type Level = {
   entities: Map<string, Entity>;
   floor: MutableRefObject<Mesh | null> | null;
   checkpoint: Vector3;
-  loadLevel: (name: string) => void;
+  loadLevel: (name: any[]) => void;
 };
 
 export type Actions = {
@@ -105,25 +105,24 @@ export const useStore = create(
         get().player.ref?.current?.setTranslation(
           (get().level.checkpoint ?? new Vector3())
             .clone()
-            .add(new Vector3(0, 2, 0)),
+            .add(new Vector3(0, 0.5, 0)),
           false
         );
         get().player.ref?.current?.setLinvel(new Vector3(0, 0, 0), false);
         get().player.ref?.current?.setAngvel(new Vector3(0, 0, 0), false);
         get().player.ref?.current?.setRotation(new Quaternion(), false);
-        get().controls.direction.current = new Vector3(1, 0, 0);
+
+        get().player.state = "moving";
       },
     },
     level: {
       entities: new Map(),
       floor: null,
       checkpoint: new Vector3(0, 0, 0),
-      loadLevel: (levelName) => {
-        const level = levels[levelName];
-
+      loadLevel: (entities: any) => {
         // set((store) => {
         get().level.entities = new Map([
-          ...level.map((entity, index) => {
+          ...entities.map((entity, index) => {
             const uuid = MathUtils.generateUUID();
             return [
               uuid,
@@ -134,8 +133,6 @@ export const useStore = create(
             ];
           }),
         ]);
-        get().level.checkpoint = level.checkpoint;
-        get().game.isLevelEditing = false;
 
         get().player.reset();
       },
