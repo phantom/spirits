@@ -210,22 +210,17 @@ export const App = () => {
                       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white opacity-0 animate-pulse"></div>
                     </div>
                   )}
-                  {!airdrop ? (
-                    <button
-                      className="bg-[#6E56CF] px-4 py-2 w-full mb-2  rounded-lg text-white font-bold"
-                      onClick={() => {
-                        fetchAirdrop();
-                      }}
-                    >
-                      Claim
-                    </button>
-                  ) : (
-                    <button
-                      className="bg-[#6E56CF] px-4 py-2 w-full mb-2  rounded-lg text-white font-bold"
-                      onClick={() => {}}
-                    >
-                      Play Again
-                    </button>
+                  {!airdrop && (
+                    <>
+                      <button
+                        className="bg-[#6E56CF] px-4 py-2 w-full mb-2  rounded-lg text-white font-bold"
+                        onClick={() => {
+                          fetchAirdrop();
+                        }}
+                      >
+                        Claim now
+                      </button>
+                    </>
                   )}
                 </div>
               )}

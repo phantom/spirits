@@ -7,11 +7,6 @@ export const tutorialLevel = [
     oneWay: true,
   },
   {
-    position: [0, 8, 0],
-    type: "checkpoint",
-    rotation: [0, 0, 0],
-  },
-  {
     type: "tip",
     position: [-4.5, 8, -0.1],
     rotation: [0, 0, 0, "XYZ"],
@@ -19,19 +14,19 @@ export const tutorialLevel = [
   },
   {
     type: "coin",
-    position: [-2, 10, 0],
+    position: [1, 10, 0],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
   },
   {
     type: "coin",
-    position: [0, 10, 0],
+    position: [3, 10, 0],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
   },
   {
     type: "coin",
-    position: [2, 10, 0],
+    position: [5, 10, 0],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
   },
@@ -50,13 +45,7 @@ export const tutorialLevel = [
   },
   {
     type: "coin",
-    position: [-2, 23, 0],
-    scale: [1, 1, 1],
-    rotation: [0, 0, 0, "XYZ"],
-  },
-  {
-    type: "coin",
-    position: [2, 24, 0],
+    position: [0, 23, 0],
     scale: [1, 1, 1],
     rotation: [0, 0, 0, "XYZ"],
   },
