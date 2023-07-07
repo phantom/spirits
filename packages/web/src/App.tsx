@@ -29,8 +29,6 @@ export const App = () => {
   const providerProps = useProviderProps();
   const { publicKey, handleConnect } = providerProps;
 
-  console.log("publicKey", publicKey?.toString());
-
   const score = useStore((store) => store.player.score);
   const height = useStore((store) => store.player.maxHeight);
   const isLevelEditing = useStore((store) => store.game.isLevelEditing);

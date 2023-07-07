@@ -173,34 +173,50 @@ useStore.setState((store) => {
 
   let height = 0;
 
-  const entities = [tutorialLevel, testRoom, endLevel].reduce((agg, init) => {
-    const entities = init(height);
-    height += entities.sort((a, b) => b.position[1] - a.position[1])[0]
-      .position[1];
+  const entities = [tutorialLevel, firstLevel, testRoom, endLevel].reduce(
+    (agg, init) => {
+      const entities = init(height);
+      height += entities.sort((a, b) => b.position[1] - a.position[1])[0]
+        .position[1];
 
-    return [...agg, ...(entities as any)];
-  }, []) as unknown as any[];
+      return [...agg, ...(entities as any)];
+    },
+    []
+  ) as unknown as any[];
 
   // side, top and bottom platforms get automatically added
   entities.push(
     {
-      position: [-8, height / 2 - 1, 0],
+      position: [-8, height / 2 - 20, 0],
       scale: [1, height, 1],
       type: "platform",
       rotation: [0, 0, 0],
     },
     {
-      position: [8, height / 2 - 1, 0],
+      position: [8, height / 2 - 20, 0],
       scale: [1, height, 1],
       type: "platform",
       rotation: [0, 0, 0],
     },
     {
-      position: [0, -1, 0],
-      scale: [17, 1, 1],
+      position: [0, 0, 0],
+      scale: [12, 1, 1],
       type: "platform",
       rotation: [0, 0, 0],
     },
+    {
+      position: [-5.5, 1, 0],
+      scale: [1, 2, 1],
+      type: "vertical-platform-small",
+      rotation: [0, 1, 0],
+    },
+    {
+      position: [5.5, 1, 0],
+      scale: [1, 2, 1],
+      type: "vertical-platform-small",
+      rotation: [0, 0, 0],
+    },
+
     {
       position: [-8, height + 3, 0],
       scale: [1, 8, 1],
