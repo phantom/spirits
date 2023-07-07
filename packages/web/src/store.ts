@@ -1,13 +1,13 @@
-// import { RigidBodyApi } from "@react-three/rapier";
 import { RapierRigidBody } from "@react-three/rapier";
 import CameraControls from "camera-controls";
-import { setAutoFreeze } from "immer";
+import { enableMapSet, setAutoFreeze } from "immer";
 import { createRef, MutableRefObject, RefObject } from "react";
-import { Mesh, Vector2, Vector3, MathUtils } from "three";
+import { Mesh, Vector2, Vector3, MathUtils, Quaternion } from "three";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
 setAutoFreeze(false);
+enableMapSet();
 
 export type ActionType = "up" | "down" | "left" | "right" | "jump";
 
@@ -23,6 +23,7 @@ export type PlayerState =
 
 export type EntityType =
   | "platform"
+  | "checkpoint"
   | "spiked-platform"
   | "coin"
   | "spike"
@@ -49,6 +50,7 @@ export type Entity = {
 export type Level = {
   entities: Map<string, Entity>;
   floor: MutableRefObject<Mesh | null> | null;
+  checkpoint: Vector3;
 };
 
 export type Actions = {
@@ -67,6 +69,7 @@ export type Store = {
     score: number;
     maxHeight: number;
     scoredCoinsRef: RefObject<Set<string>> | null;
+    reset: () => void;
   };
   level: Level;
   camera: {
@@ -85,17 +88,28 @@ export type Store = {
 };
 
 export const useStore = create(
-  immer<Store>((set) => ({
+  immer<Store>((set, get) => ({
     player: {
       state: "moving",
       ref: null,
       score: 0,
       maxHeight: 0,
       scoredCoinsRef: createRef<Set<string>>() as MutableRefObject<Set<string>>,
+      reset: () => {
+        get().player.ref?.current?.setTranslation(
+          get().level.checkpoint.clone().add(new Vector3(0, 2, 0)),
+          false
+        );
+        get().player.ref?.current?.setLinvel(new Vector3(0, 0, 0), false);
+        get().player.ref?.current?.setAngvel(new Vector3(0, 0, 0), false);
+        get().player.ref?.current?.setRotation(new Quaternion(), false);
+        get().controls.direction.current = new Vector3(1, 0, 0);
+      },
     },
     level: {
       entities: new Map(),
       floor: null,
+      checkpoint: new Vector3(0, 0, 0),
     },
     game: {
       isPaused: false,

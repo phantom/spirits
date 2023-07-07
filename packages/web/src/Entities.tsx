@@ -9,6 +9,7 @@ import { SpikedPlatform } from "./SpikedPlatform";
 import { Platform, PlatformSprite } from "./Platform";
 import { Snake } from "./Snake";
 import { Enemy } from "./Enemy";
+import { Checkpoint } from "./Checkpoint";
 
 const coinsCount = 25;
 const spikesCount = 4;
@@ -112,6 +113,12 @@ export const Entities = () => {
           entities.current.set(
             uuid,
             <Enemy key={uuid} position={blueprint.position} />
+          );
+          break;
+        case "checkpoint":
+          entities.current.set(
+            uuid,
+            <Checkpoint key={uuid} position={blueprint.position} />
           );
           break;
         case "square-platform":

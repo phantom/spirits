@@ -14,6 +14,7 @@ const xboundary = [-1, 1];
 export function FloatingSpike(props: RigidBodyProps) {
   const store = useStore((store) => store);
   const ref = React.useRef<RapierRigidBody>(null);
+  const resetPlayer = useStore((store) => store.player.reset);
 
   useFrame(() => {
     const { current: spike } = ref;
@@ -40,8 +41,7 @@ export function FloatingSpike(props: RigidBodyProps) {
     <RigidBody
       onCollisionEnter={({ other }) => {
         if (other.rigidBodyObject?.name !== "player") return;
-        store?.player.ref?.current?.setTranslation(new Vector3(0, 2, 0), false);
-        store?.player.ref?.current?.setLinvel(new Vector3(0, 0, 0), false);
+        resetPlayer();
       }}
       ref={ref}
       {...props}
