@@ -44,17 +44,14 @@ export const useProviderProps = (): ProviderProps => {
     });
 
     provider.on("connect", (publicKey: PublicKey) => {
-      console.log("connect event fired", publicKey.toString);
       setPublicKey(publicKey);
     });
 
     provider.on("accountChanged", (publicKey: PublicKey | null) => {
-      console.log("accountChanged event fired", publicKey?.toString());
       setPublicKey(publicKey);
     });
 
     provider.on("disconnect", () => {
-      console.log("disconnect event fired");
       setPublicKey(null);
     });
 
