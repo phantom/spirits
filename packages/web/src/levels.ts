@@ -31,7 +31,7 @@ export const checkpointsTestLevel = [
     oneWay: true,
   },
   {
-    position: [0, 9, 0],
+    position: [0, 8, 0],
     type: "checkpoint",
     rotation: [0, 0, 0],
   },
@@ -43,7 +43,7 @@ export const checkpointsTestLevel = [
     oneWay: true,
   },
   {
-    position: [0, 19, 0],
+    position: [0, 18, 0],
     // scale: [17, 1, 1],
     type: "checkpoint",
     rotation: [0, 0, 0],

@@ -107,7 +107,7 @@ export const useStore = create(
         get().player.ref?.current?.setTranslation(
           checkpoint.equals(new Vector3())
             ? new Vector3()
-            : checkpoint.add(new Vector3(0, -2.5, 0)),
+            : checkpoint.add(new Vector3(0, -1.5, 0)),
           false
         );
         get().player.ref?.current?.setLinvel(new Vector3(0, 0, 0), false);
@@ -160,7 +160,5 @@ export const useStore = create(
 
 useStore.setState((store) => {
   store.camera.movement.current = new Vector2();
-  store.controls.direction.current = new Vector3(0, 0, 1);
-
-  store.level.loadLevel("first");
+  store.level.loadLevel([...checkpointsTestLevel]);
 });

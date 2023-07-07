@@ -44,7 +44,7 @@ export function Checkpoint(props: RigidBodyProps) {
       <mesh
         position={[
           props.position![0],
-          props.position![1] - 0.1,
+          props.position![1] + 0.9,
           props.position![2] - 0.1,
         ]}
       >
