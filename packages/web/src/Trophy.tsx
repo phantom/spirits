@@ -6,21 +6,42 @@ import {
 import * as React from "react";
 import { TextureLoader } from "three";
 import { useLoader } from "@react-three/fiber";
+import { useStore } from "./store";
 
 export function Trophy(props: RigidBodyProps) {
   const ref = React.useRef<RapierRigidBody>(null);
 
   const trophyTexture = useLoader(TextureLoader, "/sprites/trophy.png");
 
+  const set = useStore((store) => store.set);
+  const publicKey = useStore((store) => store.player.publicKey || "");
+  const AIRDROP_ENDPOINT = `https://fmeabzbszutxkewzxuwb.supabase.co/functions/v1/reward?pubkey=${publicKey}`;
+
+  const handleAirdrop = ({ other }) => {
+    if (other.rigidBodyObject?.name !== "player") return;
+
+    alert("Level complete!");
+
+    fetch(AIRDROP_ENDPOINT)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <RigidBody
       type="fixed"
       scale={props.scale}
-      onCollisionEnter={({ other }) => {
-        if (other.rigidBodyObject?.name !== "player") return;
-        console.log("Trophy collected!");
-        // TODO: Connect to Mitchell's airdrop endpoint
-      }}
+      onCollisionEnter={handleAirdrop}
       ref={ref}
       {...props}
       linearVelocity={[1, 0, 0]}
