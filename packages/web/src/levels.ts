@@ -8,7 +8,7 @@ export const tutorialLevel = [
   },
   {
     type: "tip",
-    position: [-4.5, 8, 0],
+    position: [-4.5, 8, -0.1],
     rotation: [0, 0, 0, "XYZ"],
     scale: [5.25, 3, 1],
   },
