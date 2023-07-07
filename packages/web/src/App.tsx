@@ -166,18 +166,6 @@ export const App = () => {
                   >
                     Claim
                   </button>
-                  <button
-                    className="bg-[#6E56CF] px-4 py-2 rounded-lg text-white font-bold"
-                    onClick={() => {
-                      resetPlayer();
-                      set((store) => {
-                        store.game.isPaused = false;
-                        store.level.levelFinished = false;
-                      });
-                    }}
-                  >
-                    Restart
-                  </button>
                 </div>
               )}
             </div>
@@ -202,16 +190,6 @@ export const App = () => {
                 }}
               >
                 🔄{""}
-              </button>
-              <button
-                className="bg-[#232326] px-4 py-2 rounded-lg text-white font-bold"
-                onClick={() => {
-                  set((store) => {
-                    store.game.isPaused = true;
-                  });
-                }}
-              >
-                Menu
               </button>
             </div>
           </div>
