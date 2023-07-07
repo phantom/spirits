@@ -64,6 +64,7 @@ export default function Editor() {
           "platform-section",
           "platform-small",
           "tip",
+          "decor",
         ],
         onChange: (value: EntityType) => {
           setEntityType(value);

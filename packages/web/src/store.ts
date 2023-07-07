@@ -12,6 +12,7 @@ import {
   firstLevel,
   levels,
   roomOne,
+  roomThree,
   roomTwo,
   testRoom,
   tutorialLevel,
@@ -46,6 +47,7 @@ export type EntityType =
   | "platform-section"
   | "platform-small"
   | "tip"
+  | "decor"
   | "square-platform";
 
 export type Entity = {
@@ -180,10 +182,11 @@ useStore.setState((store) => {
   let height = 0;
 
   const entities = [
-    // tutorialLevel,
-    // roomOne, // custom room starting with checkpoint
+    tutorialLevel,
+    roomOne, // custom room starting with checkpoint
     roomTwo, // custom room starting with checkpoint
-    // endLevel,
+    roomThree, // custom room starting with checkpoint
+    endLevel,
   ].reduce((agg, init) => {
     const newEntities = init.map((e) => {
       return {

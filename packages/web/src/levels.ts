@@ -57,6 +57,90 @@ export const tutorialLevel = [
   },
 ];
 
+export const roomThree = [
+  {
+    type: "platform-section",
+    position: [0, 6, 0],
+    scale: [15, 0.3, 1],
+    rotation: [0, 0, 0, "XYZ"],
+    oneWay: true,
+  },
+  {
+    position: [0, 8, 0],
+    type: "checkpoint",
+    rotation: [0, 0, 0],
+  },
+  {
+    type: "platform-section",
+    position: [0, 6, 0],
+    scale: [15, 0.3, 1],
+    rotation: [0, 0, 0, "XYZ"],
+    oneWay: true,
+  },
+  { position: [0, 8, 0], type: "checkpoint", rotation: [0, 0, 0] },
+  {
+    type: "decor",
+    position: [0, 11.04, -1],
+    rotation: [0, 0, 0, "XYZ"],
+    scale: [15, 10, 1],
+  },
+  {
+    type: "snake",
+    position: [-3.2219356281240668, 22.957036003528216, 0],
+    rotation: [0, 0, 0, "XYZ"],
+    scale: [3, 10, 1],
+  },
+  {
+    type: "snake",
+    position: [3.3885348978911427, 22.93746458108008, 0],
+    scale: [3, 10, 1],
+    rotation: [0, 0, 0, "XYZ"],
+  },
+  {
+    type: "enemy",
+    position: [-2.1014793079935146, 32.611818299107625, 0],
+    rotation: [0, 0, 0, "XYZ"],
+    scale: [1, 1, 1],
+  },
+  {
+    type: "coin",
+    position: [0, 25.476722798344774, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+  },
+  {
+    type: "coin",
+    position: [0, 23.347013299830458, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+  },
+  {
+    type: "coin",
+    position: [0, 21.018390402011594, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+  },
+  {
+    type: "coin",
+    position: [0, 18.65213015333094, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+  },
+  {
+    type: "enemy",
+    position: [2.282317048853363, 32.611818299107625, 0],
+    scale: [1, 1, 1],
+    rotation: [0, 0, 0, "XYZ"],
+  },
+  {
+    type: "platform-section",
+    position: [0, 31.535805167452736, 0],
+    scale: [15, 0.3, 1],
+    rotation: [0, 0, 0, "XYZ"],
+    oneWay: true,
+  },
+];
+
 export const roomTwo = [
   {
     type: "platform-section",
