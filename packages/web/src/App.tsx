@@ -122,12 +122,15 @@ export const App = () => {
             <div className="p-8  rounded-lg flex flex-col gap-4 text-white items-center">
               {!isLevelFinished ? (
                 <>
+                  <img
+                    src="/screen/splash-screen.png"
+                    className="w-36 h-36 mb-4"
+                  />
                   <h1 className="text-white text-6xl font-bold">Spirit Jump</h1>
-                  <span className="text-4xl font-bold">
-                    Click / tap to play.
-                  </span>
-                  <span className=" text-center">
-                    Top Right button or R for restart to last checkpoint
+                  <span>Earn rewards by completing challenges every day</span>
+                  <span>
+                    Click / tap to play. Press R to restart from the last
+                    checkpoint
                   </span>
                   <button
                     className="bg-[#6E56CF] px-4 py-2 rounded-lg w-full text-white font-bold"
