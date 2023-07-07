@@ -24,8 +24,10 @@ const animationMap: { [key: PlayerState]: string } = {
 
 export const Player = ({
   position = [0, 0, 0],
+  playMusic,
 }: {
   position: Vector3Tuple;
+  playMusic: () => void;
 }) => {
   const ref = useRef<RapierRigidBody>(null);
 
@@ -153,6 +155,7 @@ export const Player = ({
       }
       state = "jumping";
       lastJumpedAt.current = Date.now();
+      playMusic();
     }
 
     if (
@@ -178,7 +181,7 @@ export const Player = ({
     player.setLinvel(linvel, true);
     player.applyImpulse(impulse, true);
 
-    console.log(state);
+    // console.log(state);
     if (player.translation().y > playerHeight)
       set((store) => {
         store.player.maxHeight = Math.floor(player.translation().y);

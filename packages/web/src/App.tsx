@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Leva, button, useControls } from "leva";
-import * as React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MathUtils, Vector3 } from "three";
 import Camera from "./Camera";
 import ConnectRow from "./ConnectRow";
@@ -38,6 +38,11 @@ export const App = () => {
   const isLevelEditing = useStore((store) => store.game.isLevelEditing);
   const set = useStore((store) => store.set);
   const isGamePaused = useStore((store) => store.game.isPaused);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+  };
 
   const resetPlayer = useStore((store) => store.player.reset);
   const loadLevel = useStore((store) => store.level.loadLevel);
@@ -81,6 +86,12 @@ export const App = () => {
 
   return (
     <>
+      {isPlaying && (
+        <audio autoPlay loop>
+          <source src={"/sounds/backgroundMusic.mp3"} type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+      )}
       {/* Provider Connection */}
       {provider && (
         <ConnectRow
@@ -132,8 +143,8 @@ export const App = () => {
             <Editor />
           ) : (
             <>
-              <Physics debug>
-                <Player position={[0, 2, 0]} />
+              <Physics>
+                <Player position={[0, 2, 0]} playMusic={handlePlay} />
 
                 {/* Spawns coins, spikes, platforms */}
                 <Entities />
