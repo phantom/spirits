@@ -205,23 +205,10 @@ useStore.setState((store) => {
     },
     {
       position: [0, -1, 0],
-      scale: [12, 1, 1],
+      scale: [17, 1, 1],
       type: "platform",
       rotation: [0, 0, 0],
     },
-    {
-      position: [-5.5, 0, 0],
-      scale: [1, 2, 1],
-      type: "vertical-platform-small",
-      rotation: [0, 1, 0],
-    },
-    {
-      position: [5.5, 0, 0],
-      scale: [1, 2, 1],
-      type: "vertical-platform-small",
-      rotation: [0, 0, 0],
-    },
-
     {
       position: [-8, height + 3, 0],
       scale: [1, 8, 1],

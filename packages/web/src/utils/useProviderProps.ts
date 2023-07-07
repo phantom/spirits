@@ -38,6 +38,11 @@ export const useProviderProps = (): ProviderProps => {
   useEffect(() => {
     if (!provider) return;
 
+    // attempt to eagerly connect
+    provider.connect({ onlyIfTrusted: true }).catch(() => {
+      // fail silently
+    });
+
     provider.on("connect", (publicKey: PublicKey) => {
       console.log("connect event fired", publicKey.toString);
       setPublicKey(publicKey);
