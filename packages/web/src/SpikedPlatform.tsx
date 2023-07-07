@@ -1,7 +1,7 @@
 import { RigidBody, RigidBodyProps } from "@react-three/rapier";
 import * as React from "react";
 import { useStore } from "./store";
-import { Sprite, SpriteMaterial, TextureLoader, Vector3 } from "three";
+import { TextureLoader, Vector3 } from "three";
 import { useLoader } from "@react-three/fiber";
 
 interface SpikedPlatformProps extends RigidBodyProps {
@@ -31,27 +31,26 @@ export const SpikedPlatform = ({
   const spikeRight = useLoader(TextureLoader, "/sprites/spike-right.png");
 
   const spikePosition = new Vector3();
-  let spikeMaterial;
+  let spikeTexture;
 
   switch (orientation) {
     case "up":
       spikePosition.y += platformSize.y / 2 + 0.5;
-      spikeMaterial = new SpriteMaterial({ map: spikeUp });
+      spikeTexture = spikeUp;
       break;
     case "down":
       spikePosition.y -= platformSize.y / 2 + 0.5;
-      spikeMaterial = new SpriteMaterial({ map: spikeDown });
+      spikeTexture = spikeDown;
       break;
     case "left":
       spikePosition.x -= platformSize.x / 2 + 0.5;
-      spikeMaterial = new SpriteMaterial({ map: spikeLeft });
+      spikeTexture = spikeLeft;
       break;
     case "right":
       spikePosition.x += platformSize.x / 2 + 0.5;
-      spikeMaterial = new SpriteMaterial({ map: spikeRight });
+      spikeTexture = spikeRight;
       break;
   }
-  const spikeSprite = new Sprite(spikeMaterial);
 
   return (
     <group position={position}>
@@ -72,7 +71,7 @@ export const SpikedPlatform = ({
       >
         <mesh>
           <boxGeometry args={[1, 1, 0]} />
-          <primitive object={spikeSprite} />
+          <meshStandardMaterial map={spikeTexture} transparent={true} />
         </mesh>
       </RigidBody>
     </group>
