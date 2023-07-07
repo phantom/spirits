@@ -15,17 +15,18 @@ export function Trophy(props: RigidBodyProps) {
   return (
     <RigidBody
       type="fixed"
-      scale={[2, 2, 1]}
+      scale={props.scale}
       onCollisionEnter={({ other }) => {
         if (other.rigidBodyObject?.name !== "player") return;
         console.log("Trophy collected!");
+        // TODO: Connect to Mitchell's airdrop endpoint
       }}
       ref={ref}
       {...props}
       linearVelocity={[1, 0, 0]}
     >
       <mesh>
-        <boxGeometry args={[1, 1]} />
+        <planeGeometry args={[1, 1]} />
         <meshStandardMaterial
           map={trophyTexture}
           color={0xffffff}
