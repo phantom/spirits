@@ -20,6 +20,8 @@ export function Trophy(props: RigidBodyProps) {
   const handleAirdrop = ({ other }) => {
     if (other.rigidBodyObject?.name !== "player") return;
 
+    alert("Level complete!");
+
     fetch(AIRDROP_ENDPOINT)
       .then((response) => {
         if (!response.ok) {
@@ -28,9 +30,6 @@ export function Trophy(props: RigidBodyProps) {
         return response.json();
       })
       .then((data) => {
-        set((store) => {
-          store.game.isPaused = true;
-        });
         console.log(data);
       })
       .catch((error) => {

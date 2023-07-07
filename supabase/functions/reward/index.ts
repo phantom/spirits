@@ -28,10 +28,15 @@ const pool = new postgres.Pool(databaseUrl, 3, true);
 
 const router = new Router();
 router.get("/reward", async (context) => {
+  if (context.request.method === "OPTIONS") {
+    context.response.headers.set("Access-Control-Allow-Origin", "*");
+    context.response.body = "ok";
+    return;
+  }
+
   const keypair = getEnvKeypair();
   const pubkey = context.request.url.searchParams.get("pubkey");
 
-<<<<<<< HEAD
   // Validate fields
   if (!pubkey) {
     context.response.status = 400;
@@ -95,16 +100,13 @@ router.get("/reward", async (context) => {
 
   // Insert into database
   await insertSweepstakes(pool, pubkey, sweepstakesObj);
+  context.response.headers.set("Access-Control-Allow-Origin", "*");
   context.response.body = {
     ...sweepstakesObj,
     freshSweepstakes: true,
     mint: sweepstakes.chainData.mint,
     transferHash,
   };
-=======
-  context.response.headers.set("Access-Control-Allow-Origin", "*");
-  context.response.body = { data: "Rewards" };
->>>>>>> cffbafd (hook up to airdrop (still needs a small fix))
 });
 
 const app = new Application();
