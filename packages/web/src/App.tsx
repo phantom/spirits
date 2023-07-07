@@ -1,8 +1,8 @@
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Leva, button, useControls } from "leva";
-import React, { useState, useEffect, useRef } from "react";
-import { MathUtils, Vector3 } from "three";
+import * as React from "react";
+import { MathUtils } from "three";
 import Camera from "./Camera";
 import ConnectRow from "./ConnectRow";
 import Editor from "./Editor";
@@ -11,12 +11,7 @@ import { Player } from "./Player";
 import { useStore } from "./store";
 import getProvider from "./utils/getProvider";
 import { useProviderProps } from "./utils/useProviderProps";
-import { Coin } from "./Coin";
-import { Snake } from "./Snake";
 import { Background } from "./Background";
-import { SpikedPlatform } from "./SpikedPlatform";
-import { Enemy } from "./Enemy";
-import { Trophy } from "./Trophy";
 import { levels } from "./levels";
 
 // =============================================================================
@@ -36,16 +31,20 @@ export const App = () => {
   const score = useStore((store) => store.player.score);
   const height = useStore((store) => store.player.maxHeight);
   const isLevelEditing = useStore((store) => store.game.isLevelEditing);
-  const set = useStore((store) => store.set);
   const isGamePaused = useStore((store) => store.game.isPaused);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = React.useState(false);
 
   const handlePlay = () => {
     setIsPlaying(true);
   };
 
+  const set = useStore((store) => store.set);
   const resetPlayer = useStore((store) => store.player.reset);
   const loadLevel = useStore((store) => store.level.loadLevel);
+
+  set((store) => {
+    store.player.publicKey = publicKey;
+  });
 
   const _ = useControls(
     {

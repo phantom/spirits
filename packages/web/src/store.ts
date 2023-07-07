@@ -1,4 +1,5 @@
 import { RapierRigidBody } from "@react-three/rapier";
+import { PublicKey } from "@solana/web3.js";
 import CameraControls from "camera-controls";
 import { enableMapSet, setAutoFreeze } from "immer";
 import { createRef, MutableRefObject, RefObject } from "react";
@@ -72,6 +73,7 @@ export type Store = {
     score: number;
     maxHeight: number;
     scoredCoinsRef: RefObject<Set<string>> | null;
+    publicKey: PublicKey | null;
     reset: () => void;
   };
   level: Level;
@@ -98,6 +100,7 @@ export const useStore = create(
       score: 0,
       maxHeight: 0,
       scoredCoinsRef: createRef<Set<string>>() as MutableRefObject<Set<string>>,
+      publicKey: null,
       reset: () => {
         get().player.ref?.current?.setTranslation(
           (get().level.checkpoint ?? new Vector3())
