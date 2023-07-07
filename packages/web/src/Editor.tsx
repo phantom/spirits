@@ -55,6 +55,7 @@ export default function Editor() {
             "snake",
             "enemy",
             "coin",
+            "trophy",
             "square-platform",
             "vertical-platform",
             "vertical-platform-small",

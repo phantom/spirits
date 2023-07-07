@@ -22,7 +22,7 @@ const Main = styled.main`
   justify-content: space-between;
   padding: 20px;
   align-items: center;
-  background-color: ${REACT_GRAY};
+  background-color: #232326;
   @media (max-width: 768px) {
     width: 100%;
     height: auto;
@@ -37,6 +37,7 @@ const Body = styled.div`
 
 const Pre = styled.pre`
   margin-bottom: 5px;
+  color: #fff;
 `;
 
 const Badge = styled.div`
@@ -74,6 +75,14 @@ const Divider = styled.div`
   height: 1px;
 `;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+`;
+
 // =============================================================================
 // Typedefs
 // =============================================================================
@@ -89,20 +98,27 @@ interface Props {
 // =============================================================================
 
 const ConnectRow = React.memo((props: Props) => {
-  const { publicKey, connect } = props;
+  const { publicKey, connectedMethods, connect } = props;
 
   return (
     <Main>
       <Body>
         {publicKey ? (
           // connected
-          <>
+          <Container>
             <div>
               <Pre>Connected as</Pre>
               <Badge>{publicKey.toBase58()}</Badge>
-              <Divider />
             </div>
-          </>
+
+            <div>
+              <Button
+                onClick={connectedMethods[connectedMethods.length - 1].onClick}
+              >
+                Disconnect
+              </Button>
+            </div>
+          </Container>
         ) : (
           // not connected
           <Button onClick={connect}>Connect to Phantom</Button>

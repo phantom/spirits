@@ -28,6 +28,7 @@ export type EntityType =
   | "spike"
   | "snake"
   | "enemy"
+  | "trophy"
   | "vertical-platform"
   | "vertical-platform-small"
   | "platform-section"
@@ -134,21 +135,21 @@ useStore.setState((store) => {
       rotation: [0, 0, 0],
     },
     {
+      type: "spiked-platform",
       position: [0, 3.75, 0],
       scale: [1, 1, 1],
-      type: "spiked-platform",
       orientation: "up",
     },
     { position: [3, 42, 0], scale: [1, 4, 1], type: "platform" },
     { position: [-3, 46, 0], scale: [1, 4, 1], type: "platform" },
     { position: [3, 50, 0], scale: [1, 4, 1], type: "platform" },
     {
+      type: "spiked-platform",
       position: [7, 15, 0],
       scale: [1, 1, 1],
-      type: "spiked-platform",
       orientation: "left",
     },
-    { position: [-6.33, 2.05, 0], scale: [1, 1, 1], type: "enemy" },
+    { type: "enemy", position: [-3.33, 2.18, 0], scale: [1, 1, 1] },
     {
       type: "platform",
       position: [0, -6.412917749024082, 7.57424949949359e-17],
@@ -156,9 +157,9 @@ useStore.setState((store) => {
       scale: [10, 1, 1],
     },
     {
+      type: "spiked-platform",
       position: [0, 28, 0],
       scale: [1, 1, 1],
-      type: "spiked-platform",
       orientation: "down",
     },
     {
@@ -257,6 +258,7 @@ useStore.setState((store) => {
       scale: [1, 1, 1],
       rotation: [0, 0, 0, "XYZ"],
     },
+    { type: "enemy", position: [3.33, 36.7, 0], scale: [1, 1, 1] },
     {
       type: "platform-section",
       position: [0, 1.3631882861304385, 0],
@@ -284,6 +286,11 @@ useStore.setState((store) => {
       scale: [15, 0.3, 1],
       rotation: [0, 0, 0, "XYZ"],
       oneWay: true,
+    },
+    {
+      type: "trophy",
+      position: [0, 65, 0],
+      scale: [2, 2, 1],
     },
   ];
   store.level.entities = new Map([
