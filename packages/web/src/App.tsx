@@ -12,6 +12,7 @@ import getProvider from "./utils/getProvider";
 import { useProviderProps } from "./utils/useProviderProps";
 import { Background } from "./Background";
 import { levels } from "./levels";
+import { Airdrop } from "./types";
 
 // =============================================================================
 // Constants
@@ -35,6 +36,7 @@ export const App = () => {
   const isGamePaused = useStore((store) => store.game.isPaused);
   const isLevelFinished = useStore((store) => store.level.levelFinished);
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const [airdrop, setAirdrop] = React.useState<Airdrop>();
 
   useLoader(TextureLoader, "/sprites/spritesheet.png");
 
@@ -101,6 +103,13 @@ export const App = () => {
       resetPlayer();
     }
   }, []);
+
+  const fetchAirdrop = async () => {
+    const res = await fetch(
+      `https://fmeabzbszutxkewzxuwb.supabase.co/functions/v1/reward?pubkey=${publicKey}`
+    );
+    const data: Airdrop = await res.json();
+  };
 
   return (
     <>
@@ -175,7 +184,7 @@ export const App = () => {
                   <button
                     className="bg-[#6E56CF] px-4 py-2 w-full mb-2  rounded-lg text-white font-bold"
                     onClick={() => {
-                      alert("claim");
+                      fetchAirdrop();
                     }}
                   >
                     Claim

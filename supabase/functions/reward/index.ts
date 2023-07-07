@@ -20,7 +20,7 @@ const connection = new Connection(
 );
 const metaplex = new Metaplex(connection).use(keypairIdentity(keypair));
 
-const COLLECTION_ID = "BSSKxxsMXEFozV4kQoqNqhfvjpQxJBCf2jB7mR2Bqx4p";
+const COLLECTION_ID = "3Lw12XTn5nH1C61jRVcZ4SoxFndoGuVJdH6ZgRszKs7L";
 
 // Database pool
 const databaseUrl = Deno.env.get("SUPABASE_DB_URL");
@@ -50,6 +50,7 @@ router.get("/reward", async (context) => {
   // Shortcut if user already has a sweepstakes entry
   if (databaseSweepstakes.length > 0) {
     const parsedSweeptakes = JSON.parse(databaseSweepstakes[0].sweepstakes);
+    context.response.headers.set("Access-Control-Allow-Origin", "*");
     context.response.body = {
       ...parsedSweeptakes,
       freshSweepstake: false,
