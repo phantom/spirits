@@ -119,7 +119,7 @@ export const App = () => {
       {isGamePaused ? (
         <div>
           <div className="absolute z-50 bg-[#232326] flex items-center justify-center h-full w-full p-2">
-            <div className="p-8  rounded-lg flex flex-col gap-4 text-white">
+            <div className="p-8  rounded-lg flex flex-col gap-4 text-white items-center">
               {!isLevelFinished ? (
                 <>
                   <h1 className="text-white text-6xl font-bold">Spirit Jump</h1>
@@ -130,7 +130,7 @@ export const App = () => {
                     Top Right button or R for restart to last checkpoint
                   </span>
                   <button
-                    className="bg-[#6E56CF] px-4 py-2 rounded-lg text-white font-bold"
+                    className="bg-[#6E56CF] px-4 py-2 rounded-lg w-full text-white font-bold"
                     onClick={() => {
                       set((store) => {
                         store.game.isPaused = false;
@@ -154,7 +154,7 @@ export const App = () => {
                   </h2>
                   <img src="/images/coin.png" className="w-20 h-20 mb-4" />
                   <button
-                    className="bg-[#6E56CF] px-4 py-2  mb-2  rounded-lg text-white font-bold"
+                    className="bg-[#6E56CF] px-4 py-2 w-full mb-2  rounded-lg text-white font-bold"
                     onClick={() => {
                       alert("claim");
                     }}
