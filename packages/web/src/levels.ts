@@ -339,7 +339,7 @@ export const endLevel = (offset: number) => [
   },
 ];
 
-export const firstLevel = (offset: number = 0) => [
+export const firstLevel = (offset: number) => [
   {
     type: "spiked-platform",
     position: [0, offset + 3.75, 0],

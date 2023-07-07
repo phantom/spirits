@@ -172,13 +172,17 @@ useStore.setState((store) => {
   store.camera.movement.current = new Vector2();
 
   let height = 0;
-  const entities = [tutorialLevel, testRoom, endLevel].reduce((agg, init) => {
-    const entities = init(height);
-    height += entities.sort((a, b) => b.position[1] - a.position[1])[0]
-      .position[1];
 
-    return [...agg, ...(entities as any)];
-  }, []) as unknown as any[];
+  const entities = [tutorialLevel, firstLevel, testRoom, endLevel].reduce(
+    (agg, init) => {
+      const entities = init(height);
+      height += entities.sort((a, b) => b.position[1] - a.position[1])[0]
+        .position[1];
+
+      return [...agg, ...(entities as any)];
+    },
+    []
+  ) as unknown as any[];
 
   // side, top and bottom platforms get automatically added
   entities.push(
