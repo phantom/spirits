@@ -42,6 +42,7 @@ export type EntityType =
   | "vertical-platform"
   | "vertical-platform-small"
   | "platform-section"
+  | "tip"
   | "square-platform";
 
 export type Entity = {
@@ -199,19 +200,19 @@ useStore.setState((store) => {
       rotation: [0, 0, 0],
     },
     {
-      position: [0, 0, 0],
+      position: [0, -1, 0],
       scale: [12, 1, 1],
       type: "platform",
       rotation: [0, 0, 0],
     },
     {
-      position: [-5.5, 1, 0],
+      position: [-5.5, 0, 0],
       scale: [1, 2, 1],
       type: "vertical-platform-small",
       rotation: [0, 1, 0],
     },
     {
-      position: [5.5, 1, 0],
+      position: [5.5, 0, 0],
       scale: [1, 2, 1],
       type: "vertical-platform-small",
       rotation: [0, 0, 0],
