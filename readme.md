@@ -1,15 +1,3 @@
-- hide leva on prod, not on dev. make it appear using a script
-- X make camera follow the player
-- X click movement
-  - Still scuffed though
-- level editor (transform controls?)
-- line that follows the player - green is up, red is down - mimicking a graph lol
-- player stuff should be calculated with delta
-- if moving in a certain direction and jumping, remain the x velocity from before the jump
-- force portrait mode
-
-# Spirit Sprint
-
 # Spirit Jump
 
 https://spiritjump.netlify.app/
