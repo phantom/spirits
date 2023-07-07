@@ -11,6 +11,7 @@ import {
   endLevel,
   firstLevel,
   levels,
+  roomOne,
   testRoom,
   tutorialLevel,
 } from "./levels";
@@ -176,7 +177,7 @@ useStore.setState((store) => {
 
   const entities = [
     tutorialLevel,
-    // testRoom, // custom room starting with checkpoint
+    roomOne, // custom room starting with checkpoint
     // testRoom, // custom room starting with checkpoint
     // testRoom, // custom room starting with checkpoint
     // testRoom, // custom room starting with checkpoint
