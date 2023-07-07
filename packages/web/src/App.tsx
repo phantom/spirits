@@ -280,7 +280,7 @@ export const App = () => {
       )}
 
       <div className="absolute bottom-0 right-0">
-        <Leva collapsed={true} fill />
+        <Leva collapsed={true} fill hidden={true} />
       </div>
     </>
   );
