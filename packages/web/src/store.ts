@@ -100,7 +100,9 @@ export const useStore = create(
       scoredCoinsRef: createRef<Set<string>>() as MutableRefObject<Set<string>>,
       reset: () => {
         get().player.ref?.current?.setTranslation(
-          get().level.checkpoint.clone().add(new Vector3(0, 2, 0)),
+          (get().level.checkpoint ?? new Vector3())
+            .clone()
+            .add(new Vector3(0, 2, 0)),
           false
         );
         get().player.ref?.current?.setLinvel(new Vector3(0, 0, 0), false);
