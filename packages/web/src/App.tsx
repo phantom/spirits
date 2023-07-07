@@ -157,14 +157,16 @@ export const App = () => {
                     Click / tap to play. Press R to restart from the last
                     checkpoint
                   </span>
-                  <button
-                    className="bg-[#6E56CF] px-4 py-2 rounded-full w-full text-white font-bold"
-                    onClick={() => {
-                      handleConnect();
-                    }}
-                  >
-                    Connect Wallet
-                  </button>
+                  {!publicKey && (
+                    <button
+                      className="bg-[#6E56CF] px-4 py-2 rounded-full w-full text-white font-bold"
+                      onClick={() => {
+                        handleConnect();
+                      }}
+                    >
+                      Connect Wallet
+                    </button>
+                  )}
                   <button
                     className={`bg-[#6E56CF] px-4 py-2 rounded-full w-full text-white font-bold ${
                       publicKey === null ? "opacity-50 cursor-not-allowed" : ""
@@ -178,15 +180,16 @@ export const App = () => {
                   >
                     {score > 0 ? "Resume" : "Play"}
                   </button>
-                  <br></br>
-                  {publicKey ? (
-                    <span>
-                      Connected to{" "}
-                      {`${publicKey?.toString().substring(0, 10)}...`}
-                    </span>
-                  ) : (
-                    <span>Not connected</span>
-                  )}
+                  <div className="text-sm">
+                    {publicKey && (
+                      <>
+                        <span className="opacity-30">Connected to </span>
+                        <span className="opacity-70 font-semibold">
+                          {`${publicKey?.toString().substring(0, 10)}...`}
+                        </span>
+                      </>
+                    )}
+                  </div>
                 </>
               ) : (
                 <div className="flex flex-col items-center">
@@ -277,7 +280,7 @@ export const App = () => {
       )}
 
       <div className="absolute bottom-0 right-0">
-        <Leva collapsed={true} fill />
+        <Leva collapsed={true} fill hidden={true} />
       </div>
     </>
   );

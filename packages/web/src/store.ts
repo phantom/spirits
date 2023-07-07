@@ -11,6 +11,9 @@ import {
   endLevel,
   firstLevel,
   levels,
+  roomAfterTutorial,
+  roomAfterTutorial2,
+  roomAfterTutorial3,
   roomOne,
   roomThree,
   roomTwo,
@@ -119,7 +122,6 @@ export const useStore = create(
       publicKey: null,
       reset: () => {
         const checkpoint = get().level.checkpoint.clone();
-
         get().player.ref?.current?.setTranslation(
           checkpoint.equals(new Vector3())
             ? new Vector3()
@@ -159,7 +161,7 @@ export const useStore = create(
     game: {
       isLoaded: false,
       isPaused: true,
-      isPlaying: true,
+      isPlaying: false,
       isLevelEditing: false,
     },
     camera: {
@@ -183,7 +185,10 @@ useStore.setState((store) => {
 
   const entities = [
     tutorialLevel,
-    roomOne, // custom room starting with checkpoint
+    // roomOne, // custom room starting with checkpoint
+    roomAfterTutorial,
+    roomAfterTutorial2,
+    roomAfterTutorial3,
     roomTwo, // custom room starting with checkpoint
     roomThree, // custom room starting with checkpoint
     endLevel,

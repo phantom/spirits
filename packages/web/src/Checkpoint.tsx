@@ -23,6 +23,7 @@ export function Checkpoint(props: RigidBodyProps) {
   );
 
   const [isCapured, setCaptured] = React.useState(false);
+  const playerRef = useStore((store) => store.player.ref);
   // const enemyTexture = useLoader(TextureLoader, "/sprites/enemy.png");
 
   return (
@@ -33,11 +34,17 @@ export function Checkpoint(props: RigidBodyProps) {
           sensor={true}
           onIntersectionEnter={() => {
             setCaptured(true);
-            set((store) => {
-              store.level.checkpoint = new Vector3().fromArray(
-                props.position as number[]
-              );
-            });
+            if (
+              (playerRef?.current?.translation().y ?? 0) >
+                props.position?.[1] - 3 ??
+              0
+            ) {
+              set((store) => {
+                store.level.checkpoint = new Vector3().fromArray(
+                  props.position as number[]
+                );
+              });
+            }
           }}
         />
       </RigidBody>
