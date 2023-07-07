@@ -40,6 +40,7 @@ export const App = () => {
   const isGamePaused = useStore((store) => store.game.isPaused);
 
   const resetPlayer = useStore((store) => store.player.reset);
+  const loadLevel = useStore((store) => store.level.loadLevel);
 
   const _ = useControls(
     {
@@ -52,28 +53,8 @@ export const App = () => {
         },
       },
       loadLevelFromName: button(() => {
-        const levelName = prompt("level name") || "";
-
-        const level = levels[levelName];
-
-        set((store) => {
-          store.level.entities = new Map([
-            ...level.map((entity, index) => {
-              const uuid = MathUtils.generateUUID();
-              return [
-                uuid,
-                {
-                  ...entity,
-                  id: uuid,
-                },
-              ];
-            }),
-          ]);
-          store.level.checkpoint = level.checkpoint;
-          store.game.isLevelEditing = false;
-        });
-
-        resetPlayer();
+        const name = prompt("level name") ?? "";
+        loadLevel(name);
       }),
       ...(!isLevelEditing &&
         {
